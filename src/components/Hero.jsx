@@ -8,6 +8,9 @@ export default function Hero() {
     const [isPaused, setIsPaused] = useState(false);
     const autoPlayRef = useRef();
 
+    // Constant member count to maintain brand stability
+    const CONSTANT_MEMBERS = "2.0M";
+
     const slides = [
         {
             id: 1,
@@ -50,28 +53,12 @@ export default function Hero() {
     const { title, desc, image, ctaText, trust } = slides[currentSlide];
 
     return (
-        // Increased min-height to 100vh for a true full-screen impact on desktop
         <section className="relative pt-[100px] lg:pt-[120px] min-h-screen lg:min-h-[100vh] bg-cyan-500 overflow-hidden font-sans flex items-center">
             
-            {/* --- ENHANCED DECORATIVE GEOMETRY --- */}
-            {/* Top Right Circles */}
+            {/* Decorative Geometry */}
             <div className="absolute top-10 -right-20 w-64 h-64 border-[32px] border-white/10 rounded-full hidden xl:block"></div>
-            <div className="absolute top-40 right-20 w-16 h-16 border-4 border-white/20 rounded-full animate-pulse"></div>
-            
-            {/* Bottom Left Rectangles & Shapes */}
             <div className="absolute bottom-20 left-10 w-32 h-32 bg-white/5 rounded-3xl rotate-12 hidden lg:block"></div>
-            <div className="absolute bottom-40 left-[15%] w-12 h-12 bg-white/10 rounded-lg -rotate-12 hidden xl:block"></div>
             
-            {/* Floating "Blips" */}
-            <div className="absolute top-[20%] left-[5%] w-4 h-4 bg-white/30 rounded-full"></div>
-            <div className="absolute top-[60%] right-[10%] w-3 h-3 bg-white/20 rounded-full"></div>
-            <div className="absolute bottom-[10%] left-[40%] w-6 h-6 border-2 border-white/20 rounded-full"></div>
-            
-            {/* Middle decorative bar */}
-            <div className="absolute top-1/2 left-0 w-24 h-2 bg-white/10 rounded-r-full hidden 2xl:block"></div>
-            {/* ----------------------------------- */}
-
-            {/* Container width increased to max-w-[1440px] (8xl) */}
             <div className="max-w-[1440px] mx-auto px-6 py-20 lg:py-32 w-full relative z-10">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">
                     
@@ -80,12 +67,35 @@ export default function Hero() {
                         <span className="inline-block bg-[#0B1E3D] text-white font-bold text-xs lg:text-sm uppercase tracking-[0.3em] px-5 py-2 rounded-md mb-8">
                             Nexus Lending®
                         </span>
+
                         <h1 className="text-5xl lg:text-7xl xl:text-8xl font-black text-[#0B1E3D] leading-[0.95] mb-8 tracking-tighter">
                             {title}
                         </h1>
-                        <p className="text-[#0B1E3D]/90 text-xl lg:text-2xl xl:text-3xl font-semibold mb-12 max-w-2xl leading-relaxed">
+                        <p className="text-[#0B1E3D]/90 text-xl lg:text-2xl xl:text-3xl font-semibold mb-8 max-w-2xl leading-relaxed">
                             {desc}
                         </p>
+
+                        {/* TRUST BADGE (Now with constant 2.4M members) */}
+                        <div className="flex flex-wrap items-center gap-4 mb-12">
+                            <div className="flex bg-white/15 backdrop-blur-md border border-white/20 p-2 rounded-2xl items-center gap-3">
+                                <div className="flex bg-[#0B1E3D] px-3 py-1.5 rounded-xl items-center gap-1.5 shadow-lg">
+                                    <div className="flex text-yellow-400">
+                                        {[...Array(4)].map((_, i) => (
+                                            <svg key={i} className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                            </svg>
+                                        ))}
+                                        <svg className="w-3.5 h-3.5 fill-current opacity-50" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                    </div>
+                                    <span className="text-white font-black text-xs">4.7/5</span>
+                                </div>
+                                <p className="text-[#0B1E3D] font-bold text-sm pr-2">
+                                    Trusted by <span className="text-white">{CONSTANT_MEMBERS}</span> members
+                                </p>
+                            </div>
+                        </div>
                         
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
                             <button className="px-14 py-6 bg-[#0B1E3D] hover:bg-[#162a4d] text-white font-bold text-xl lg:text-2xl rounded-2xl shadow-[0_20px_50px_rgba(11,30,61,0.3)] transition-all transform active:scale-95">
@@ -113,9 +123,7 @@ export default function Hero() {
                     {/* RIGHT SIDE: Image */}
                     <div className="lg:w-[45%] flex flex-col items-center">
                         <div className="relative group">
-                            {/* Larger, more visible background glow/card */}
                             <div className="absolute -inset-8 bg-white/30 rounded-[5rem] -rotate-6 group-hover:rotate-0 transition-transform duration-1000 -z-10 blur-sm"></div>
-                            
                             <div className="relative z-10 bg-white p-4 lg:p-6 rounded-[3.5rem] shadow-[0_80px_120px_-30px_rgba(0,0,0,0.5)]">
                                 <img 
                                     src={image} 
@@ -142,4 +150,4 @@ export default function Hero() {
             </div>
         </section>
     );
-}clearInterval
+}
