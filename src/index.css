@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* 1. Reset the entire page scope */
+html, body, #root {
+  background-color: white !important;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* 2. Remove any default Vite font/color resets if they are still there */
+:root {
+  background-color: white !important;
+}
