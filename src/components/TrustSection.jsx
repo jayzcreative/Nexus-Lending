@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const socialFeed = [
     {
@@ -28,12 +30,20 @@ const socialFeed = [
 ];
 
 export default function TrustSection() {
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: false,
+            easing: 'ease-out-cubic'
+        });
+    }, []);
+
     return (
         <section className="py-24 bg-white relative overflow-hidden">
             <div className="max-w-[1440px] mx-auto px-6">
                 
                 {/* --- PART 1: THE PILLARS (Authority) --- */}
-                <div className="text-center mb-20">
+                <div className="text-center mb-20" data-aos="fade-down">
                     <h2 className="text-4xl lg:text-6xl font-black text-[#0B1E3D] mb-6 tracking-tight">
                         The Nexus <span className="text-cyan-500">Difference.</span>
                     </h2>
@@ -43,8 +53,12 @@ export default function TrustSection() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24">
-                    {/* Pillar 1: AI Security */}
-                    <div className="p-10 rounded-[3rem] bg-cyan-50 border border-cyan-100 hover:shadow-xl transition-all group">
+                    {/* Pillar 1: AI Security - Slides from Left */}
+                    <div 
+                        data-aos="fade-right" 
+                        data-aos-delay="100"
+                        className="p-10 rounded-[3rem] bg-cyan-50 border border-cyan-100 hover:shadow-xl transition-all group"
+                    >
                         <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">🤖</div>
                         <h3 className="text-2xl font-bold text-[#0B1E3D] mb-4">Autonomous Defense</h3>
                         <p className="text-gray-600 leading-relaxed font-medium">
@@ -52,8 +66,12 @@ export default function TrustSection() {
                         </p>
                     </div>
 
-                    {/* Pillar 2: Transparency */}
-                    <div className="p-10 rounded-[3rem] bg-[#0B1E3D] text-white hover:shadow-xl transition-all group">
+                    {/* Pillar 2: Transparency - Fades Up */}
+                    <div 
+                        data-aos="fade-up" 
+                        data-aos-delay="300"
+                        className="p-10 rounded-[3rem] bg-[#0B1E3D] text-white hover:shadow-xl transition-all group"
+                    >
                         <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">💎</div>
                         <h3 className="text-2xl font-bold mb-4">Pure Transparency</h3>
                         <p className="text-white/80 leading-relaxed font-medium">
@@ -61,8 +79,12 @@ export default function TrustSection() {
                         </p>
                     </div>
 
-                    {/* Pillar 3: Speed */}
-                    <div className="p-10 rounded-[3rem] bg-cyan-500 text-white hover:shadow-xl transition-all group">
+                    {/* Pillar 3: Speed - Slides from Right */}
+                    <div 
+                        data-aos="fade-left" 
+                        data-aos-delay="500"
+                        className="p-10 rounded-[3rem] bg-cyan-500 text-white hover:shadow-xl transition-all group"
+                    >
                         <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">⚡</div>
                         <h3 className="text-2xl font-bold mb-4">Instant Synergy</h3>
                         <p className="text-white/90 leading-relaxed font-medium">
@@ -71,10 +93,10 @@ export default function TrustSection() {
                     </div>
                 </div>
 
-                {/* --- PART 2: THE REVIEWS (Human Social Proof) --- */}
-                <div className="bg-[#F8FAFC] rounded-[4rem] relative border border-gray-100 overflow-hidden">
+                {/* --- PART 2: THE REVIEWS --- */}
+                <div className="bg-[#F8FAFC] rounded-[4rem] relative border border-gray-100 overflow-hidden" data-aos="zoom-in-up">
                     
-                    {/* The Constant Aggregate Rating Bar (matches screenshot concept) */}
+                    {/* Aggregate Rating Bar */}
                     <div className="bg-[#0B1E3D] p-4 lg:p-6 text-center lg:text-left flex flex-col lg:flex-row items-center justify-between gap-4">
                         <div className="flex flex-col lg:flex-row items-center gap-3">
                             <span className="text-white font-bold text-base opacity-70">Our members say</span>
@@ -93,22 +115,22 @@ export default function TrustSection() {
                     </div>
 
                     <div className="p-10 lg:p-20 relative">
-                        {/* Section Header */}
-                        <div className="text-center mb-16">
+                        <div className="text-center mb-16" data-aos="fade-up">
                             <h3 className="text-[#0B1E3D] text-3xl lg:text-5xl font-black tracking-tight mb-2">
-                               Voices of <span className="text-cyan-500">Nexus.</span>
+                                Voices of <span className="text-cyan-500">Nexus.</span>
                             </h3>
                             <p className="text-gray-500 text-lg font-bold uppercase tracking-widest">Active Community Stories</p>
                         </div>
 
-                        {/* Review Grid */}
+                        {/* Review Grid - Staggered Slide In */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
                             {socialFeed.map((post, index) => (
                                 <div 
                                     key={index} 
+                                    data-aos="fade-up"
+                                    data-aos-delay={index * 200}
                                     className="bg-white p-8 rounded-[2.5rem] border-2 border-transparent hover:border-cyan-400 transition-all duration-300 group shadow-sm hover:shadow-xl flex flex-col h-full"
                                 >
-                                    {/* Header: Stars & "Invited" */}
                                     <div className="flex justify-between items-center mb-6">
                                         <div className="flex gap-0.5 text-green-500">
                                             {[...Array(5)].map((_, i) => (
@@ -117,7 +139,6 @@ export default function TrustSection() {
                                                 </svg>
                                             ))}
                                         </div>
-                                        {/* FEATURE: "✅ Invited" Badge from screenshot */}
                                         <div className="flex items-center gap-1.5 text-gray-500 bg-gray-50 px-3 py-1 rounded-full text-xs font-bold border border-gray-100">
                                             <svg className="w-3.5 h-3.5 fill-cyan-500" viewBox="0 0 20 20">
                                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -126,13 +147,11 @@ export default function TrustSection() {
                                         </div>
                                     </div>
 
-                                    {/* Review Title & Body */}
                                     <h4 className="font-extrabold text-[#0B1E3D] text-lg mb-3 leading-tight">{post.title}</h4>
                                     <p className="text-[#0B1E3D]/80 text-base leading-relaxed font-semibold mb-10 flex-grow">
                                         "{post.comment}"
                                     </p>
 
-                                    {/* Footer: Human Info & Time */}
                                     <div className="flex items-center gap-4 pt-6 border-t border-gray-50 mt-auto">
                                         <div className="w-14 h-14 bg-cyan-50 rounded-full flex items-center justify-center text-3xl group-hover:rotate-6 transition-transform">
                                             {post.avatar}
@@ -148,10 +167,6 @@ export default function TrustSection() {
                                 </div>
                             ))}
                         </div>
-                        
-                        {/* Optional: Simple arrows for carousel feel (just visual for now) */}
-                        <div className="hidden xl:flex absolute top-1/2 left-4 w-12 h-12 bg-white rounded-full items-center justify-center text-gray-300 border shadow-sm group hover:text-cyan-500 hover:border-cyan-500 transition-colors">←</div>
-                        <div className="hidden xl:flex absolute top-1/2 right-4 w-12 h-12 bg-white rounded-full items-center justify-center text-gray-300 border shadow-sm group hover:text-cyan-500 hover:border-cyan-500 transition-colors">→</div>
                     </div>
                 </div>
             </div>

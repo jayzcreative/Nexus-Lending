@@ -45,14 +45,14 @@ const Navbar = () => {
         <nav className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-100 font-sans shadow-sm" onMouseLeave={() => setActiveDropdown(null)}>
             <div className="max-w-7xl mx-auto px-6 h-[80px] flex items-center justify-between">
                 
-                {/* Logo Section */}
-                <div className="flex items-center gap-3 group cursor-pointer">
+                {/* Logo Section - Clickable to top/home */}
+                <a href="#" onClick={() => setIsOpen(false)} className="flex items-center gap-3 group cursor-pointer">
                     <img src={logo} alt="Nexus Logo" className="w-10 h-10 object-contain group-hover:scale-105 transition-transform duration-300" />
                     <div className="flex flex-col leading-tight">
                         <span className="text-[#0B1E3D] font-bold text-xl tracking-tight uppercase">Nexus</span>
                         <span className="text-cyan-500 text-[10px] font-bold tracking-[0.2em] uppercase">Lending</span>
                     </div>
-                </div>
+                </a>
 
                 {/* Desktop Navigation */}
                 <div className="hidden lg:flex items-center gap-2 h-full">
@@ -70,22 +70,26 @@ const Navbar = () => {
                 <div className="flex items-center gap-4">
                     <button className="hidden sm:block text-gray-900 hover:text-cyan-500 text-sm font-semibold px-4 py-2 transition-colors">Log In</button>
                     <button className="px-6 py-2.5 bg-cyan-500 hover:bg-black text-white text-sm font-bold rounded-lg shadow-md shadow-sky-200 transition-all active:scale-95">Check My Rate</button>
-                    <button className="lg:hidden text-gray-900 p-2" onClick={() => setIsOpen(!isOpen)}>
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} strokeWidth="2" stroke="currentColor" /></svg>
+                    
+                    {/* Hamburger Toggle */}
+                    <button className="lg:hidden text-gray-900 p-2 z-50 transition-colors hover:text-cyan-500" onClick={() => setIsOpen(!isOpen)}>
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} strokeWidth="2" strokeLinecap="round" />
+                        </svg>
                     </button>
                 </div>
             </div>
 
             {/* --- DESKTOP DROPDOWN MENUS --- */}
             {activeDropdown === "Products" && (
-                <div className="hidden lg:block absolute top-[80px] left-0 w-full bg-white border-b border-gray-100 shadow-2xl">
+                <div className="hidden lg:block absolute top-[80px] left-0 w-full bg-white border-b border-gray-100 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="max-w-7xl mx-auto px-10 py-10 grid grid-cols-5 gap-8">
                         {Object.entries(products).map(([category, items]) => (
                             <div key={category}>
                                 <h3 className="text-[#0B1E3D] font-bold text-xs uppercase tracking-widest mb-4 border-l-4 border-cyan-500 pl-3">{category}</h3>
                                 <ul className="space-y-2">
                                     {items.map(item => (
-                                        <li key={item}><a href="#" className="text-gray-500 hover:text-cyan-500 text-sm block py-1">{item}</a></li>
+                                        <li key={item}><a href="#" className="text-gray-500 hover:text-cyan-500 text-sm block py-1 transition-colors">{item}</a></li>
                                     ))}
                                 </ul>
                             </div>
@@ -95,7 +99,7 @@ const Navbar = () => {
             )}
 
             {activeDropdown && activeDropdown !== "Products" && (
-                <div className="hidden lg:block absolute top-[80px] left-0 w-full bg-white border-b border-gray-100 shadow-2xl">
+                <div className="hidden lg:block absolute top-[80px] left-0 w-full bg-white border-b border-gray-100 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="max-w-7xl mx-auto px-10 py-8 grid grid-cols-4 gap-6">
                         {navSections[activeDropdown].map((item) => (
                             <a key={item.title} href="#" className="group p-4 rounded-xl hover:bg-gray-50 transition-all">
@@ -109,42 +113,51 @@ const Navbar = () => {
 
             {/* --- MOBILE MENU --- */}
             {isOpen && (
-                <div className="lg:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-white z-40 overflow-y-auto px-6 py-6 animate-in slide-in-from-right duration-300">
-                    <div className="flex flex-col gap-2">
-                        {navLinks.map(name => (
-                            <div key={name} className="border-b border-gray-50 last:border-none">
-                                <button 
-                                    onClick={() => toggleAccordion(name)}
-                                    className="w-full flex items-center justify-between text-gray-900 font-bold text-xl py-4"
-                                >
-                                    {name}
-                                    <svg className={`w-5 h-5 transition-transform ${mobileAccordion === name ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
-                                </button>
-                                
-                                {/* Accordion Content */}
-                                <div className={`overflow-hidden transition-all duration-300 ${mobileAccordion === name ? 'max-h-[500px] mb-4' : 'max-h-0'}`}>
-                                    <div className="pl-4 flex flex-col gap-3 border-l-2 border-cyan-500/30">
-                                        <a href="#" className="text-cyan-500 font-bold text-sm py-1">View all {name}</a>
-                                        {name === "Products" ? (
-                                            Object.keys(products).map(cat => (
-                                                <a key={cat} href="#" className="text-gray-500 text-sm py-1">{cat}</a>
-                                            ))
-                                        ) : (
-                                            navSections[name].map(item => (
-                                                <a key={item.title} href="#" className="text-gray-500 text-sm py-1">{item.title}</a>
-                                            ))
-                                        )}
+                <>
+                    {/* Blurred Backdrop - Closes menu on click */}
+                    <div className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-30 transition-opacity" onClick={() => setIsOpen(false)}></div>
+                    
+                    {/* Floating Menu Card */}
+                    <div className="lg:hidden fixed top-[90px] right-4 left-4 max-h-[80vh] bg-white z-40 overflow-y-auto px-6 py-8 rounded-[2.5rem] shadow-2xl border border-gray-100 animate-in fade-in zoom-in duration-300">
+                        <div className="flex flex-col gap-2">
+                            {navLinks.map(name => (
+                                <div key={name} className="border-b border-gray-50 last:border-none">
+                                    <button 
+                                        onClick={() => toggleAccordion(name)}
+                                        className="w-full flex items-center justify-between text-[#0B1E3D] font-bold text-lg py-4 px-4 rounded-2xl transition-all duration-200 hover:bg-gray-50 hover:text-cyan-500 active:scale-[0.98]"
+                                    >
+                                        {name}
+                                        <svg className={`w-5 h-5 transition-transform duration-300 ${mobileAccordion === name ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                                    </button>
+                                    
+                                    {/* Accordion Content */}
+                                    <div className={`overflow-hidden transition-all duration-500 ease-in-out ${mobileAccordion === name ? 'max-h-[600px] mb-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                        <div className="pl-6 mt-2 flex flex-col gap-3 border-l-2 border-cyan-500/20">
+                                            {name === "Products" ? (
+                                                Object.keys(products).map(cat => (
+                                                    <a key={cat} href="#" className="text-gray-500 text-sm py-2 px-3 rounded-xl transition-colors hover:bg-cyan-50 hover:text-cyan-600 font-semibold">{cat}</a>
+                                                ))
+                                            ) : (
+                                                navSections[name].map(item => (
+                                                    <a key={item.title} href="#" className="text-gray-500 text-sm py-2 px-3 rounded-xl transition-colors hover:bg-cyan-50 hover:text-cyan-600">
+                                                        <span className="font-bold block text-[#0B1E3D]">{item.title}</span>
+                                                        <span className="text-[11px] opacity-70">{item.desc}</span>
+                                                    </a>
+                                                ))
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
+                        
+                        {/* Mobile Action Buttons */}
+                        <div className="mt-8 flex flex-col gap-3">
+                            <button className="w-full py-4 text-[#0B1E3D] font-bold border-2 border-[#0B1E3D]/5 rounded-2xl hover:bg-gray-50 active:scale-95 transition-all">Log In</button>
+                            <button className="w-full py-4 bg-cyan-500 text-white font-bold rounded-2xl shadow-lg shadow-cyan-200 hover:bg-black active:scale-95 transition-all">Check My Rate</button>
+                        </div>
                     </div>
-                    
-                    <div className="mt-8 flex flex-col gap-4">
-                        <button className="w-full py-4 text-[#0B1E3D] font-bold border-2 border-[#0B1E3D]/10 rounded-xl">Log In</button>
-                        <button className="w-full py-4 bg-cyan-500 text-white font-bold rounded-xl shadow-lg">Check My Rate</button>
-                    </div>
-                </div>
+                </>
             )}
         </nav>
     );
