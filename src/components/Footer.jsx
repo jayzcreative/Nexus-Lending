@@ -2,7 +2,6 @@ import React from 'react';
 import logo from '../assets/logo.png'; 
 
 export default function Footer() {
-    // Exact data sync from Navbar
     const products = {
         "Personal Loans": ["Debt Consolidation", "Wedding Loans", "Home Improvement", "Vacation Loans", "Emergency Loans"],
         "Car Loans": ["New Car Finance", "Used Car Loans", "Refinance", "Lease Buyout", "Auto Equity"],
@@ -14,6 +13,12 @@ export default function Footer() {
     const whyNexus = ["Our AI Tech", "Security", "Nexus vs Banks", "Success Stories"];
     const howItWorks = ["The 3-Step Process", "Eligibility", "Rates & Fees", "Help Center"];
     const aboutUs = ["Our Mission", "Leadership", "Careers", "Press"];
+
+    const socialLinks = [
+        { name: 'LinkedIn', svg: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> },
+        { name: 'X', svg: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.464-2.464L20 4"/></svg> },
+        { name: 'Facebook', svg: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> }
+    ];
 
     return (
         <footer className="bg-[#0B1E3D] text-white pt-24 pb-12 font-sans border-t border-white/5">
@@ -32,7 +37,14 @@ export default function Footer() {
                         <p className="text-gray-400 text-sm leading-relaxed mb-8">
                             Democratizing credit access through high-fidelity AI alternative data modeling. We provide faster, more transparent, and user-friendly lending solutions for the next generation.
                         </p>
-                         
+
+                        <div className="flex gap-4">
+                            {socialLinks.map((social) => (
+                                <button key={social.name} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-cyan-500 hover:text-white hover:border-cyan-500 transition-all cursor-pointer text-gray-400">
+                                    {social.svg}
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
                     <div className="bg-white/5 p-8 rounded-[2rem] border border-white/10 flex-1 max-w-lg">
@@ -44,69 +56,77 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* 2. MEGA LINK GRID (25 Product Links + 12 Nav Links) */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-12 gap-x-8 mb-20 border-t border-white/10 pt-16">
+                {/* 2. MEGA LINK GRID */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-16 gap-x-8 mb-20 border-t border-white/10 pt-16">
                     
-                    {/* Map through all 5 product categories */}
+                    {/* Products: Shows first 3 on mobile */}
                     {Object.entries(products).map(([category, items]) => (
                         <div key={category}>
                             <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">
                                 {category}
                             </h4>
                             <ul className="space-y-3">
-                                {items.map(item => (
-                                    <li key={item} className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">{item}</li>
+                                {items.map((item, index) => (
+                                    <li 
+                                        key={item} 
+                                        className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}
+                                    >
+                                        {item}
+                                    </li>
                                 ))}
                             </ul>
                         </div>
                     ))}
 
-                    {/* Company Section (Why Nexus) */}
+                    {/* Why Nexus: Shows first 3 on mobile */}
                     <div>
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Why Nexus?</h4>
                         <ul className="space-y-3">
-                            {whyNexus.map(link => (
-                                <li key={link} className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">{link}</li>
+                            {whyNexus.map((link, index) => (
+                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>{link}</li>
                             ))}
                         </ul>
                     </div>
 
-                    {/* Resources Section (How it works) */}
+                    {/* Resources: Shows first 3 on mobile */}
                     <div>
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Resources</h4>
                         <ul className="space-y-3">
-                            {howItWorks.map(link => (
-                                <li key={link} className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">{link}</li>
+                            {howItWorks.map((link, index) => (
+                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>{link}</li>
                             ))}
                         </ul>
                     </div>
 
-                    {/* About Section */}
+                    {/* About Us: Shows first 3 on mobile */}
                     <div>
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">About Us</h4>
                         <ul className="space-y-3">
-                            {aboutUs.map(link => (
-                                <li key={link} className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">{link}</li>
+                            {aboutUs.map((link, index) => (
+                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>{link}</li>
                             ))}
                         </ul>
                     </div>
 
-                    {/* Support & Legal (The "Important" links) */}
-                    <div className="lg:col-span-2 pt-10 lg:pt-0 border-t lg:border-t-0 border-white/5">
+                    {/* Support & Legal: All important, showing all */}
+                    <div>
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Support & Legal</h4>
-                        <div className="grid grid-cols-2 gap-4">
-                            <ul className="space-y-3">
-                                <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Contact Us</li>
-                                <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Help Center</li>
-                                <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Media Kit</li>
-                            </ul>
-                            <ul className="space-y-3">
-                                <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Terms of Use</li>
-                                <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Privacy Policy</li>
-                                <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Cookie Settings</li>
-                                <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Disclosures</li>
-                            </ul>
-                        </div>
+                        <ul className="space-y-3">
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Contact Us</li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Help Center</li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer hidden md:block">Media Kit</li>
+                        </ul>
+                    </div>
+
+                    {/* Compliance & Privacy: ONLY Terms and Privacy on mobile */}
+                    <div>
+                        <h4 className="text-cyan-400 font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Compliance & Privacy</h4>
+                        <ul className="space-y-3">
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Terms of Use</li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Privacy Policy</li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer hidden md:block">Cookie Settings</li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer hidden md:block">Disclosures</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -123,10 +143,10 @@ export default function Footer() {
                     
                     <div className="flex items-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
                         <div className="flex items-center gap-2 border-r border-white/10 pr-8">
-                             <span className="text-[10px] font-bold">FDIC MEMBER</span>
+                             <span className="text-[10px] font-bold">RESERVE BANK OF ZIMBABWE COMPLIANT</span>
                         </div>
                         <div className="flex items-center gap-2">
-                             <span className="text-[10px] font-bold">EQUAL HOUSING LENDER</span>
+                             <span className="text-[10px] font-bold uppercase tracking-wider">RBI Registered NBFC Partner (India)</span>
                         </div>
                     </div>
                 </div>
