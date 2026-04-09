@@ -137,7 +137,7 @@ export default function Footer() {
                             © 2026 NEXUS LENDING PLATFORM. ALL RIGHTS RESERVED.
                         </p>
                         <p className="text-gray-600 text-[10px] font-bold uppercase tracking-widest">
-                            PROUDLY BUILT BY <span className="text-cyan-500">JAYZTHEPLUG</span>  
+                            PROUDLY BUILT BY <span className="text-cyan-500">JAYZTHEPLUG & MANDEMCODEX</span>  
                         </p>
                     </div>
                     
