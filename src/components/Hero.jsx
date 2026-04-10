@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Hero1Image from '../assets/hero03.jpg';
-import Hero2Image from '../assets/hero2.png';
+import Hero2Image from '../assets/hero0.png';
 import Hero3Image from '../assets/hero02.jpg';
 
 export default function Hero() {
