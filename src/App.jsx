@@ -26,7 +26,7 @@ import PersonalLoans from './components/navigation/PersonalLoans';
 import CarLoans from './components/navigation/CarLoans';
 import HealthLoans from './components/navigation/HealthLoans';
 import MortgageLoans from './components/navigation/MortgageLoans';
-import StudentLoans from './components/navigation/StudentLoans';
+import StudentLoans from './components/navigation/StudentsLoans';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
