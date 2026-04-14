@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // NEW: Added Link for faster routing
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png'; 
 
 const Navbar = () => {
@@ -7,14 +7,19 @@ const Navbar = () => {
     const [activeDropdown, setActiveDropdown] = useState(null); 
     const [mobileAccordion, setMobileAccordion] = useState(null); 
 
-    // Mapping for main link destinations
+    // UPDATED: Mapping for main link destinations including your 5 new pages
     const linkPaths = {
         "Products": "/products",
+        "Personal Loans": "/personal-loans",
+        "Car Loans": "/car-loans",
+        "Health & Insurance": "/health-insurance",
+        "Mortgage": "/mortgage",
+        "Student Loans": "/student-loans",
         "Why Nexus?": "/why-nexus",
         "How it works": "/how-it-works",
         "About Us": "/about-us",
         "Login": "/login",
-        "CheckRate": "/check-rate" // NEW: Added path for loan application
+        "CheckRate": "/check-rate"
     };
 
     const products = {
@@ -85,8 +90,6 @@ const Navbar = () => {
                     <Link to={linkPaths["Login"]} className="hidden sm:block text-gray-900 hover:text-cyan-500 text-sm font-semibold px-4 py-2 transition-colors">
                         Log In
                     </Link>
-                    
-                    {/* DESKTOP CHECK RATE LINK */}
                     <Link 
                         to={linkPaths["CheckRate"]} 
                         className="px-6 py-2.5 bg-cyan-500 hover:bg-black text-white text-sm font-bold rounded-lg shadow-md shadow-sky-200 transition-all active:scale-95 flex items-center justify-center"
@@ -108,13 +111,24 @@ const Navbar = () => {
                     <div className="max-w-7xl mx-auto px-10 py-10 grid grid-cols-5 gap-8">
                         {Object.entries(products).map(([category, items]) => (
                             <div key={category}>
-                                <h3 className="text-[#0B1E3D] font-bold text-xs uppercase tracking-widest mb-4 border-l-4 border-cyan-500 pl-3 block">
+                                {/* Category title now links to its page */}
+                                <Link 
+                                    to={linkPaths[category]} 
+                                    onClick={() => setActiveDropdown(null)}
+                                    className="text-[#0B1E3D] font-bold text-xs uppercase tracking-widest mb-4 border-l-4 border-cyan-500 pl-3 block hover:text-cyan-500 transition-colors"
+                                >
                                     {category}
-                                </h3>
+                                </Link>
                                 <ul className="space-y-2">
                                     {items.map(item => (
                                         <li key={item}>
-                                            <Link to="/products" className="text-gray-500 hover:text-cyan-500 text-sm block py-1 transition-colors">{item}</Link>
+                                            <Link 
+                                                to={linkPaths[category]} // Connects sub-links to the main category page for now
+                                                onClick={() => setActiveDropdown(null)}
+                                                className="text-gray-500 hover:text-cyan-500 text-sm block py-1 transition-colors"
+                                            >
+                                                {item}
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -124,6 +138,7 @@ const Navbar = () => {
                 </div>
             )}
 
+            {/* Other Sections (Why Nexus, How it works, About Us) */}
             {activeDropdown && activeDropdown !== "Products" && (
                 <div className="hidden lg:block absolute top-[80px] left-0 w-full bg-white border-b border-gray-100 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="max-w-7xl mx-auto px-10 py-8 grid grid-cols-4 gap-6">
@@ -141,7 +156,6 @@ const Navbar = () => {
             {isOpen && (
                 <>
                     <div className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-30 transition-opacity" onClick={() => setIsOpen(false)}></div>
-                    
                     <div className="lg:hidden fixed top-[90px] right-4 left-4 max-h-[80vh] bg-white z-40 overflow-y-auto px-6 py-8 rounded-[2.5rem] shadow-2xl border border-gray-100 animate-in fade-in zoom-in duration-300">
                         <div className="flex flex-col gap-2">
                             {navLinks.map(name => (
@@ -154,21 +168,17 @@ const Navbar = () => {
                                         >
                                             {name}
                                         </Link>
-                                        <button 
-                                            onClick={() => toggleAccordion(name)}
-                                            className="py-4 px-6 rounded-r-2xl text-gray-400 hover:text-cyan-500 transition-all border-l border-gray-50"
-                                        >
+                                        <button onClick={() => toggleAccordion(name)} className="py-4 px-6 rounded-r-2xl text-gray-400 hover:text-cyan-500 transition-all border-l border-gray-50">
                                             <svg className={`w-5 h-5 transition-transform duration-300 ${mobileAccordion === name ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                                         </button>
                                     </div>
-                                    
                                     <div className={`overflow-hidden transition-all duration-500 ease-in-out ${mobileAccordion === name ? 'max-h-[800px] mb-4 opacity-100' : 'max-h-0 opacity-0'}`}>
                                         <div className="pl-6 mt-2 flex flex-col gap-3 border-l-2 border-cyan-500/20">
                                             {name === "Products" ? (
                                                 Object.keys(products).map(cat => (
                                                     <Link 
                                                         key={cat} 
-                                                        to="/products"
+                                                        to={linkPaths[cat]}
                                                         onClick={() => setIsOpen(false)}
                                                         className="text-[#0B1E3D] text-md py-3 px-4 rounded-xl bg-gray-50 font-bold transition-all"
                                                     >
@@ -187,24 +197,6 @@ const Navbar = () => {
                                     </div>
                                 </div>
                             ))}
-                        </div>
-                        
-                        <div className="mt-8 flex flex-col gap-3">
-                            <Link 
-                                to={linkPaths["Login"]} 
-                                onClick={() => setIsOpen(false)} 
-                                className="w-full py-4 text-center text-[#0B1E3D] font-bold border-2 border-[#0B1E3D]/5 rounded-2xl active:scale-95 transition-all"
-                            >
-                                Log In
-                            </Link>
-                            {/* MOBILE CHECK RATE LINK */}
-                            <Link 
-                                to={linkPaths["CheckRate"]} 
-                                onClick={() => setIsOpen(false)}
-                                className="w-full py-4 bg-cyan-500 text-white text-center font-bold rounded-2xl shadow-lg shadow-cyan-200 active:scale-95 transition-all"
-                            >
-                                Check My Rate
-                            </Link>
                         </div>
                     </div>
                 </>

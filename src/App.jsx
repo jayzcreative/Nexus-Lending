@@ -20,7 +20,13 @@ import AboutUsLinks from './components/AboutUsLinks';
 import LogIn from './components/LogIn';
 import NewUsers from './components/NewUsers';
 import CheckRate from './components/CheckRate'; 
-import BotShield from './components/BotShield'; // NEW: Import BotShield
+import BotShield from './components/BotShield';
+
+import PersonalLoans from './components/navigation/PersonalLoans';
+import CarLoans from './components/navigation/CarLoans';
+import HealthLoans from './components/navigation/HealthLoans';
+import MortgageLoans from './components/navigation/MortgageLoans';
+import StudentLoans from './components/navigation/StudentLoans';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -45,6 +51,7 @@ const AppContent = ({ user }) => {
   const location = useLocation();
   
   // Pages that hide Navbar/Footer for a clean experience
+  // Note: We keep Navbar for the specific Loan category pages (Car, Health, etc.)
   const isCleanPage = 
     location.pathname === '/login' || 
     location.pathname === '/signup' || 
@@ -62,6 +69,13 @@ const AppContent = ({ user }) => {
           <Route path="/how-it-works" element={<HowLinks />} />
           <Route path="/about-us" element={<AboutUsLinks />} />
           
+          {/* NEW: Dedicated Routes for each Loan Type */}
+          <Route path="/personal-loans" element={<PersonalLoans />} />
+          <Route path="/car-loans" element={<CarLoans />} />
+          <Route path="/health-insurance" element={<HealthLoans />} />
+          <Route path="/mortgage" element={<MortgageLoans />} />
+          <Route path="/student-loans" element={<StudentLoans />} />
+
           <Route path="/check-rate" element={<CheckRate />} />
 
           {/* Protected Auth Routes using BotShield */}
