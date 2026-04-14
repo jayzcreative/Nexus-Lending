@@ -1,13 +1,42 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { auth } from '../firebase'; 
+import { onAuthStateChanged } from 'firebase/auth';
 import Hero1Image from '../assets/hero03.jpg';
 import Hero2Image from '../assets/hero0.png';
 import Hero3Image from '../assets/hero02.jpg';
 
+const FastCounter = ({ target, duration = 1500, suffix = "M" }) => {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        let start = 0;
+        const end = parseFloat(target);
+        const increment = end / (duration / 16);
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= end) {
+                setCount(end);
+                clearInterval(timer);
+            } else {
+                setCount(start);
+            }
+        }, 16);
+        return () => clearInterval(timer);
+    }, [target, duration]);
+    return <span>{count % 1 === 0 ? count : count.toFixed(1)}{suffix}</span>;
+};
+
 export default function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const CONSTANT_MEMBERS = "2.0M";
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setIsLoggedIn(!!user);
+        });
+        return () => unsubscribe();
+    }, []);
 
     const slides = [
         {
@@ -15,7 +44,8 @@ export default function Hero() {
             title: "Smart loans, right at your fingertips.",
             desc: "Check your eligibility, get instant offers, and stay in control anytime, anywhere.",
             image: Hero1Image,
-            ctaText: "Check My Rate",
+            ctaText: isLoggedIn ? "View Dashboard" : "Get Started",
+            link: isLoggedIn ? "/dashboard" : "/login",
             trust: "Ranked #1 in Consumer Satisfaction 2026"
         },
         {
@@ -23,15 +53,17 @@ export default function Hero() {
             title: "Track your loan. Stay ahead.",
             desc: "View balances, upcoming payments, and manage everything in one simple dashboard.",
             image: Hero2Image,
-            ctaText: "View Dashboard",
+            ctaText: isLoggedIn ? "Portfolio" : "Sign In",
+            link: isLoggedIn ? "/dashboard" : "/login",
             trust: "Trusted by over 2 Million Members"
         },
         {
             id: 3,
-            title: "Approved in minutes. Celebrate faster.",
-            desc: "Get the funds you need quick decisions, zero hassle, total peace of mind.",
+            title: "Approved in minutes. Faster funding.",
+            desc: "Get the funds you need with quick decisions, zero hassle, and total peace of mind.",
             image: Hero3Image,
-            ctaText: "Get Approved Now",
+            ctaText: isLoggedIn ? "Apply Now" : "Join Nexus",
+            link: isLoggedIn ? "/dashboard" : "/signup",
             trust: "Bank-Level Security & Encryption"
         }
     ];
@@ -46,94 +78,73 @@ export default function Hero() {
 
     useEffect(() => {
         if (isPaused) return;
-        const interval = setInterval(nextSlide, 8000); // Slower delay as requested
+        const interval = setInterval(nextSlide, 8000);
         return () => clearInterval(interval);
     }, [isPaused, nextSlide]);
 
     return (
-        <section className="relative min-h-[110vh] lg:min-h-screen bg-cyan-500 overflow-hidden font-sans flex items-center pt-[80px]">
+        <section className="relative min-h-screen bg-cyan-500 overflow-hidden font-sans flex flex-col pt-[100px] pb-12">
             
             {/* Decorative Geometry */}
             <div className="absolute top-10 -right-20 w-64 h-64 border-[32px] border-white/10 rounded-full hidden xl:block"></div>
             <div className="absolute bottom-20 left-10 w-32 h-32 bg-white/5 rounded-3xl rotate-12 hidden lg:block"></div>
             
-            <div className="max-w-[1440px] mx-auto px-6 w-full relative z-10">
-                {/* Fixed Height Container to stop jumping */}
-                <div className="relative min-h-[600px] lg:min-h-[650px]">
+            <div className="max-w-[1440px] mx-auto px-6 w-full relative z-10 flex flex-col flex-grow">
+                <div className="relative h-[850px] sm:h-[700px] lg:h-[550px] xl:h-[600px]">
                     {slides.map((slide, index) => {
-                        // Page sliding logic: 
-                        // Active = centered
-                        // Previous = far left
-                        // Next/Others = far right
-                        let position = "translate-x-full opacity-0";
-                        if (index === currentSlide) {
-                            position = "translate-x-0 opacity-100 z-20";
-                        } else if (
-                            index === currentSlide - 1 || 
-                            (currentSlide === 0 && index === slides.length - 1)
-                        ) {
-                            position = "-translate-x-full opacity-0 z-10";
-                        }
-
+                        const isActive = index === currentSlide;
                         return (
                             <div
                                 key={slide.id}
-                                className={`absolute inset-0 flex flex-col lg:flex-row items-center justify-between gap-12 transition-all duration-1000 ease-[cubic-bezier(0.4, 0, 0.2, 1)] ${position}`}
+                                className={`absolute inset-0 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12 transition-all duration-1000 ease-[cubic-bezier(0.4, 0, 0.2, 1)] 
+                                ${isActive 
+                                    ? "opacity-100 translate-x-0 z-20 pointer-events-auto" 
+                                    : "opacity-0 translate-x-12 z-10 pointer-events-none"}`}
                             >
-                                {/* LEFT SIDE: Content */}
-                                <div className="lg:w-[55%] text-left">
+                                <div className="w-full lg:w-[60%] text-left">
                                     <span className="inline-block bg-[#0B1E3D] text-white font-bold text-xs lg:text-sm uppercase tracking-[0.3em] px-5 py-2 rounded-md mb-6">
                                         Nexus Lending®
                                     </span>
 
-                                    <h1 className="text-5xl lg:text-7xl xl:text-8xl font-black text-[#0B1E3D] leading-[0.95] mb-8 tracking-tighter">
+                                    <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black text-[#0B1E3D] leading-[1.1] lg:leading-[0.95] mb-6 tracking-tighter">
                                         {slide.title}
                                     </h1>
-                                    <p className="text-[#0B1E3D]/90 text-xl lg:text-2xl font-semibold mb-8 max-w-2xl leading-relaxed">
+                                    <p className="text-[#0B1E3D]/90 text-lg lg:text-2xl font-semibold mb-8 max-w-2xl leading-relaxed">
                                         {slide.desc}
                                     </p>
 
-                                    {/* STARS & TRUST BADGE - RE-ADDED */}
-                                    <div className="flex flex-wrap items-center gap-4 mb-10">
-                                        <div className="flex bg-white/15 backdrop-blur-md border border-white/20 p-2 rounded-2xl items-center gap-3">
-                                            <div className="flex bg-[#0B1E3D] px-3 py-1.5 rounded-xl items-center gap-1.5 shadow-lg">
-                                                <div className="flex text-yellow-400">
-                                                    {[...Array(4)].map((_, i) => (
-                                                        <svg key={i} className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
-                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                        </svg>
-                                                    ))}
-                                                    <svg className="w-3.5 h-3.5 fill-current opacity-50" viewBox="0 0 20 20">
-                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                    </svg>
-                                                </div>
-                                                <span className="text-white font-black text-xs">4.7/5</span>
-                                            </div>
-                                            <p className="text-[#0B1E3D] font-bold text-sm pr-2">
-                                                Trusted by <span className="text-white">{CONSTANT_MEMBERS}</span> members
-                                            </p>
-                                        </div>
-                                    </div>
+                                    {/* BUTTON GROUP */}
+                                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                                        <Link 
+                                            to={slide.link}
+                                            className="w-full sm:w-auto text-center px-8 lg:px-12 py-5 bg-[#0B1E3D] hover:bg-[#162a4d] text-white font-bold text-lg lg:text-xl rounded-2xl shadow-xl transition-all transform active:scale-95"
+                                        >
+                                            {slide.ctaText}
+                                        </Link>
 
-                                    <button className="px-14 py-6 bg-[#0B1E3D] hover:bg-[#162a4d] text-white font-bold text-xl lg:text-2xl rounded-2xl shadow-xl transition-all transform active:scale-95">
-                                        {slide.ctaText}
-                                    </button>
+                                        {/* CONNECTED: Check Rate Button */}
+                                        <Link 
+                                            to="/check-rate"
+                                            className="w-full sm:w-auto text-center px-8 lg:px-12 py-5 border-2 border-[#0B1E3D] text-[#0B1E3D] font-bold text-lg lg:text-xl rounded-2xl hover:bg-[#0B1E3D] hover:text-white transition-all transform active:scale-95 shadow-sm"
+                                        >
+                                            Check Rate
+                                        </Link>
+                                    </div>
                                 </div>
 
-                                {/* RIGHT SIDE: Image */}
-                                <div className="lg:w-[45%] flex flex-col items-center">
-                                    <div className="relative group">
-                                        <div className="absolute -inset-8 bg-white/30 rounded-[5rem] -rotate-6 transition-transform duration-1000 -z-10 blur-sm"></div>
-                                        <div className="relative z-10 bg-white p-4 lg:p-6 rounded-[3.5rem] shadow-2xl">
+                                <div className="w-full lg:w-[40%] flex flex-col items-center">
+                                    <div className="relative group w-full max-w-[480px]">
+                                        <div className="absolute -inset-4 lg:-inset-8 bg-white/30 rounded-[3rem] lg:rounded-[5rem] -rotate-3 lg:-rotate-6 transition-transform duration-1000 -z-10 blur-sm"></div>
+                                        <div className="relative z-10 bg-white p-3 lg:p-6 rounded-[2.5rem] lg:rounded-[3.5rem] shadow-2xl">
                                             <img 
                                                 src={slide.image} 
                                                 alt="Nexus App" 
-                                                className="w-full max-w-[480px] h-[350px] lg:h-[450px] object-cover rounded-[2.8rem]" 
+                                                className="w-full aspect-[4/3] lg:h-[450px] object-cover rounded-[2rem] lg:rounded-[2.8rem]" 
                                             />
                                         </div>
                                     </div>
-                                    <div className="mt-8 text-center">
-                                        <p className="text-[#0B1E3D] font-black text-sm tracking-[0.3em] uppercase opacity-80">
+                                    <div className="mt-6 lg:mt-8 text-center">
+                                        <p className="text-[#0B1E3D] font-black text-[10px] lg:text-sm tracking-[0.2em] lg:tracking-[0.3em] uppercase opacity-80">
                                             {slide.trust}
                                         </p>
                                     </div>
@@ -144,31 +155,52 @@ export default function Hero() {
                 </div>
 
                 {/* CONTROLS */}
-                <div className="flex flex-wrap items-center gap-6 mt-16 relative z-30">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-8 mt-12 relative z-30">
                     <div className="flex items-center gap-4">
                         <button 
                             onClick={() => setIsPaused(!isPaused)} 
-                            className="w-14 h-14 flex items-center justify-center rounded-2xl border-2 border-[#0B1E3D]/20 text-[#0B1E3D] hover:bg-white/20 transition-all shadow-sm"
+                            className="w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center rounded-2xl border-2 border-[#0B1E3D]/20 text-[#0B1E3D] hover:bg-white/20 transition-all shadow-sm"
                         >
                             {isPaused ? 
-                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> : 
-                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                                <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> : 
+                                <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
                             }
                         </button>
-                        <div className="flex bg-[#0B1E3D]/5 p-1.5 rounded-2xl backdrop-blur-sm shadow-inner">
-                            <button onClick={prevSlide} className="p-4 text-[#0B1E3D] hover:bg-white rounded-xl transition-all font-bold">←</button>
-                            <button onClick={nextSlide} className="p-4 text-[#0B1E3D] hover:bg-white rounded-xl transition-all font-bold">→</button>
+                        <div className="flex bg-[#0B1E3D]/5 p-1 rounded-2xl backdrop-blur-sm shadow-inner">
+                            <button onClick={prevSlide} className="px-4 py-3 text-[#0B1E3D] hover:bg-white rounded-xl transition-all font-bold">←</button>
+                            <button onClick={nextSlide} className="px-4 py-3 text-[#0B1E3D] hover:bg-white rounded-xl transition-all font-bold">→</button>
+                        </div>
+                        <div className="flex gap-1.5 ml-2">
+                            {slides.map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setCurrentSlide(i)}
+                                    className={`h-1 rounded-full transition-all duration-500 ${currentSlide === i ? 'w-6 bg-[#0B1E3D]' : 'w-1.5 bg-[#0B1E3D]/20'}`}
+                                />
+                            ))}
                         </div>
                     </div>
-                    
-                    <div className="flex gap-2">
-                        {slides.map((_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => setCurrentSlide(i)}
-                                className={`h-1.5 rounded-full transition-all duration-500 ${currentSlide === i ? 'w-8 bg-[#0B1E3D]' : 'w-2 bg-[#0B1E3D]/20'}`}
-                            />
-                        ))}
+                </div>
+
+                {/* STATS BAR */}
+                <div className="mt-16 lg:mt-20 pt-10 border-t border-white/20 grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-4 text-center">
+                    <div className="flex flex-col items-center lg:items-start">
+                        <h2 className="text-5xl lg:text-7xl font-black text-[#0B1E3D]">
+                            <FastCounter target="2.0" suffix="M" />
+                        </h2>
+                        <p className="text-[#0B1E3D] font-bold uppercase tracking-widest text-xs mt-2 opacity-70">Active Members</p>
+                    </div>
+                    <div className="flex flex-col items-center lg:items-start">
+                        <h2 className="text-5xl lg:text-7xl font-black text-[#0B1E3D]">
+                            <FastCounter target="850" suffix="k+" />
+                        </h2>
+                        <p className="text-[#0B1E3D] font-bold uppercase tracking-widest text-xs mt-2 opacity-70">Funded Loans</p>
+                    </div>
+                    <div className="flex flex-col items-center lg:items-start">
+                        <h2 className="text-5xl lg:text-7xl font-black text-[#0B1E3D]">
+                            <FastCounter target="12" suffix="+" />
+                        </h2>
+                        <p className="text-[#0B1E3D] font-bold uppercase tracking-widest text-xs mt-2 opacity-70">Regions Covered</p>
                     </div>
                 </div>
             </div>

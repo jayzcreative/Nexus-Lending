@@ -42,21 +42,16 @@ const productData = [
 ];
 
 export default function ProductsLinks() {
-    const gridRef = useRef(null); // Ref for the whole grid (Desktop)
-    const firstCardRef = useRef(null); // Ref for the 1st card (Mobile)
+    const gridRef = useRef(null); 
+    const firstCardRef = useRef(null); 
     const [isHighlighted, setIsHighlighted] = useState(false);
 
     const handleExploreClick = () => {
         const isMobile = window.innerWidth < 768;
-        
-        // 1. Determine target and scroll
         const target = isMobile ? firstCardRef.current : gridRef.current;
-        target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
 
-        // 2. Trigger the highlight
         setIsHighlighted(true);
-
-        // 3. Remove highlight
         setTimeout(() => {
             setIsHighlighted(false);
         }, 2000);
@@ -65,7 +60,7 @@ export default function ProductsLinks() {
     return (
         <div className="min-h-screen bg-gray-50 font-sans flex flex-col">
             
-            <main className="flex-grow max-w-[1440px] mx-auto px-6 pt-32 pb-20">
+            <main className="flex-grow max-w-[1440px] mx-auto px-6 pt-32 pb-20 w-full">
                 {/* 1. Header Hero Card */}
                 <div className="w-full bg-[#0B1E3D] rounded-3xl p-10 mb-12 shadow-2xl border-l-[12px] border-cyan-500 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-full bg-gradient-to-l from-cyan-500/10 to-transparent"></div>
@@ -75,18 +70,18 @@ export default function ProductsLinks() {
                     </p>
                 </div>
 
-                {/* 2. Optimized 5-Column Grid */}
+                {/* 2. Responsive Scrollable Container */}
                 <div 
                     ref={gridRef}
-                    className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-24 transition-all duration-700 rounded-[3rem] p-2 ${
+                    className={`flex overflow-x-auto pb-8 snap-x snap-mandatory md:snap-none md:grid md:grid-cols-2 lg:grid-cols-5 gap-6 mb-24 transition-all duration-700 rounded-[3rem] p-2 no-scrollbar ${
                         isHighlighted ? 'md:ring-8 md:ring-cyan-400 md:ring-offset-8 md:bg-cyan-50/50' : 'ring-0'
                     }`}
                 >
                     {productData.map((item, index) => (
                         <div 
                             key={item.category} 
-                            ref={index === 0 ? firstCardRef : null} // Attach ref only to the first card
-                            className={`bg-white rounded-[2.5rem] p-8 shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group relative ${
+                            ref={index === 0 ? firstCardRef : null}
+                            className={`flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-auto snap-center bg-white rounded-[2.5rem] p-8 shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group relative ${
                                 isHighlighted && index === 0 ? 'ring-4 ring-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.5)] scale-105 md:scale-100 md:ring-0' : ''
                             }`}
                         >
@@ -96,10 +91,12 @@ export default function ProductsLinks() {
                             <h3 className="text-[#0B1E3D] font-black text-xl mb-2">{item.category}</h3>
                             <p className="text-gray-400 text-[11px] mb-6 leading-relaxed uppercase tracking-wider font-bold h-12">{item.desc}</p>
                             <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-8"></div>
-                            <ul className="w-full space-y-4">
+                            
+                            {/* Updated List for better tap targets */}
+                            <ul className="w-full space-y-2">
                                 {item.links.map((link) => (
                                     <li key={link}>
-                                        <a href="#" className="text-gray-600 hover:text-cyan-600 text-[13px] font-bold flex justify-between items-center group/item transition-colors">
+                                        <a href="#" className="text-gray-600 hover:text-cyan-600 text-base py-2 font-bold flex justify-between items-center group/item transition-colors">
                                             {link}
                                             <span className="text-cyan-400 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all font-black">→</span>
                                         </a>

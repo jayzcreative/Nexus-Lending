@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, Shield, Globe, Award, Zap, Heart } from 'lucide-react';
+import { Target, Shield, Globe, Award, Zap, Heart, MessageSquare, ChevronDown } from 'lucide-react';
 import companyImg from '../assets/company.jpg';
 import dataImg from '../assets/data.jpg';
 import founderImg from '../assets/founder.jpg';
@@ -28,6 +28,25 @@ export default function AboutUsLinks() {
         }
     ];
 
+    const impacts = [
+        {
+            name: "Chenai M.",
+            biz: "Tech Startup Founder",
+            story: "Nexus saw my potential when traditional banks only saw my lack of collateral. They funded my expansion in 24 hours."
+        },
+        {
+            name: "Tinashe K.",
+            biz: "Final Year Student",
+            story: "The AI score took my part-time earnings into account, allowing me to secure a laptop loan for my final projects."
+        }
+    ];
+
+    const aboutFaqs = [
+        { q: "Why did you start in Harare?", a: "We saw that local brilliance was being held back by outdated paperwork. We wanted to build a solution from home, for home." },
+        { q: "Are you a bank?", a: "We are an AI-first fintech partner. We work alongside the financial ecosystem to provide faster access to capital." },
+        { q: "How do you protect my data?", a: "We use bank-grade AES-256 encryption. Your 'Financial DNA' is seen by our AI, but never sold to third parties." }
+    ];
+
     const milestones = [
         { year: "2024", event: "The Spark in Harare" },
         { year: "2025", event: "Nexus AI Goes Live" },
@@ -41,10 +60,10 @@ export default function AboutUsLinks() {
     ];
 
     return (
-        <div className="pt-32 pb-20 bg-white font-sans">
+        <div className="pt-32 pb-20 bg-white font-sans selection:bg-cyan-100">
             <div className="max-w-7xl mx-auto px-6">
                 
-                {/* Section 1: Hero + Human Mission */}
+                {/* Section 1: Hero */}
                 <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
                     <div>
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-50 text-cyan-600 rounded-full text-sm font-bold mb-6">
@@ -55,7 +74,7 @@ export default function AboutUsLinks() {
                             <span className="text-cyan-500">A partner in your growth.</span>
                         </h1>
                         <p className="text-xl text-slate-500 leading-relaxed mb-8">
-                            We started Nexus in Harare,Zimbabwe with a simple observation: the current banking system doesn't see the full picture. We built this to help the entrepreneurs, the dreamers, and the doers get the support they actually need, right when they need it.
+                            We started Nexus in Harare with a simple observation: the banking system wasn't built for the modern earner. We built this to help the entrepreneurs and the doers get the support they deserve.
                         </p>
                         
                         <div className="grid grid-cols-3 gap-4 border-t border-slate-100 pt-8">
@@ -72,14 +91,12 @@ export default function AboutUsLinks() {
                         <div className="absolute -top-4 -right-4 w-64 h-64 bg-cyan-100 rounded-full blur-3xl opacity-40"></div>
                         <img 
                             src={companyImg} 
-                            alt="Our Team Workspace" 
+                            alt="Our Workspace" 
                             className="rounded-[2.5rem] shadow-2xl relative z-10 w-full h-[500px] object-cover"
                         />
-                        
-                        {/* Updated Location Badge */}
                         <div className="absolute -bottom-6 -left-6 bg-[#0B1E3D] text-white p-5 rounded-3xl z-20 shadow-xl border border-white/10 hidden md:flex items-center gap-4">
                             <div className="bg-cyan-500/20 p-3 rounded-2xl text-cyan-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <Globe size={24} />
                             </div>
                             <div>
                                 <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-1">Our Base</p>
@@ -89,20 +106,20 @@ export default function AboutUsLinks() {
                     </div>
                 </div>
 
-                {/* Section 2: Human Values */}
-                <div className="bg-[#0B1E3D] rounded-[3rem] p-12 lg:p-20 text-white mb-32 overflow-hidden relative">
+                {/* Section 2: Values */}
+                <div className="bg-[#0B1E3D] rounded-[3rem] p-12 lg:p-20 text-white mb-32 relative overflow-hidden">
                     <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
                         <div className="order-2 lg:order-1">
                             <img 
                                 src={dataImg} 
-                                alt="Our Technology" 
+                                alt="Technology" 
                                 className="rounded-3xl opacity-90 border border-white/10 shadow-2xl"
                             />
                         </div>
                         <div className="order-1 lg:order-2">
                             <h2 className="text-4xl font-bold mb-6 italic">The Heart of the Tech</h2>
                             <p className="text-slate-300 text-lg mb-8 leading-relaxed">
-                                Our engine does the heavy lifting so you don't have to. We analyze your real-time cash flow and business health to give you a fair shot, regardless of your history.
+                                Our engine handles the complexity so you can focus on your dreams. We analyze trajectory, not just history.
                             </p>
                             <div className="space-y-6">
                                 {values.map((v, i) => (
@@ -119,35 +136,36 @@ export default function AboutUsLinks() {
                             </div>
                         </div>
                     </div>
-                    <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none"></div>
                 </div>
 
-                {/* Section 3: Leadership */}
+                {/* Section 3: Impact (The People We Helped) */}
+                <div className="mb-32">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl font-black text-[#0B1E3D] mb-4">Lives Impacted</h2>
+                        <p className="text-slate-500">Real stories from our Nexus community.</p>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {impacts.map((story, i) => (
+                            <div key={i} className="p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:shadow-xl transition-shadow relative overflow-hidden">
+                                <MessageSquare className="absolute -top-4 -right-4 w-24 h-24 text-cyan-500/5 rotate-12" />
+                                <p className="text-slate-600 text-lg italic mb-8 relative z-10">"{story.story}"</p>
+                                <div>
+                                    <h4 className="font-black text-[#0B1E3D]">{story.name}</h4>
+                                    <p className="text-cyan-600 text-sm font-bold uppercase tracking-widest">{story.biz}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Section 4: Leadership */}
                 <div className="text-center mb-32">
-                    <h2 className="text-4xl font-black text-[#0B1E3D] mb-4">The People Behind the Code</h2>
-                    <p className="text-slate-500 max-w-2xl mx-auto mb-16">
-                        We are a mix of engineers, dreamers, and finance geeks working together to build something better.
-                    </p>
-                    
+                    <h2 className="text-4xl font-black text-[#0B1E3D] mb-16">The People Behind the Code</h2>
                     <div className="grid md:grid-cols-3 gap-12">
                         {team.map((member, i) => (
-                            <div key={i} className="group">
-                                <div className="relative mb-6 inline-block">
-                                    <div className="w-48 h-48 rounded-full overflow-hidden border-8 border-slate-50 relative z-10 shadow-xl bg-slate-100">
-                                        <img 
-                                            src={member.img} 
-                                            alt={member.name} 
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
-                                    </div>
-                                    <a 
-                                        href={member.linkedin} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        className="absolute bottom-2 right-2 bg-white p-3 rounded-full shadow-lg z-20 text-[#0077B5] hover:bg-[#0B1E3D] hover:text-white transition-all duration-300"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                                    </a>
+                            <div key={i} className="group text-center">
+                                <div className="w-48 h-48 rounded-full overflow-hidden border-8 border-slate-50 shadow-xl mx-auto mb-6">
+                                    <img src={member.img} alt={member.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                 </div>
                                 <h4 className="text-2xl font-bold text-[#0B1E3D]">{member.name}</h4>
                                 <p className="text-cyan-600 font-medium">{member.role}</p>
@@ -156,13 +174,28 @@ export default function AboutUsLinks() {
                     </div>
                 </div>
 
-                {/* Section 4: Final CTA */}
-                <div className="bg-[#f8fafc] rounded-[2.5rem] p-12 text-center border border-slate-100">
+                {/* Section 5: Transparency Questions */}
+                <div className="mb-32 max-w-3xl mx-auto">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-black text-[#0B1E3D]">Transparency is Key</h2>
+                    </div>
+                    <div className="space-y-4">
+                        {aboutFaqs.map((faq, i) => (
+                            <div key={i} className="border-b border-slate-100 pb-6">
+                                <div className="flex justify-between items-center cursor-pointer group">
+                                    <h4 className="font-bold text-[#0B1E3D] group-hover:text-cyan-500 transition-colors">{faq.q}</h4>
+                                    <ChevronDown size={18} className="text-slate-300" />
+                                </div>
+                                <p className="mt-3 text-slate-500 text-sm leading-relaxed">{faq.a}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Final CTA */}
+                <div className="bg-slate-50 rounded-[2.5rem] p-12 text-center border border-slate-100">
                     <h3 className="text-3xl font-black text-[#0B1E3D] mb-4">Let's build your future together.</h3>
-                    <p className="text-slate-500 mb-8 max-w-xl mx-auto italic">
-                        "Your growth is our only metric for success."
-                    </p>
-                    <button className="bg-[#0B1E3D] text-white px-10 py-4 rounded-full font-bold hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 active:scale-95">
+                    <button className="bg-[#0B1E3D] text-white px-10 py-4 rounded-full font-bold hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                         Get Started
                     </button>
                 </div>

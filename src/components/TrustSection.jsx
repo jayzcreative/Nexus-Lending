@@ -53,12 +53,7 @@ export default function TrustSection() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24">
-                    {/* Pillar 1: AI Security - Slides from Left */}
-                    <div 
-                        data-aos="fade-right" 
-                        data-aos-delay="100"
-                        className="p-10 rounded-[3rem] bg-cyan-50 border border-cyan-100 hover:shadow-xl transition-all group"
-                    >
+                    <div data-aos="fade-right" data-aos-delay="100" className="p-10 rounded-[3rem] bg-cyan-50 border border-cyan-100 hover:shadow-xl transition-all group">
                         <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">🤖</div>
                         <h3 className="text-2xl font-bold text-[#0B1E3D] mb-4">Autonomous Defense</h3>
                         <p className="text-gray-600 leading-relaxed font-medium">
@@ -66,12 +61,7 @@ export default function TrustSection() {
                         </p>
                     </div>
 
-                    {/* Pillar 2: Transparency - Fades Up */}
-                    <div 
-                        data-aos="fade-up" 
-                        data-aos-delay="300"
-                        className="p-10 rounded-[3rem] bg-[#0B1E3D] text-white hover:shadow-xl transition-all group"
-                    >
+                    <div data-aos="fade-up" data-aos-delay="300" className="p-10 rounded-[3rem] bg-[#0B1E3D] text-white hover:shadow-xl transition-all group">
                         <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">💎</div>
                         <h3 className="text-2xl font-bold mb-4">Pure Transparency</h3>
                         <p className="text-white/80 leading-relaxed font-medium">
@@ -79,12 +69,7 @@ export default function TrustSection() {
                         </p>
                     </div>
 
-                    {/* Pillar 3: Speed - Slides from Right */}
-                    <div 
-                        data-aos="fade-left" 
-                        data-aos-delay="500"
-                        className="p-10 rounded-[3rem] bg-cyan-500 text-white hover:shadow-xl transition-all group"
-                    >
+                    <div data-aos="fade-left" data-aos-delay="500" className="p-10 rounded-[3rem] bg-cyan-500 text-white hover:shadow-xl transition-all group">
                         <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">⚡</div>
                         <h3 className="text-2xl font-bold mb-4">Instant Synergy</h3>
                         <p className="text-white/90 leading-relaxed font-medium">
@@ -122,14 +107,14 @@ export default function TrustSection() {
                             <p className="text-gray-500 text-lg font-bold uppercase tracking-widest">Active Community Stories</p>
                         </div>
 
-                        {/* Review Grid - Staggered Slide In */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+                        {/* --- UPDATED PART: Horizontal Scroll on Small Screens --- */}
+                        <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 pb-8 md:pb-0 snap-x snap-mandatory scrollbar-hide">
                             {socialFeed.map((post, index) => (
                                 <div 
                                     key={index} 
                                     data-aos="fade-up"
                                     data-aos-delay={index * 200}
-                                    className="bg-white p-8 rounded-[2.5rem] border-2 border-transparent hover:border-cyan-400 transition-all duration-300 group shadow-sm hover:shadow-xl flex flex-col h-full"
+                                    className="min-w-[85%] md:min-w-0 snap-center bg-white p-8 rounded-[2.5rem] border-2 border-transparent hover:border-cyan-400 transition-all duration-300 group shadow-sm hover:shadow-xl flex flex-col h-full"
                                 >
                                     <div className="flex justify-between items-center mb-6">
                                         <div className="flex gap-0.5 text-green-500">

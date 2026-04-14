@@ -1,12 +1,12 @@
 import React from 'react';
-import { ShieldCheck, Cpu, Zap, CreditCard, BarChart3, Lock, CheckCircle } from 'lucide-react';
-import whyImage from '../assets/whynexus.jpg'; // Ensure this path is correct for your project
+import { ShieldCheck, Cpu, Zap, CreditCard, BarChart3, Lock, CheckCircle, HelpCircle, ChevronDown } from 'lucide-react';
+import whyImage from '../assets/whynexus.jpg'; 
 
 export default function WhyNexusLinks() {
     const advantages = [
         {
             title: "AI-Powered Precision",
-            desc: "Our proprietary models analyze over 10,000 data points beyond just a FICO score to find your true potential.",
+            desc: "Our proprietary models analyze over 10,000 data points to find your true potential, not just a score.",
             icon: <Cpu className="w-8 h-8 text-cyan-500" />
         },
         {
@@ -15,8 +15,8 @@ export default function WhyNexusLinks() {
             icon: <Lock className="w-8 h-8 text-cyan-500" />
         },
         {
-            title: "Lightning Decisions",
-            desc: "Automated underwriting fueled by machine learning gives you a firm offer in under 60 seconds.",
+            title: "Fair & Fast Decisions",
+            desc: "Our machine learning gives you a firm offer in under 60 seconds. No waiting, no bias.",
             icon: <Zap className="w-8 h-8 text-cyan-500" />
         },
         {
@@ -26,6 +26,12 @@ export default function WhyNexusLinks() {
         }
     ];
 
+    const faqs = [
+        { q: "Is checking my rate going to hurt my credit score?", a: "No. We use a soft inquiry that doesn't affect your traditional credit score at all." },
+        { q: "How do you decide who to approve?", a: "We look at your real-time cash flow and career trajectory. We value your future, not just your past." },
+        { q: "Is Nexus available for small businesses in Harare?", a: "Yes! We are specifically designed to help entrepreneurs and modern earners across Zimbabwe grow." }
+    ];
+
     return (
         <div className="pt-32 pb-20 bg-slate-50 font-sans selection:bg-cyan-100">
             <div className="max-w-7xl mx-auto px-6">
@@ -33,20 +39,23 @@ export default function WhyNexusLinks() {
                 {/* Hero Section */}
                 <div className="text-center mb-20">
                     <div className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-cyan-600 uppercase bg-cyan-100 rounded-full">
-                        The Future of Credit
+                        Built for Harare. Built for the Future.
                     </div>
                     <h1 className="text-5xl md:text-6xl font-black text-[#0B1E3D] mb-6 tracking-tight">
                         Built for the <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Next Generation.</span>
                     </h1>
                     <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                        Nexus isn't just a lender. We're an AI-first financial ecosystem designed to approve more people, faster, with lower rates than traditional banks.
+                        Nexus isn't just a lender. We're a human-first financial ecosystem designed to approve more people, faster, based on where they're going not where they've been.
                     </p>
                 </div>
 
-                {/* Advantage Grid with Hover Effects */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+                {/* Advantage Grid - Updated for Horizontal Mobile Scroll */}
+                <div className="flex overflow-x-auto pb-10 snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24 no-scrollbar">
                     {advantages.map((item, idx) => (
-                        <div key={idx} className="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-100 transition-all duration-500 ease-out">
+                        <div 
+                            key={idx} 
+                            className="flex-shrink-0 w-[85vw] md:w-auto snap-center group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-100 transition-all duration-500 ease-out"
+                        >
                             <div className="mb-6 p-3 bg-slate-50 w-fit rounded-2xl group-hover:scale-110 group-hover:bg-cyan-50 transition-transform duration-300">
                                 {item.icon}
                             </div>
@@ -72,9 +81,9 @@ export default function WhyNexusLinks() {
                             </div>
                             <div className="space-y-6">
                                 {[
-                                    { label: "Alternative Data", val: "94%" },
+                                    { label: "Alternative Data Points", val: "94%" },
                                     { label: "Fraud Risk Factor", val: "0.02%" },
-                                    { label: "Repayment Probability", val: "98.7%" }
+                                    { label: "Growth Potential", val: "98.7%" }
                                 ].map((stat, i) => (
                                     <div key={i}>
                                         <div className="flex justify-between text-sm mb-2">
@@ -95,15 +104,22 @@ export default function WhyNexusLinks() {
                     <div>
                         <h2 className="text-4xl font-black text-[#0B1E3D] mb-6">How our Intelligence works for you.</h2>
                         <p className="text-slate-600 mb-8 leading-relaxed">
-                            While banks only look at your past, our AI looks at your trajectory. We use machine learning to analyze income stability, education, and career growth to give you the credit you actually deserve.
+                            While banks only look at your past, our AI looks at your trajectory. We analyze income stability and career growth to give you the credit you actually deserve. We're here to say "yes" when the paperwork says "maybe."
                         </p>
-                        <button className="px-8 py-4 bg-[#0B1E3D] text-white rounded-2xl font-bold hover:bg-cyan-600 transition-colors shadow-lg shadow-slate-200">
-                            Learn About Our Tech
-                        </button>
+                        <div className="flex gap-8 border-t border-slate-200 pt-8">
+                            <div>
+                                <p className="text-3xl font-black text-[#0B1E3D]">120k+</p>
+                                <p className="text-xs text-slate-400 uppercase font-bold tracking-widest">Active Users</p>
+                            </div>
+                            <div>
+                                <p className="text-3xl font-black text-[#0B1E3D]">$0</p>
+                                <p className="text-xs text-slate-400 uppercase font-bold tracking-widest">Hidden Fees</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                {/* Trust Content + Circle Image Section */}
+                {/* Transparency Section */}
                 <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
                     <div className="order-2 lg:order-1">
                         <h2 className="text-4xl font-black text-[#0B1E3D] mb-8 leading-tight">
@@ -111,26 +127,20 @@ export default function WhyNexusLinks() {
                             <span className="text-cyan-500">Total Transparency.</span>
                         </h2>
                         <div className="space-y-6">
-                            <div className="flex gap-4">
-                                <CheckCircle className="text-cyan-500 shrink-0" size={24} />
-                                <p className="text-slate-600"><strong>Bias-Free Lending:</strong> Our AI removes human prejudice, focusing purely on your financial behavior and potential.</p>
-                            </div>
-                            <div className="flex gap-4">
-                                <CheckCircle className="text-cyan-500 shrink-0" size={24} />
-                                <p className="text-slate-600"><strong>Data Sovereignty:</strong> You own your data. We use it only to secure your better rates, protected by multi-layer encryption.</p>
-                            </div>
-                            <div className="flex gap-4">
-                                <CheckCircle className="text-cyan-500 shrink-0" size={24} />
-                                <p className="text-slate-600"><strong>Real-Time Auditing:</strong> Every automated decision is cross-checked by our security protocols to ensure 100% accuracy.</p>
-                            </div>
+                            {[
+                                { title: "Bias-Free Lending", body: "Our AI removes human prejudice, focusing purely on your financial potential." },
+                                { title: "Data Sovereignty", body: "You own your data. We use it only to secure your better rates." },
+                                { title: "Real-Time Trust", body: "Every automated decision is cross-checked by our security protocols." }
+                            ].map((v, i) => (
+                                <div key={i} className="flex gap-4">
+                                    <CheckCircle className="text-cyan-500 shrink-0" size={24} />
+                                    <p className="text-slate-600"><strong>{v.title}:</strong> {v.body}</p>
+                                </div>
+                            ))}
                         </div>
-                        <p className="mt-8 text-slate-500 italic">
-                            "Nexus was founded to fix the broken trust between traditional banks and modern earners."
-                        </p>
                     </div>
                     
                     <div className="order-1 lg:order-2 flex justify-center">
-                        {/* Image is now a perfect circle with no effects */}
                         <div className="w-full max-w-[400px] aspect-square rounded-full overflow-hidden border-8 border-white shadow-xl">
                             <img 
                                 src={whyImage} 
@@ -141,21 +151,39 @@ export default function WhyNexusLinks() {
                     </div>
                 </div>
 
-                {/* Comparison Card (Glassmorphism) */}
+                {/* FAQ Section */}
+                <div className="mb-32">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-black text-[#0B1E3D]">Common Questions</h2>
+                    </div>
+                    <div className="max-w-3xl mx-auto space-y-4">
+                        {faqs.map((f, i) => (
+                            <div key={i} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                                <div className="flex items-center justify-between cursor-pointer group">
+                                    <h4 className="font-bold text-[#0B1E3D] group-hover:text-cyan-600 transition-colors">{f.q}</h4>
+                                    <ChevronDown size={20} className="text-slate-400" />
+                                </div>
+                                <p className="mt-4 text-slate-500 text-sm leading-relaxed">{f.a}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Comparison Card */}
                 <div className="bg-[#0B1E3D] rounded-[3.5rem] p-8 md:p-16 text-white overflow-hidden relative shadow-2xl shadow-blue-900/20">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px]"></div>
                     <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
                         <div>
                             <h2 className="text-4xl font-bold mb-6">Nexus vs. The Rest</h2>
-                            <p className="text-cyan-100/70 mb-10 text-lg">We’ve removed the friction, the paperwork, and the bias. Lending is now a digital-first experience.</p>
+                            <p className="text-cyan-100/70 mb-10 text-lg">We’ve removed the friction, the paperwork, and the bias. Lending is now digital-first.</p>
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="p-6 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm">
                                     <p className="text-cyan-400 text-3xl font-black mb-1">10x</p>
                                     <p className="text-xs uppercase tracking-widest font-bold">Faster Decisions</p>
                                 </div>
                                 <div className="p-6 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm">
-                                    <p className="text-cyan-400 text-3xl font-black mb-1">0</p>
-                                    <p className="text-xs uppercase tracking-widest font-bold">Hidden Fees</p>
+                                    <p className="text-cyan-400 text-3xl font-black mb-1">99%</p>
+                                    <p className="text-xs uppercase tracking-widest font-bold">Data Security</p>
                                 </div>
                             </div>
                         </div>

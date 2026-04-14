@@ -1,5 +1,5 @@
 import React from 'react';
-import { MousePointerClick, Activity, Landmark, ShieldCheck, Zap } from 'lucide-react';
+import { MousePointerClick, Activity, Landmark, ShieldCheck, Zap, ChevronDown, Rocket } from 'lucide-react';
 import howImage from '../assets/how.jpg'; 
 
 export default function HowLinks() {
@@ -24,7 +24,20 @@ export default function HowLinks() {
             desc: "Review your offer and sign digitally. Funds are typically sent within 24 hours.",
             icon: <Landmark className="w-6 h-6" />,
             link: "#"
+        },
+        {
+            number: "04",
+            title: "Grow with Nexus",
+            desc: "Use our dashboard to track your growth. Consistent repayment unlocks even better rates.",
+            icon: <Rocket className="w-6 h-6" />,
+            link: "#"
         }
+    ];
+
+    const processFaqs = [
+        { q: "What specific accounts do I need to connect?", a: "Most users connect their primary business or personal bank account. This allows our AI to see your cash flow without requiring physical bank statements." },
+        { q: "How long until the money hits my account?", a: "Once you sign your digital agreement, funds are usually dispatched immediately and land in your account within 1 business day." },
+        { q: "Is there a penalty for paying back early?", a: "Never. We believe in your growth if you're ready to clear your balance early, we won't charge you extra for it." }
     ];
 
     return (
@@ -56,11 +69,10 @@ export default function HowLinks() {
                     </div>
 
                     {/* Step Cards */}
-                    <div className="space-y-12 order-1 lg:order-2">
+                    <div className="space-y-8 order-1 lg:order-2">
                         {steps.map((step, idx) => (
-                            <a 
+                            <div 
                                 key={idx} 
-                                href={step.link} 
                                 className="group flex gap-8 p-6 rounded-3xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-100"
                             >
                                 <div className="flex-shrink-0 w-16 h-16 bg-cyan-500 text-white rounded-2xl flex items-center justify-center font-black text-2xl shadow-lg shadow-cyan-100">
@@ -73,7 +85,26 @@ export default function HowLinks() {
                                     </div>
                                     <p className="text-slate-500 leading-relaxed">{step.desc}</p>
                                 </div>
-                            </a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* FAQ Section for "How it Works" */}
+                <div className="mb-32 bg-slate-50 rounded-[3rem] p-8 md:p-16 border border-slate-100">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-black text-[#0B1E3D]">Process Deep-Dive</h2>
+                        <p className="text-slate-500 mt-2">Everything you need to know about the journey.</p>
+                    </div>
+                    <div className="max-w-3xl mx-auto space-y-4">
+                        {processFaqs.map((faq, i) => (
+                            <div key={i} className="bg-white p-6 rounded-3xl border border-slate-200/50">
+                                <div className="flex items-center justify-between group cursor-pointer">
+                                    <h4 className="font-bold text-[#0B1E3D] group-hover:text-cyan-600 transition-colors">{faq.q}</h4>
+                                    <ChevronDown size={20} className="text-slate-400" />
+                                </div>
+                                <p className="mt-4 text-slate-500 text-sm leading-relaxed">{faq.a}</p>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -86,7 +117,7 @@ export default function HowLinks() {
                             <h3 className="text-2xl font-bold mb-4">Bank-Grade Privacy</h3>
                             <p className="text-slate-400 mb-8">Your data is encrypted with AES-256 protocols. We never sell your information it's used only to get you the best possible rate.</p>
                         </div>
-                        <a href="#" className="w-fit py-3 px-6 bg-white/10 hover:bg-white/20 rounded-xl font-bold transition-colors">Security Specs</a>
+                        <button className="w-fit py-3 px-6 bg-white/10 hover:bg-white/20 rounded-xl font-bold transition-colors">Security Specs</button>
                     </div>
                     
                     <div className="bg-cyan-50 rounded-[2.5rem] p-10 flex flex-col justify-between border border-cyan-100">
@@ -95,13 +126,14 @@ export default function HowLinks() {
                             <h3 className="text-2xl font-bold text-[#0B1E3D] mb-4">Instant Intelligence</h3>
                             <p className="text-slate-500 mb-8">Our proprietary AI models analyze cash flow and career growth to approve users that traditional systems might overlook.</p>
                         </div>
-                        <a href="#" className="w-fit py-3 px-6 bg-cyan-500 text-white rounded-xl font-bold hover:bg-black transition-colors">Our Tech Stack</a>
+                        <button className="w-fit py-3 px-6 bg-cyan-500 text-white rounded-xl font-bold hover:bg-black transition-colors">Our Tech Stack</button>
                     </div>
                 </div>
 
-                {/* Simple Footer Link placeholder */}
+                {/* Support Footer */}
                 <div className="text-center py-20 border-t border-slate-100">
-                    <h4 className="text-[#0B1E3D] font-bold mb-4">Have questions?</h4>
+                    <h4 className="text-[#0B1E3D] font-bold mb-4 uppercase tracking-widest text-sm">Need a human?</h4>
+                    <p className="text-slate-500 mb-8 max-w-md mx-auto">If you're stuck at any step, our support team in Harare is available 24/7 via live chat.</p>
                     <div className="flex justify-center gap-8">
                         <a href="#" className="text-slate-400 hover:text-cyan-500 font-semibold text-sm transition-colors">Help Center</a>
                         <a href="#" className="text-slate-400 hover:text-cyan-500 font-semibold text-sm transition-colors">Rates & Fees</a>
