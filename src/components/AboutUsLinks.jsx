@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Added this import
 import { Target, Shield, Globe, Award, Zap, Heart, MessageSquare, ChevronDown } from 'lucide-react';
 import companyImg from '../assets/company.jpg';
 import dataImg from '../assets/data.jpg';
@@ -138,7 +139,7 @@ export default function AboutUsLinks() {
                     </div>
                 </div>
 
-                {/* Section 3: Impact (The People We Helped) */}
+                {/* Section 3: Impact */}
                 <div className="mb-32">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl font-black text-[#0B1E3D] mb-4">Lives Impacted</h2>
@@ -194,10 +195,13 @@ export default function AboutUsLinks() {
 
                 {/* Final CTA */}
                 <div className="bg-slate-50 rounded-[2.5rem] p-12 text-center border border-slate-100">
-                    <h3 className="text-3xl font-black text-[#0B1E3D] mb-4">Let's build your future together.</h3>
-                    <button className="bg-[#0B1E3D] text-white px-10 py-4 rounded-full font-bold hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                    <h3 className="text-3xl font-black text-[#0B1E3D] mb-8">Let's build your future together.</h3>
+                    <Link 
+                        to="/signup"
+                        className="inline-block bg-[#0B1E3D] text-white px-10 py-4 rounded-full font-bold hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                    >
                         Get Started
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

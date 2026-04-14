@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Ensure react-router-dom is installed
 import logo from '../assets/logo.png'; 
 
-export default function Footer() {
+export default function Footer({ onCheckRate }) {
     const products = {
         "Personal Loans": ["Debt Consolidation", "Wedding Loans", "Home Improvement", "Vacation Loans", "Emergency Loans"],
         "Car Loans": ["New Car Finance", "Used Car Loans", "Refinance", "Lease Buyout", "Auto Equity"],
@@ -50,9 +51,15 @@ export default function Footer() {
                     <div className="bg-white/5 p-8 rounded-[2rem] border border-white/10 flex-1 max-w-lg">
                         <h4 className="text-cyan-400 font-black text-sm uppercase tracking-widest mb-2">Ready to start?</h4>
                         <p className="text-gray-300 text-xl font-bold mb-6">Check your personalized rate in under 5 minutes.</p>
-                        <button className="px-8 py-3 bg-cyan-500 hover:bg-white hover:text-[#0B1E3D] text-white font-black rounded-xl transition-all shadow-lg shadow-cyan-500/20">
+                        
+                        {/* Changed from <button> to <Link> to enable navigation */}
+                        <Link 
+                            to="/check-rate" 
+                            onClick={onCheckRate}
+                            className="inline-block px-8 py-3 bg-cyan-500 hover:bg-white hover:text-[#0B1E3D] text-white font-black rounded-xl transition-all shadow-lg shadow-cyan-500/20 cursor-pointer"
+                        >
                             Check My Rate
-                        </button>
+                        </Link>
                     </div>
                 </div>
 

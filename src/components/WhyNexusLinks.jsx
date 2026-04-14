@@ -1,5 +1,6 @@
 import React from 'react';
-import { ShieldCheck, Cpu, Zap, CreditCard, BarChart3, Lock, CheckCircle, HelpCircle, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Import Link for navigation
+import { ShieldCheck, Cpu, Zap, CreditCard, BarChart3, Lock, CheckCircle, ChevronDown } from 'lucide-react';
 import whyImage from '../assets/whynexus.jpg'; 
 
 export default function WhyNexusLinks() {
@@ -49,7 +50,7 @@ export default function WhyNexusLinks() {
                     </p>
                 </div>
 
-                {/* Advantage Grid - Updated for Horizontal Mobile Scroll */}
+                {/* Advantage Grid */}
                 <div className="flex overflow-x-auto pb-10 snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24 no-scrollbar">
                     {advantages.map((item, idx) => (
                         <div 
@@ -191,9 +192,14 @@ export default function WhyNexusLinks() {
                             <CreditCard className="mx-auto mb-4 text-white/50" size={48} />
                             <h3 className="text-2xl font-bold mb-2 text-white">Ready to start?</h3>
                             <p className="text-white/80 text-sm mb-8">Check your rate in 60 seconds without affecting your credit score.</p>
-                            <button className="w-full py-4 bg-white text-[#0B1E3D] rounded-2xl font-black hover:bg-slate-100 transition-all active:scale-95">
+                            
+                            {/* Linked to /signup while maintaining the exact same UI styling */}
+                            <Link 
+                                to="/signup"
+                                className="w-full py-4 bg-white text-[#0B1E3D] rounded-2xl font-black hover:bg-slate-100 transition-all active:scale-95 flex items-center justify-center cursor-pointer"
+                            >
                                 GET STARTED NOW
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
