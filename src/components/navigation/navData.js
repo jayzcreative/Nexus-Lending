@@ -17,57 +17,57 @@ export const linkPaths = {
 export const productLinks = [
     {
         category: "PERSONAL LOANS",
-        path: "/personal-loans", // Added main category path
+        path: "/personal-loans",
         links: [
-            { name: "Debt Consolidation", path: "/personal-loans" },
-            { name: "Wedding Loans", path: "/personal-loans" },
-            { name: "Home Improvement", path: "/personal-loans" },
-            { name: "Vacation Loans", path: "/personal-loans" },
-            { name: "Emergency Loans", path: "/personal-loans" },
+            { name: "Debt Consolidation", path: "/personal-loans#debt-consolidation" },
+            { name: "Wedding Loans", path: "/personal-loans#wedding-loans" },
+            { name: "Home Improvement", path: "/personal-loans#home-improvement" },
+            { name: "Vacation Loans", path: "/personal-loans#vacation-loans" },
+            { name: "Emergency Loans", path: "/personal-loans#emergency-loans" },
         ],
     },
     {
         category: "CAR LOANS",
-        path: "/car-loans", // Added main category path
+        path: "/car-loans",
         links: [
-            { name: "New Car Finance", path: "/car-loans" },
-            { name: "Used Car Loans", path: "/car-loans" },
-            { name: "Refinance", path: "/car-loans" },
-            { name: "Lease Buyout", path: "/car-loans" },
-            { name: "Auto Equity", path: "/car-loans" },
+            { name: "New Car Finance", path: "/car-loans#new-car-finance" },
+            { name: "Used Car Loans", path: "/car-loans#used-car-loans" },
+            { name: "Refinance", path: "/car-loans#refinance-auto" },
+            { name: "Lease Buyout", path: "/car-loans#lease-buyout" },
+            { name: "Auto Equity", path: "/car-loans#auto-equity" },
         ],
     },
     {
         category: "HEALTH & INSURANCE",
-        path: "/health-insurance", // Added main category path
+        path: "/health-insurance",
         links: [
-            { name: "Medical Bills", path: "/health-insurance" },
-            { name: "Dental Loans", path: "/health-insurance" },
-            { name: "Life Insurance", path: "/health-insurance" },
-            { name: "Health Coverage", path: "/health-insurance" },
-            { name: "Pet Insurance", path: "/health-insurance" },
+            { name: "Medical Bills", path: "/health-insurance#medical-bills" },
+            { name: "Dental Loans", path: "/health-insurance#dental-loans" },
+            { name: "Life Insurance", path: "/health-insurance#life-insurance" },
+            { name: "Health Coverage", path: "/health-insurance#health-coverage" },
+            { name: "Pet Insurance", path: "/health-insurance#pet-insurance" },
         ],
     },
     {
         category: "MORTGAGE",
-        path: "/mortgage", // Added main category path
+        path: "/mortgage",
         links: [
-            { name: "Home Purchase", path: "/mortgage" },
-            { name: "Refinance", path: "/mortgage" },
-            { name: "Cash-out Refi", path: "/mortgage" },
-            { name: "Jumbo Loans", path: "/mortgage" },
-            { name: "FHA Loans", path: "/mortgage" },
+            { name: "Home Purchase", path: "/mortgage#home-purchase" },
+            { name: "Refinance", path: "/mortgage#refinance" },
+            { name: "Cash-out Refi", path: "/mortgage#cash-out-refi" },
+            { name: "Jumbo Loans", path: "/mortgage#jumbo-loans" },
+            { name: "FHA Loans", path: "/mortgage#fha-loans" },
         ],
     },
     {
         category: "STUDENT LOANS",
-        path: "/student-loans", // Added main category path
+        path: "/student-loans",
         links: [
-            { name: "Undergraduate", path: "/student-loans" },
-            { name: "Graduate", path: "/student-loans" },
-            { name: "Parent Plus", path: "/student-loans" },
-            { name: "Refinance", path: "/student-loans" },
-            { name: "MBA Loans", path: "/student-loans" },
+            { name: "Undergraduate", path: "/student-loans#undergraduate" },
+            { name: "Graduate", path: "/student-loans#graduate" },
+            { name: "Parent Plus", path: "/student-loans#parent-plus" },
+            { name: "Refinance", path: "/student-loans#refinance-student" },
+            { name: "MBA Loans", path: "/student-loans#mba-loans" },
         ],
     },
 ];

@@ -16,13 +16,13 @@ export default function AboutUsLinks() {
             linkedin: "https://linkedin.com" 
         },
         { 
-            name: "Sarah Jenkins", 
+            name: "Sarah Moyo", 
             role: "Chief Executive Officer", 
             img: managerImg, 
             linkedin: "https://linkedin.com" 
         },
         { 
-            name: "David Okoro", 
+            name: "David Mapfuudze", 
             role: "Operations Manager", 
             img: ceoImg, 
             linkedin: "https://linkedin.com" 

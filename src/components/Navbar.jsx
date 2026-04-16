@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo.png'; 
+import logo from '../assets/logo.png';
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false); 
-    const [activeDropdown, setActiveDropdown] = useState(null); 
-    const [mobileAccordion, setMobileAccordion] = useState(null); 
+    const [isOpen, setIsOpen] = useState(false);
+    const [activeDropdown, setActiveDropdown] = useState(null);
+    const [mobileAccordion, setMobileAccordion] = useState(null);
+    const [mobileSubAccordion, setMobileSubAccordion] = useState(null);
 
-    // UPDATED: Mapping for main link destinations including your 5 new pages
+    // Prevent scrolling when mobile menu is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [isOpen]);
+
     const linkPaths = {
         "Products": "/products",
         "Personal Loans": "/personal-loans",
@@ -20,6 +29,14 @@ const Navbar = () => {
         "About Us": "/about-us",
         "Login": "/login",
         "CheckRate": "/check-rate"
+    };
+
+    const subLinkIds = {
+        "Debt Consolidation": "#debt-consolidation", "Wedding Loans": "#wedding-loans", "Home Improvement": "#home-improvement", "Vacation Loans": "#vacation-loans", "Emergency Loans": "#emergency-loans",
+        "New Car Finance": "#new-car-finance", "Used Car Loans": "#used-car-loans", "Refinance": "#refinance-auto", "Lease Buyout": "#lease-buyout", "Auto Equity": "#auto-equity",
+        "Medical Bills": "#medical-bills", "Dental Loans": "#dental-loans", "Life Insurance": "#life-insurance", "Health Coverage": "#health-coverage", "Pet Insurance": "#pet-insurance",
+        "Home Purchase": "#home-purchase", "Refinance ": "#refinance", "Cash-out Refi": "#cash-out-refi", "Jumbo Loans": "#jumbo-loans", "FHA Loans": "#fha-loans",
+        "Undergraduate": "#undergraduate", "Graduate": "#graduate", "Parent Plus": "#parent-plus", "Refinance  ": "#refinance-student", "MBA Loans": "#mba-loans"
     };
 
     const products = {
@@ -55,13 +72,17 @@ const Navbar = () => {
 
     const toggleAccordion = (name) => {
         setMobileAccordion(mobileAccordion === name ? null : name);
+        setMobileSubAccordion(null);
+    };
+
+    const toggleSubAccordion = (name) => {
+        setMobileSubAccordion(mobileSubAccordion === name ? null : name);
     };
 
     return (
         <nav className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-100 font-sans shadow-sm" onMouseLeave={() => setActiveDropdown(null)}>
             <div className="max-w-7xl mx-auto px-6 h-[80px] flex items-center justify-between">
                 
-                {/* Logo Section */}
                 <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3 group cursor-pointer">
                     <img src={logo} alt="Nexus Logo" className="w-10 h-10 object-contain group-hover:scale-105 transition-transform duration-300" />
                     <div className="flex flex-col leading-tight">
@@ -70,7 +91,7 @@ const Navbar = () => {
                     </div>
                 </Link>
 
-                {/* Desktop Navigation */}
+                {/* --- DESKTOP NAV --- */}
                 <div className="hidden lg:flex items-center gap-2 h-full">
                     {navLinks.map((name) => (
                         <div key={name} className="h-full flex items-center" onMouseEnter={() => setActiveDropdown(name)}>
@@ -85,7 +106,6 @@ const Navbar = () => {
                     ))}
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex items-center gap-4">
                     <Link to={linkPaths["Login"]} className="hidden sm:block text-gray-900 hover:text-cyan-500 text-sm font-semibold px-4 py-2 transition-colors">
                         Log In
@@ -111,7 +131,6 @@ const Navbar = () => {
                     <div className="max-w-7xl mx-auto px-10 py-10 grid grid-cols-5 gap-8">
                         {Object.entries(products).map(([category, items]) => (
                             <div key={category}>
-                                {/* Category title now links to its page */}
                                 <Link 
                                     to={linkPaths[category]} 
                                     onClick={() => setActiveDropdown(null)}
@@ -123,7 +142,7 @@ const Navbar = () => {
                                     {items.map(item => (
                                         <li key={item}>
                                             <Link 
-                                                to={linkPaths[category]} // Connects sub-links to the main category page for now
+                                                to={`${linkPaths[category]}${subLinkIds[item] || ''}`} 
                                                 onClick={() => setActiveDropdown(null)}
                                                 className="text-gray-500 hover:text-cyan-500 text-sm block py-1 transition-colors"
                                             >
@@ -138,7 +157,6 @@ const Navbar = () => {
                 </div>
             )}
 
-            {/* Other Sections (Why Nexus, How it works, About Us) */}
             {activeDropdown && activeDropdown !== "Products" && (
                 <div className="hidden lg:block absolute top-[80px] left-0 w-full bg-white border-b border-gray-100 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="max-w-7xl mx-auto px-10 py-8 grid grid-cols-4 gap-6">
@@ -152,55 +170,89 @@ const Navbar = () => {
                 </div>
             )}
 
-            {/* --- MOBILE MENU --- */}
-            {isOpen && (
-                <>
-                    <div className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-30 transition-opacity" onClick={() => setIsOpen(false)}></div>
-                    <div className="lg:hidden fixed top-[90px] right-4 left-4 max-h-[80vh] bg-white z-40 overflow-y-auto px-6 py-8 rounded-[2.5rem] shadow-2xl border border-gray-100 animate-in fade-in zoom-in duration-300">
-                        <div className="flex flex-col gap-2">
-                            {navLinks.map(name => (
-                                <div key={name} className="border-b border-gray-50 last:border-none">
-                                    <div className="flex items-center justify-between w-full">
-                                        <Link 
-                                            to={linkPaths[name]} 
-                                            onClick={() => setIsOpen(false)}
-                                            className="flex-grow text-[#0B1E3D] font-bold text-lg py-4 px-4 rounded-l-2xl transition-all duration-200 hover:text-cyan-500"
-                                        >
-                                            {name}
-                                        </Link>
-                                        <button onClick={() => toggleAccordion(name)} className="py-4 px-6 rounded-r-2xl text-gray-400 hover:text-cyan-500 transition-all border-l border-gray-50">
-                                            <svg className={`w-5 h-5 transition-transform duration-300 ${mobileAccordion === name ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
-                                        </button>
-                                    </div>
-                                    <div className={`overflow-hidden transition-all duration-500 ease-in-out ${mobileAccordion === name ? 'max-h-[800px] mb-4 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                        <div className="pl-6 mt-2 flex flex-col gap-3 border-l-2 border-cyan-500/20">
-                                            {name === "Products" ? (
-                                                Object.keys(products).map(cat => (
-                                                    <Link 
-                                                        key={cat} 
-                                                        to={linkPaths[cat]}
-                                                        onClick={() => setIsOpen(false)}
-                                                        className="text-[#0B1E3D] text-md py-3 px-4 rounded-xl bg-gray-50 font-bold transition-all"
-                                                    >
-                                                        {cat}
-                                                    </Link>
-                                                ))
-                                            ) : (
-                                                navSections[name].map(item => (
-                                                    <Link key={item.title} to={linkPaths[name]} onClick={() => setIsOpen(false)} className="text-gray-500 text-sm py-2 px-3 rounded-xl transition-colors hover:bg-cyan-50">
-                                                        <span className="font-bold block text-[#0B1E3D]">{item.title}</span>
-                                                        <span className="text-[11px] opacity-70">{item.desc}</span>
-                                                    </Link>
-                                                ))
-                                            )}
-                                        </div>
+            {/* --- MOBILE SIDEBAR MENU --- */}
+            <div 
+                className={`lg:hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-30 transition-opacity duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`} 
+                onClick={() => setIsOpen(false)}
+            ></div>
+            
+            <div className={`lg:hidden fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-white z-40 shadow-2xl transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className="flex flex-col h-full px-6 py-20 overflow-y-auto">
+                    <div className="flex flex-col gap-2">
+                        {navLinks.map(name => (
+                            <div key={name} className="border-b border-gray-50 last:border-none">
+                                <div className="flex items-center justify-between w-full">
+                                    <Link 
+                                        to={linkPaths[name]} 
+                                        onClick={() => setIsOpen(false)}
+                                        className="flex-grow text-[#0B1E3D] font-bold text-lg py-4 transition-all duration-200 hover:text-cyan-500"
+                                    >
+                                        {name}
+                                    </Link>
+                                    <button onClick={() => toggleAccordion(name)} className="py-4 px-4 text-gray-400 hover:text-cyan-500 transition-all">
+                                        <svg className={`w-5 h-5 transition-transform duration-300 ${mobileAccordion === name ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                                    </button>
+                                </div>
+                                
+                                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${mobileAccordion === name ? 'max-h-[1500px] mb-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    <div className="pl-4 mt-2 flex flex-col gap-2 border-l-2 border-cyan-500/20">
+                                        {name === "Products" ? (
+                                            Object.entries(products).map(([cat, items]) => (
+                                                <div key={cat} className="flex flex-col">
+                                                    <div className="flex items-center justify-between w-full bg-gray-50 rounded-xl px-4 py-3">
+                                                        <Link 
+                                                            to={linkPaths[cat]}
+                                                            onClick={() => setIsOpen(false)}
+                                                            className="text-[#0B1E3D] text-md font-bold flex-grow"
+                                                        >
+                                                            {cat}
+                                                        </Link>
+                                                        <button 
+                                                            onClick={() => toggleSubAccordion(cat)}
+                                                            className="p-1 text-gray-400"
+                                                        >
+                                                            <svg className={`w-5 h-5 transition-transform ${mobileSubAccordion === cat ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                                                        </button>
+                                                    </div>
+                                                    <div className={`overflow-hidden transition-all duration-300 ${mobileSubAccordion === cat ? 'max-h-[500px] py-2' : 'max-h-0'}`}>
+                                                        {items.map(subItem => (
+                                                            <Link
+                                                                key={subItem}
+                                                                to={`${linkPaths[cat]}${subLinkIds[subItem] || ''}`}
+                                                                onClick={() => setIsOpen(false)}
+                                                                className="block pl-6 py-2 text-gray-500 text-sm hover:text-cyan-500 font-medium"
+                                                            >
+                                                                {subItem}
+                                                            </Link>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            navSections[name].map(item => (
+                                                <Link key={item.title} to={linkPaths[name]} onClick={() => setIsOpen(false)} className="text-gray-500 text-sm py-2 px-3 rounded-xl transition-colors hover:bg-cyan-50">
+                                                    <span className="font-bold block text-[#0B1E3D]">{item.title}</span>
+                                                    <span className="text-[11px] opacity-70">{item.desc}</span>
+                                                </Link>
+                                            ))
+                                        )}
                                     </div>
                                 </div>
-                            ))}
+                            </div>
+                        ))}
+                        
+                        <div className="border-t border-gray-100 mt-4 pt-4">
+                            <Link 
+                                to={linkPaths["Login"]} 
+                                onClick={() => setIsOpen(false)}
+                                className="block text-[#0B1E3D] font-bold text-lg py-4 hover:text-cyan-500 transition-all"
+                            >
+                                Log In
+                            </Link>
                         </div>
                     </div>
-                </>
-            )}
+                </div>
+            </div>
         </nav>
     );
 };

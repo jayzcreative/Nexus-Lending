@@ -1,12 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { User, Home, Car, HeartPulse, GraduationCap } from 'lucide-react';
 
 const products = [
-    { name: "Personal Loans", icon: "👤", range: "$50 - $5,000", features: ["Checking your rate takes 5 minutes", "No pre-payment penalty", "Fixed monthly payments", "Funds as fast as one business day", "Competitive APR models"] },
-    { name: "Mortgage", icon: "🏠", range: "$10,000 - $250,000", features: ["Low down payment options", "Get pre-approved in minutes", "Zero hidden lender fees", "Expert support team", "Flexible term lengths"] },
-    { name: "Car Loans", icon: "🚗", range: "$2,000 - $40,000", features: ["Swap your car loan and save", "Average monthly savings of $126", "Check your rate in minutes", "No impact on credit score", "Simple online application"] },
-    { name: "Health & Insurance", icon: "🏥", range: "$100 - $15,000", features: ["Covers elective procedures", "Easy payment plans", "No surprise medical bills", "Direct hospital payment", "Flexible repayment terms"] },
-    { name: "Student Loans", icon: "🎓", range: "$100 - $10,000", features: ["Undergrad & Graduate funding", "Parent Plus & MBA specialized loans", "Refinance to lower your monthly rate", "Quick digital approval process", "Build your credit while in school"] }
+    { 
+        name: "Personal Loans", 
+        path: "/personal-loans",
+        icon: <User className="w-12 h-12 text-cyan-500" strokeWidth={1.5} />, 
+        range: "$50 - $5,000", 
+        features: ["Checking your rate takes 5 minutes", "No pre-payment penalty", "Fixed monthly payments", "Funds as fast as one business day", "Competitive APR models"] 
+    },
+    { 
+        name: "Mortgage", 
+        path: "/mortgage",
+        icon: <Home className="w-12 h-12 text-cyan-500" strokeWidth={1.5} />, 
+        range: "$10,000 - $250,000", 
+        features: ["Low down payment options", "Get pre-approved in minutes", "Zero hidden lender fees", "Expert support team", "Flexible term lengths"] 
+    },
+    { 
+        name: "Car Loans", 
+        path: "/car-loans",
+        icon: <Car className="w-12 h-12 text-cyan-500" strokeWidth={1.5} />, 
+        range: "$2,000 - $40,000", 
+        features: ["Swap your car loan and save", "Average monthly savings of $126", "Check your rate in minutes", "No impact on credit score", "Simple online application"] 
+    },
+    { 
+        name: "Health & Insurance", 
+        path: "/health-insurance",
+        icon: <HeartPulse className="w-12 h-12 text-cyan-500" strokeWidth={1.5} />, 
+        range: "$100 - $15,000", 
+        features: ["Covers elective procedures", "Easy payment plans", "No surprise medical bills", "Direct hospital payment", "Flexible repayment terms"] 
+    },
+    { 
+        name: "Student Loans", 
+        path: "/student-loans",
+        icon: <GraduationCap className="w-12 h-12 text-cyan-500" strokeWidth={1.5} />, 
+        range: "$100 - $10,000", 
+        features: ["Undergrad & Graduate funding", "Parent Plus & MBA specialized loans", "Refinance to lower your monthly rate", "Quick digital approval process", "Build your credit while in school"] 
+    }
 ];
 
 export default function LoanProducts() {
@@ -21,7 +52,7 @@ export default function LoanProducts() {
                         className="flex-shrink-0 w-[85%] sm:w-[60%] lg:w-full snap-center bg-white p-8 rounded-[2.5rem] border-2 border-gray-100 shadow-sm hover:shadow-2xl hover:border-cyan-400 transition-all duration-500 group flex flex-col h-full"
                     >
                         <div className="flex flex-col items-center text-center mb-6">
-                            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
+                            <div className="mb-4 group-hover:scale-110 transition-transform">
                                 {loan.icon}
                             </div>
                             <h3 className="font-black text-2xl text-[#0B1E3D] leading-tight">
@@ -60,7 +91,8 @@ export default function LoanProducts() {
                                 Check your rate
                             </Link>
                             
-                            <button className="flex items-center justify-center group/arrow cursor-pointer">
+                            {/* Explore Link updated from button to Link */}
+                            <Link to={loan.path} className="flex items-center justify-center group/arrow cursor-pointer">
                                 <div className="flex items-center gap-2 text-[#0B1E3D] font-bold text-lg group-hover/arrow:text-cyan-500 transition-colors">
                                     <span className="text-sm uppercase tracking-widest">Explore</span>
                                     <div className="w-10 h-10 rounded-full border-2 border-gray-100 flex items-center justify-center group-hover/arrow:border-cyan-500 group-hover/arrow:translate-x-2 transition-all duration-300">
@@ -69,7 +101,7 @@ export default function LoanProducts() {
                                         </svg>
                                     </div>
                                 </div>
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 ))}

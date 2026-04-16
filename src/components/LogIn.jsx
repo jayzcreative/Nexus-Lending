@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, googleProvider } from '../firebase'; 
 import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import logo from '../assets/logo.png';
+import BotShield from './BotShield'; // Ensure the path is correct
 
 const EyeOpen = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -22,8 +23,14 @@ export default function LogIn() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showShield, setShowShield] = useState(false); // New state for verification
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  const handleAuthSuccess = () => {
+    setShowShield(true);
+    // The shield will handle the redirect after its internal 1.5s timeout via onVerified
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,13 +38,10 @@ export default function LogIn() {
     setIsLoading(true);
 
     try {
-      // REAL Firebase Email/Password Auth
       await signInWithEmailAndPassword(auth, email, password);
-      console.log("Standard Login Success");
-      navigate('/dashboard'); 
+      handleAuthSuccess();
     } catch (err) {
       console.error("Auth Error:", err.code);
-      // Map Firebase error codes to user-friendly messages
       switch (err.code) {
         case 'auth/invalid-credential':
           setError("Invalid email or password. Please try again.");
@@ -54,7 +58,6 @@ export default function LogIn() {
         default:
           setError("Login failed. Please check your credentials.");
       }
-    } finally {
       setIsLoading(false);
     }
   };
@@ -64,19 +67,24 @@ export default function LogIn() {
     if (provider === 'Google') {
       try {
         setIsLoading(true);
-        const result = await signInWithPopup(auth, googleProvider);
-        console.log("User Logged In:", result.user);
-        navigate('/dashboard');
+        await signInWithPopup(auth, googleProvider);
+        handleAuthSuccess();
       } catch (err) {
         console.error("Social Auth Error:", err.message);
         setError("Failed to sign in with Google. Please try again.");
-      } finally {
         setIsLoading(false);
       }
     } else if (provider === 'Apple') {
       alert("Apple Login requires a paid developer account to configure.");
     }
   };
+
+  // If credentials are valid, show the Nexus Security Shield
+  if (showShield) {
+    return (
+      <BotShield onVerified={() => navigate('/dashboard')} />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-between font-sans text-gray-900">
@@ -96,7 +104,6 @@ export default function LogIn() {
         <div className="mt-8 mx-auto w-full max-w-[400px]">
           <div className="bg-white py-8 px-6 shadow-xl shadow-gray-200/50 rounded-[2.5rem] border border-gray-100 sm:px-10">
             
-            {/* Social Logins */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               <button 
                 onClick={() => handleSocialLogin('Google')}
@@ -149,7 +156,7 @@ export default function LogIn() {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
+                    placeholder=""
                     className="block w-full px-4 py-3.5 rounded-xl border-gray-200 bg-gray-50 text-gray-900 focus:ring-2 focus:ring-cyan-500 transition-all outline-none text-sm"
                   />
                   <button 

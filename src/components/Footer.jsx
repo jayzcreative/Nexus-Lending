@@ -52,7 +52,6 @@ export default function Footer({ onCheckRate }) {
                         <h4 className="text-cyan-400 font-black text-sm uppercase tracking-widest mb-2">Ready to start?</h4>
                         <p className="text-gray-300 text-xl font-bold mb-6">Check your personalized rate in under 5 minutes.</p>
                         
-                        {/* Changed from <button> to <Link> to enable navigation */}
                         <Link 
                             to="/check-rate" 
                             onClick={onCheckRate}
@@ -65,8 +64,6 @@ export default function Footer({ onCheckRate }) {
 
                 {/* 2. MEGA LINK GRID */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-16 gap-x-8 mb-20 border-t border-white/10 pt-16">
-                    
-                    {/* Products: Shows first 3 on mobile */}
                     {Object.entries(products).map(([category, items]) => (
                         <div key={category}>
                             <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">
@@ -85,7 +82,6 @@ export default function Footer({ onCheckRate }) {
                         </div>
                     ))}
 
-                    {/* Why Nexus: Shows first 3 on mobile */}
                     <div>
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Why Nexus?</h4>
                         <ul className="space-y-3">
@@ -95,7 +91,6 @@ export default function Footer({ onCheckRate }) {
                         </ul>
                     </div>
 
-                    {/* Resources: Shows first 3 on mobile */}
                     <div>
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Resources</h4>
                         <ul className="space-y-3">
@@ -105,7 +100,6 @@ export default function Footer({ onCheckRate }) {
                         </ul>
                     </div>
 
-                    {/* About Us: Shows first 3 on mobile */}
                     <div>
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">About Us</h4>
                         <ul className="space-y-3">
@@ -115,7 +109,6 @@ export default function Footer({ onCheckRate }) {
                         </ul>
                     </div>
 
-                    {/* Support & Legal: All important, showing all */}
                     <div>
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Support & Legal</h4>
                         <ul className="space-y-3">
@@ -125,7 +118,6 @@ export default function Footer({ onCheckRate }) {
                         </ul>
                     </div>
 
-                    {/* Compliance & Privacy: ONLY Terms and Privacy on mobile */}
                     <div>
                         <h4 className="text-cyan-400 font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Compliance & Privacy</h4>
                         <ul className="space-y-3">
@@ -144,7 +136,12 @@ export default function Footer({ onCheckRate }) {
                             © 2026 NEXUS LENDING PLATFORM. ALL RIGHTS RESERVED.
                         </p>
                         <p className="text-gray-600 text-[10px] font-bold uppercase tracking-widest">
-                            PROUDLY BUILT BY <span className="text-cyan-500">JAYZTHEPLUG & MANDEMCODEX</span>  
+                            PROUDLY BUILT BY {" "}
+                            <span className="text-cyan-500">
+                                <a href="https://github.com/jayzcreative" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">JAYZTHEPLUG</a> 
+                                & 
+                                <a href="https://github.com/WAYNEMAUTSA" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors ml-1">MANDEMCODEX</a>
+                            </span>  
                         </p>
                     </div>
                     

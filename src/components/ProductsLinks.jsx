@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // Asset imports
 import personalImg from '../assets/personal loan.jpg';
@@ -7,6 +8,23 @@ import healthImg from '../assets/health loan.jpg';
 import mortgageImg from '../assets/morgage.jpg'; 
 import studentImg from '../assets/student loan.jpg';
 import familyImg from '../assets/family.jpg'; 
+
+// Path and ID Mappings
+const linkPaths = {
+    "Personal Loans": "/personal-loans",
+    "Car Loans": "/car-loans",
+    "Health & Insurance": "/health-insurance",
+    "Mortgage": "/mortgage",
+    "Student Loans": "/student-loans"
+};
+
+const subLinkIds = {
+    "Debt Consolidation": "#debt-consolidation", "Wedding Loans": "#wedding-loans", "Home Improvement": "#home-improvement", "Vacation Loans": "#vacation-loans", "Emergency Loans": "#emergency-loans",
+    "New Car Finance": "#new-car-finance", "Used Car Loans": "#used-car-loans", "Refinance": "#refinance-auto", "Lease Buyout": "#lease-buyout", "Auto Equity": "#auto-equity",
+    "Medical Bills": "#medical-bills", "Dental Loans": "#dental-loans", "Life Insurance": "#life-insurance", "Health Coverage": "#health-coverage", "Pet Insurance": "#pet-insurance",
+    "Home Purchase": "#home-purchase", "Refinance": "#refinance", "Cash-out Refi": "#cash-out-refi", "Jumbo Loans": "#jumbo-loans", "FHA Loans": "#fha-loans",
+    "Undergraduate": "#undergraduate", "Graduate": "#graduate", "Parent Plus": "#parent-plus", "MBA Loans": "#mba-loans"
+};
 
 const productData = [
     {
@@ -92,14 +110,17 @@ export default function ProductsLinks() {
                             <p className="text-gray-400 text-[11px] mb-6 leading-relaxed uppercase tracking-wider font-bold h-12">{item.desc}</p>
                             <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-8"></div>
                             
-                            {/* Updated List for better tap targets */}
+                            {/* Functional List */}
                             <ul className="w-full space-y-2">
                                 {item.links.map((link) => (
                                     <li key={link}>
-                                        <a href="#" className="text-gray-600 hover:text-cyan-600 text-base py-2 font-bold flex justify-between items-center group/item transition-colors">
+                                        <Link 
+                                            to={`${linkPaths[item.category]}${subLinkIds[link] || ''}`} 
+                                            className="text-gray-600 hover:text-cyan-600 text-base py-2 font-bold flex justify-between items-center group/item transition-colors"
+                                        >
                                             {link}
                                             <span className="text-cyan-400 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all font-black">→</span>
-                                        </a>
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>

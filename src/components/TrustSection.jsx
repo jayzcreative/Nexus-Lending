@@ -1,31 +1,35 @@
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { ShieldCheck, Eye, Zap } from 'lucide-react'; // Added Lucide Icons
+import Bridget from '../assets/student.jpg';
+import Elena from '../assets/woman.jpg';
+import Jordan from '../assets/father.jpg';
 
 const socialFeed = [
     {
-        name: "David Chen",
+        name: "Bridget Kwenda",
         location: "MBA Borrower",
         time: "2h ago",
         title: "Simplified the MBA funding process entirely",
         comment: "Nexus made it happen when others couldn't. Found a rate 1.5% lower than my local bank using their advanced matching tools.",
-        avatar: "🎓"
+        Image: Bridget
     },
     {
-        name: "Elena Rodriguez",
+        name: "Elena Mutasa",
         location: "Parent Plus",
         time: "2h ago",
         title: "Clean transparency for my daughter's loans",
         comment: "Was worried about Parent Plus terms, but the Nexus transparency protocol made everything clear. Zero hidden fees, just pure honesty.",
-        avatar: "👨‍👩‍👧"
+        Image: Elena
     },
     {
-        name: "Jordan Smith",
+        name: "Jordan Muzeza",
         location: "Debt Refinance",
         time: "2h ago",
         title: "Actually helped me save $100+ every month",
         comment: "Autonomous fraud protection and clear savings. Swapping my car loan was the best financial decision I made this year.",
-        avatar: "⚡"
+        Image: Jordan
     }
 ];
 
@@ -53,24 +57,33 @@ export default function TrustSection() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24">
+                    {/* Autonomous Defense Icon */}
                     <div data-aos="fade-right" data-aos-delay="100" className="p-10 rounded-[3rem] bg-cyan-50 border border-cyan-100 hover:shadow-xl transition-all group">
-                        <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">🤖</div>
+                        <div className="mb-6 group-hover:scale-110 transition-transform">
+                            <ShieldCheck className="w-12 h-12 text-cyan-600" strokeWidth={1.5} />
+                        </div>
                         <h3 className="text-2xl font-bold text-[#0B1E3D] mb-4">Autonomous Defense</h3>
                         <p className="text-gray-600 leading-relaxed font-medium">
                             Our proprietary tech identifies and blocks 99.9% of phishing attempts, keeping your financial data locked tight.
                         </p>
                     </div>
 
+                    {/* Pure Transparency Icon */}
                     <div data-aos="fade-up" data-aos-delay="300" className="p-10 rounded-[3rem] bg-[#0B1E3D] text-white hover:shadow-xl transition-all group">
-                        <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">💎</div>
+                        <div className="mb-6 group-hover:scale-110 transition-transform">
+                            <Eye className="w-12 h-12 text-cyan-400" strokeWidth={1.5} />
+                        </div>
                         <h3 className="text-2xl font-bold mb-4">Pure Transparency</h3>
                         <p className="text-white/80 leading-relaxed font-medium">
                             No hidden fees, no teaser rates. What you see is exactly what you pay. We believe in total financial honesty.
                         </p>
                     </div>
 
+                    {/* Instant Synergy Icon */}
                     <div data-aos="fade-left" data-aos-delay="500" className="p-10 rounded-[3rem] bg-cyan-500 text-white hover:shadow-xl transition-all group">
-                        <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">⚡</div>
+                        <div className="mb-6 group-hover:scale-110 transition-transform">
+                            <Zap className="w-12 h-12 text-white" strokeWidth={1.5} />
+                        </div>
                         <h3 className="text-2xl font-bold mb-4">Instant Synergy</h3>
                         <p className="text-white/90 leading-relaxed font-medium">
                             Our modern tech stack allows for 5-minute rate checks with zero impact on your credit score.
@@ -107,7 +120,7 @@ export default function TrustSection() {
                             <p className="text-gray-500 text-lg font-bold uppercase tracking-widest">Active Community Stories</p>
                         </div>
 
-                        {/* --- UPDATED PART: Horizontal Scroll on Small Screens --- */}
+                        {/* --- Horizontal Scroll on Small Screens --- */}
                         <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 pb-8 md:pb-0 snap-x snap-mandatory scrollbar-hide">
                             {socialFeed.map((post, index) => (
                                 <div 
@@ -138,8 +151,12 @@ export default function TrustSection() {
                                     </p>
 
                                     <div className="flex items-center gap-4 pt-6 border-t border-gray-50 mt-auto">
-                                        <div className="w-14 h-14 bg-cyan-50 rounded-full flex items-center justify-center text-3xl group-hover:rotate-6 transition-transform">
-                                            {post.avatar}
+                                        <div className="w-14 h-14 rounded-full overflow-hidden group-hover:rotate-6 transition-transform">
+                                            <img 
+                                                src={post.Image} 
+                                                alt={post.name} 
+                                                className="w-full h-full object-cover"
+                                            />
                                         </div>
                                         <div>
                                             <h4 className="font-extrabold text-[#0B1E3D] text-lg leading-tight">{post.name}</h4>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import BotShield from './BotShield'; // Ensure path is correct
 
 const loanCategories = {
   "Personal Loans": ["Debt Consolidation", "Wedding Loans", "Home Improvement", "Vacation Loans", "Emergency Loans"],
@@ -32,7 +33,6 @@ export default function CheckRate() {
 
   const [step, setStep] = useState(0); 
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
   const [errors, setErrors] = useState({});
   const [estPayment, setEstPayment] = useState(0);
   const [interestPortion, setInterestPortion] = useState(0);
@@ -56,11 +56,8 @@ export default function CheckRate() {
   });
 
   const handleVerify = () => {
-    setIsVerifying(true);
-    setTimeout(() => {
-      setStep(1);
-      setIsVerifying(false);
-    }, 1500);
+    // This transition is now handled by the BotShield onVerified callback
+    setStep(1);
   };
 
   const handleCategoryChange = (e) => {
@@ -162,235 +159,192 @@ export default function CheckRate() {
     );
   }
 
+  // Step 0 is now replaced by the BotShield component
+  if (step === 0) {
+    return <BotShield onVerified={handleVerify} />;
+  }
+
   return (
-    <div className={`min-h-screen flex flex-col font-sans antialiased transition-colors duration-700 ${step === 0 ? 'bg-[#0B1E3D]' : 'bg-gray-50'}`}>
-      <div className={`flex-grow ${step === 0 ? '' : 'pt-8 sm:pt-16'}`}>
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-gray-50">
+      <div className="flex-grow pt-8 sm:pt-16">
         <div className="max-w-2xl mx-auto w-full px-5">
           <AnimatePresence mode="wait">
-            {step === 0 ? (
-              <motion.div 
-                key="shield"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="min-h-[80vh] flex flex-col items-center justify-center text-center py-10"
-              >
-                <div className="mb-8">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-cyan-500/20 flex items-center justify-center bg-cyan-500/5 shadow-[0_0_50px_rgba(6,182,212,0.1)]">
-                    <svg className="w-10 h-10 sm:w-12 sm:h-12 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  </div>
+            <motion.div 
+              key="form-container"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="pb-12"
+            >
+              <div className="mb-6 px-2 flex justify-between items-end">
+                <div>
+                  <h1 className="text-[10px] sm:text-xs font-black text-cyan-600 uppercase tracking-widest mb-1">Nexus Rate Check</h1>
+                  <p className="text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase">Secure AI Lending</p>
                 </div>
+                <span className="text-[10px] font-black text-gray-300 uppercase">Step {step}/6</span>
+              </div>
 
-                <h2 className="text-white text-3xl sm:text-4xl font-black tracking-tight mb-3">Security Check</h2>
-                <p className="text-gray-400 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.25em] mb-12">Verifying your connection</p>
-
-                <div className="w-full max-w-[340px] mx-auto rounded-3xl p-[1px] bg-gradient-to-b from-white/20 to-transparent">
-                  <div className="bg-[#1c2a3f] rounded-[calc(1.5rem-1px)] p-6 sm:p-8 flex items-center justify-between shadow-2xl">
-                    <div className="flex items-center gap-4 sm:gap-5">
-                      <button 
-                        onClick={handleVerify}
-                        disabled={isVerifying}
-                        className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg border-2 flex items-center justify-center transition-all ${isVerifying ? 'border-cyan-500 bg-cyan-500/10' : 'border-gray-500 bg-transparent hover:border-cyan-400'}`}
-                      >
-                        {isVerifying ? (
-                          <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-cyan-400 border-t-transparent rounded-full" />
-                        ) : (
-                          <div className="w-4 h-4 sm:w-5 sm:h-5 bg-transparent" />
-                        )}
-                      </button>
-                      <span className="text-white font-bold text-base sm:text-lg tracking-tight">I am a human</span>
-                    </div>
-                    <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest">Verify</span>
-                  </div>
-                </div>
-
-                <p className="mt-16 sm:mt-20 text-[9px] font-black text-gray-500 uppercase tracking-[0.4em] opacity-60">
-                  Nexus Shield V2.4
-                </p>
-              </motion.div>
-            ) : (
-              <motion.div 
-                key="form-container"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="pb-12"
-              >
-                <div className="mb-6 px-2 flex justify-between items-end">
-                  <div>
-                    <h1 className="text-[10px] sm:text-xs font-black text-cyan-600 uppercase tracking-widest mb-1">Nexus Rate Check</h1>
-                    <p className="text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase">Secure AI Lending</p>
-                  </div>
-                  <span className="text-[10px] font-black text-gray-300 uppercase">Step {step}/6</span>
-                </div>
-
-                <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl p-6 sm:p-8 lg:p-12 border border-gray-100">
-                  <form onSubmit={handleSubmit}>
-                    <AnimatePresence mode="wait">
-                      {step === 1 && (
-                        <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6 sm:space-y-8">
-                          <div className="bg-[#0B4D5D] rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-10 text-white shadow-xl">
-                            <label className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-cyan-400">Monthly Payment</label>
-                            <div className="text-3xl sm:text-5xl font-black mt-2 tracking-tight break-words">
-                              ${estPayment}<span className="text-lg sm:text-xl font-medium text-cyan-300 ml-1 sm:ml-2">/mo</span>
-                            </div>
+              <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl p-6 sm:p-8 lg:p-12 border border-gray-100">
+                <form onSubmit={handleSubmit}>
+                  <AnimatePresence mode="wait">
+                    {step === 1 && (
+                      <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6 sm:space-y-8">
+                        <div className="bg-[#0B4D5D] rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-10 text-white shadow-xl">
+                          <label className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-cyan-400">Monthly Payment</label>
+                          <div className="text-3xl sm:text-5xl font-black mt-2 tracking-tight break-words">
+                            ${estPayment}<span className="text-lg sm:text-xl font-medium text-cyan-300 ml-1 sm:ml-2">/mo</span>
                           </div>
+                        </div>
 
-                          <div className="grid grid-cols-1 gap-4 sm:gap-6">
-                            <div className="p-5 sm:p-6 bg-gray-50 rounded-2xl sm:rounded-3xl border border-gray-100 group focus-within:ring-2 focus-within:ring-cyan-500 transition-all">
-                                <label className="block text-[10px] sm:text-[11px] font-black text-gray-400 uppercase mb-2 sm:mb-3 tracking-widest">Amount ($)</label>
-                                <div className="flex justify-between items-center">
-                                  <input 
-                                      type="text" 
-                                      name="amount" 
-                                      value={formData.amount} 
-                                      onChange={handleInputChange} 
-                                      className="w-full bg-transparent text-3xl sm:text-4xl font-black text-[#0B1E3D] outline-none" 
-                                  />
-                                  <div className="hidden sm:flex flex-col gap-1 text-gray-400">
-                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
-                                    <svg className="w-4 h-4 rotate-180" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
-                                  </div>
+                        <div className="grid grid-cols-1 gap-4 sm:gap-6">
+                          <div className="p-5 sm:p-6 bg-gray-50 rounded-2xl sm:rounded-3xl border border-gray-100 group focus-within:ring-2 focus-within:ring-cyan-500 transition-all">
+                              <label className="block text-[10px] sm:text-[11px] font-black text-gray-400 uppercase mb-2 sm:mb-3 tracking-widest">Amount ($)</label>
+                              <div className="flex justify-between items-center">
+                                <input 
+                                    type="text" 
+                                    name="amount" 
+                                    value={formData.amount} 
+                                    onChange={handleInputChange} 
+                                    className="w-full bg-transparent text-3xl sm:text-4xl font-black text-[#0B1E3D] outline-none" 
+                                />
+                                <div className="hidden sm:flex flex-col gap-1 text-gray-400">
+                                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+                                  <svg className="w-4 h-4 rotate-180" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
                                 </div>
-                                <ErrorMsg name="amount" />
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              <div className="p-4 sm:p-5 bg-gray-50 rounded-2xl border border-gray-100">
-                                  <label className="block text-[9px] sm:text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">Term</label>
-                                  <select name="term" value={formData.term} onChange={(e) => setFormData({...formData, term: parseInt(e.target.value)})} className="w-full bg-transparent text-lg sm:text-xl font-black text-[#0B1E3D] outline-none">
-                                      {loanTerms.map(t => <option key={t} value={t}>{t} Months</option>)}
-                                  </select>
                               </div>
-                              <div className="p-4 sm:p-5 bg-cyan-50 rounded-2xl border border-cyan-100 flex items-center justify-between">
-                                  <span className="text-[9px] sm:text-[10px] font-black text-cyan-800 uppercase tracking-widest">AI APR</span>
-                                  <span className="text-lg sm:text-xl font-black text-cyan-600">15.0%</span>
-                              </div>
-                            </div>
+                              <ErrorMsg name="amount" />
                           </div>
 
-                          <div className="space-y-4">
-                            <select 
-                                name="purpose" 
-                                value={formData.purpose} 
-                                onChange={handleCategoryChange} 
-                                disabled={!!preSelected}
-                                className={`w-full px-6 sm:px-8 py-4 sm:py-5 rounded-2xl font-bold border-2 text-sm sm:text-base ${preSelected ? 'bg-gray-100 text-gray-400 border-transparent cursor-not-allowed' : 'bg-gray-50 border-transparent focus:ring-2 focus:ring-cyan-500'}`}
-                            >
-                              <option value="">Choose Loan Category</option>
-                              {Object.keys(loanCategories).map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="p-4 sm:p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                                <label className="block text-[9px] sm:text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">Term</label>
+                                <select name="term" value={formData.term} onChange={(e) => setFormData({...formData, term: parseInt(e.target.value)})} className="w-full bg-transparent text-lg sm:text-xl font-black text-[#0B1E3D] outline-none">
+                                    {loanTerms.map(t => <option key={t} value={t}>{t} Months</option>)}
+                                </select>
+                            </div>
+                            <div className="p-4 sm:p-5 bg-cyan-50 rounded-2xl border border-cyan-100 flex items-center justify-between">
+                                <span className="text-[9px] sm:text-[10px] font-black text-cyan-800 uppercase tracking-widest">AI APR</span>
+                                <span className="text-lg sm:text-xl font-black text-cyan-600">15.0%</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <select 
+                              name="purpose" 
+                              value={formData.purpose} 
+                              onChange={handleCategoryChange} 
+                              disabled={!!preSelected}
+                              className={`w-full px-6 sm:px-8 py-4 sm:py-5 rounded-2xl font-bold border-2 text-sm sm:text-base ${preSelected ? 'bg-gray-100 text-gray-400 border-transparent cursor-not-allowed' : 'bg-gray-50 border-transparent focus:ring-2 focus:ring-cyan-500'}`}
+                          >
+                            <option value="">Choose Loan Category</option>
+                            {Object.keys(loanCategories).map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                          </select>
+                          <ErrorMsg name="purpose" />
+
+                          {formData.purpose && (
+                            <select name="subType" value={formData.subType} onChange={handleInputChange} className="w-full px-6 sm:px-8 py-4 sm:py-5 bg-cyan-50 border-2 border-cyan-100 rounded-2xl font-bold text-cyan-900 text-sm sm:text-base">
+                              <option value="">Specific Type</option>
+                              {loanCategories[formData.purpose].map(sub => <option key={sub} value={sub}>{sub}</option>)}
                             </select>
-                            <ErrorMsg name="purpose" />
+                          )}
+                          <ErrorMsg name="subType" />
+                        </div>
+                      </motion.div>
+                    )}
 
-                            {formData.purpose && (
-                              <select name="subType" value={formData.subType} onChange={handleInputChange} className="w-full px-6 sm:px-8 py-4 sm:py-5 bg-cyan-50 border-2 border-cyan-100 rounded-2xl font-bold text-cyan-900 text-sm sm:text-base">
-                                <option value="">Specific Type</option>
-                                {loanCategories[formData.purpose].map(sub => <option key={sub} value={sub}>{sub}</option>)}
-                              </select>
-                            )}
-                            <ErrorMsg name="subType" />
-                          </div>
-                        </motion.div>
-                      )}
+                    {step > 1 && (
+                      <motion.div key={`s${step}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 sm:space-y-6">
+                        {step === 2 && (
+                          <>
+                            <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D]">Identity Check</h2>
+                            <input name="fullName" placeholder="Legal Name" value={formData.fullName} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
+                            <ErrorMsg name="fullName" />
+                            <input type="text" name="age" placeholder="Age" value={formData.age} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
+                            <ErrorMsg name="age" />
+                          </>
+                        )}
+                        {step === 3 && (
+                          <>
+                            <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D] text-center">Citizenship</h2>
+                            <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                              {['Zimbabwe', 'Other'].map(status => (
+                                <button key={status} type="button" onClick={() => setFormData({...formData, citizenship: status})} className={`py-5 sm:py-6 rounded-2xl font-black border-2 transition-all text-sm ${formData.citizenship === status ? 'border-cyan-500 bg-cyan-50 text-cyan-700' : 'border-gray-100 bg-gray-50 text-gray-400 hover:border-gray-200'}`}>
+                                  {status === 'Zimbabwe' ? '🇿🇼 Resident of Zimbabwe' : 'International Resident'}
+                                </button>
+                              ))}
+                            </div>
+                          </>
+                        )}
+                        {step === 4 && (
+                          <>
+                            <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D]">Address</h2>
+                            <input name="address" placeholder="Residential Address" value={formData.address} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
+                            <ErrorMsg name="address" />
+                            <div className="grid grid-cols-2 gap-4">
+                              <input name="city" placeholder="City" value={formData.city} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm w-full" />
+                              {formData.citizenship === 'Zimbabwe' ? (
+                                <select name="province" value={formData.province} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm w-full">
+                                  <option value="">Province</option>
+                                  {zimProvinces.map(p => <option key={p} value={p}>{p}</option>)}
+                                </select>
+                              ) : (
+                                <input name="province" placeholder="State" value={formData.province} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold text-sm w-full" />
+                              )}
+                            </div>
+                          </>
+                        )}
+                        {step === 5 && (
+                          <>
+                            <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D]">Financial Status</h2>
+                            <select name="employment" value={formData.employment} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm">
+                              <option value="">Employment Type</option>
+                              {employmentStatuses.map(status => <option key={status} value={status}>{status}</option>)}
+                            </select>
+                            <ErrorMsg name="employment" />
+                            <div className="relative">
+                              <span className="absolute left-6 top-1/2 -translate-y-1/2 font-black text-gray-400">$</span>
+                              <input type="text" name="income" placeholder="Monthly Net Income" value={formData.income} onChange={handleInputChange} disabled={formData.employment === "Unemployed"} className={`w-full pl-10 pr-6 py-4 bg-gray-50 rounded-2xl font-bold text-sm ${formData.employment === "Unemployed" ? 'opacity-30' : ''}`} />
+                            </div>
+                            <ErrorMsg name="income" />
+                          </>
+                        )}
+                        {step === 6 && (
+                          <>
+                            <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D]">Final Details</h2>
+                            <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
+                            <ErrorMsg name="email" />
+                            <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
+                            <ErrorMsg name="phone" />
+                          </>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
-                      {step > 1 && (
-                        <motion.div key={`s${step}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 sm:space-y-6">
-                          {step === 2 && (
-                            <>
-                              <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D]">Identity Check</h2>
-                              <input name="fullName" placeholder="Legal Name" value={formData.fullName} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
-                              <ErrorMsg name="fullName" />
-                              <input type="text" name="age" placeholder="Age" value={formData.age} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
-                              <ErrorMsg name="age" />
-                            </>
-                          )}
-                          {step === 3 && (
-                            <>
-                              <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D] text-center">Citizenship</h2>
-                              <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                                {['Zimbabwe', 'Other'].map(status => (
-                                  <button key={status} type="button" onClick={() => setFormData({...formData, citizenship: status})} className={`py-5 sm:py-6 rounded-2xl font-black border-2 transition-all text-sm ${formData.citizenship === status ? 'border-cyan-500 bg-cyan-50 text-cyan-700' : 'border-gray-100 bg-gray-50 text-gray-400 hover:border-gray-200'}`}>
-                                    {status === 'Zimbabwe' ? '🇿🇼 Resident of Zimbabwe' : 'International Resident'}
-                                  </button>
-                                ))}
-                              </div>
-                            </>
-                          )}
-                          {step === 4 && (
-                            <>
-                              <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D]">Address</h2>
-                              <input name="address" placeholder="Residential Address" value={formData.address} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
-                              <ErrorMsg name="address" />
-                              <div className="grid grid-cols-2 gap-4">
-                                <input name="city" placeholder="City" value={formData.city} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm w-full" />
-                                {formData.citizenship === 'Zimbabwe' ? (
-                                  <select name="province" value={formData.province} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm w-full">
-                                    <option value="">Province</option>
-                                    {zimProvinces.map(p => <option key={p} value={p}>{p}</option>)}
-                                  </select>
-                                ) : (
-                                  <input name="province" placeholder="State" value={formData.province} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold text-sm w-full" />
-                                )}
-                              </div>
-                            </>
-                          )}
-                          {step === 5 && (
-                            <>
-                              <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D]">Financial Status</h2>
-                              <select name="employment" value={formData.employment} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm">
-                                <option value="">Employment Type</option>
-                                {employmentStatuses.map(status => <option key={status} value={status}>{status}</option>)}
-                              </select>
-                              <ErrorMsg name="employment" />
-                              <div className="relative">
-                                <span className="absolute left-6 top-1/2 -translate-y-1/2 font-black text-gray-400">$</span>
-                                <input type="text" name="income" placeholder="Monthly Net Income" value={formData.income} onChange={handleInputChange} disabled={formData.employment === "Unemployed"} className={`w-full pl-10 pr-6 py-4 bg-gray-50 rounded-2xl font-bold text-sm ${formData.employment === "Unemployed" ? 'opacity-30' : ''}`} />
-                              </div>
-                              <ErrorMsg name="income" />
-                            </>
-                          )}
-                          {step === 6 && (
-                            <>
-                              <h2 className="text-xl sm:text-2xl font-black text-[#0B1E3D]">Final Details</h2>
-                              <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
-                              <ErrorMsg name="email" />
-                              <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleInputChange} className="w-full px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm" />
-                              <ErrorMsg name="phone" />
-                            </>
-                          )}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-10 sm:mt-12">
-                      {step > 1 && (
-                        <button type="button" onClick={prevStep} className="w-full sm:flex-1 py-4 sm:py-5 bg-gray-100 text-gray-500 font-black rounded-2xl uppercase text-[10px] tracking-widest order-2 sm:order-1">Back</button>
-                      )}
-                      <button type="button" onClick={step < 6 ? nextStep : handleSubmit} className={`w-full sm:flex-[2] py-4 sm:py-5 font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all order-1 sm:order-2 ${step === 6 ? 'bg-cyan-500 text-white shadow-xl shadow-cyan-200' : 'bg-[#0B1E3D] text-white shadow-xl shadow-blue-900/10'}`}>
-                        {step < 6 ? 'Continue' : 'Finalize Application'}
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </motion.div>
-            )}
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-10 sm:mt-12">
+                    {step > 1 && (
+                      <button type="button" onClick={prevStep} className="w-full sm:flex-1 py-4 sm:py-5 bg-gray-100 text-gray-500 font-black rounded-2xl uppercase text-[10px] tracking-widest order-2 sm:order-1">Back</button>
+                    )}
+                    <button type="button" onClick={step < 6 ? nextStep : handleSubmit} className={`w-full sm:flex-[2] py-4 sm:py-5 font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all order-1 sm:order-2 ${step === 6 ? 'bg-cyan-500 text-white shadow-xl shadow-cyan-200' : 'bg-[#0B1E3D] text-white shadow-xl shadow-blue-900/10'}`}>
+                      {step < 6 ? 'Continue' : 'Finalize Application'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </motion.div>
           </AnimatePresence>
         </div>
       </div>
 
-      {/* Footer logic: Only show if step is not 0 */}
-      {step !== 0 && (
-        <footer className="bg-[#0097B2] py-5">
-          <div className="flex items-center justify-center gap-5 text-white text-sm font-bold">
-            <Link to="/help" className="hover:opacity-80 transition-opacity">Help</Link>
-            <span className="text-white/30">•</span>
-            <Link to="/terms" className="hover:opacity-80 transition-opacity">Terms of Service</Link>
-            <span className="text-white/30">•</span>
-            <Link to="/privacy" className="hover:opacity-80 transition-opacity">Privacy Policy</Link>
-          </div>
-        </footer>
-      )}
+      <footer className="bg-[#0097B2] py-5">
+        <div className="flex items-center justify-center gap-5 text-white text-sm font-bold">
+          <Link to="/help" className="hover:opacity-80 transition-opacity">Help</Link>
+          <span className="text-white/30">•</span>
+          <Link to="/terms" className="hover:opacity-80 transition-opacity">Terms of Service</Link>
+          <span className="text-white/30">•</span>
+          <Link to="/privacy" className="hover:opacity-80 transition-opacity">Privacy Policy</Link>
+        </div>
+      </footer>
     </div>
   );
 }
