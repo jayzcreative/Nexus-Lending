@@ -142,11 +142,12 @@ export default function PersonalLoans() {
                         >
                             <div className="w-full lg:w-1/2">
                                 <div className="relative group">
+                                    {/* Animated background shape */}
                                     <div className="absolute -inset-4 bg-cyan-50 rounded-[2rem] scale-95 group-hover:scale-100 transition-transform duration-500 opacity-50"></div>
                                     <img 
                                         src={loan.image} 
                                         alt={loan.title} 
-                                        className="relative rounded-[2rem] w-full h-[400px] object-cover shadow-2xl transition-all duration-500"
+                                        className="relative rounded-[2rem] w-full h-[400px] object-cover shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2"
                                     />
                                 </div>
                             </div>

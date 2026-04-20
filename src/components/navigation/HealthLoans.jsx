@@ -129,7 +129,7 @@ export default function HealthLoans() {
                     </div>
                 </div>
 
-                {/* Alternating Categories Section (Kept as requested) */}
+                {/* Alternating Categories Section */}
                 <div className="space-y-32 mb-40">
                     {healthCategories.map((loan, index) => (
                         <div 
@@ -143,7 +143,7 @@ export default function HealthLoans() {
                                     <img 
                                         src={loan.image} 
                                         alt={loan.title} 
-                                        className="relative rounded-[2.5rem] w-full h-[450px] object-cover shadow-2xl transition-all duration-700 group-hover:scale-[1.02]"
+                                        className="relative rounded-[2.5rem] w-full h-[450px] object-cover shadow-2xl transition-all duration-700 group-hover:scale-105 group-hover:-translate-y-2"
                                     />
                                 </div>
                             </div>
@@ -177,7 +177,7 @@ export default function HealthLoans() {
                     ))}
                 </div>
 
-                {/* UNIQUE BOTTOM PROCESS SECTION (The "Wellness Step" Style) */}
+                {/* UNIQUE BOTTOM PROCESS SECTION */}
                 <div className="relative bg-white border border-gray-100 rounded-[4rem] p-12 lg:p-24 shadow-2xl shadow-gray-200/50 overflow-hidden mb-20">
                     <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400"></div>
                     
@@ -186,7 +186,7 @@ export default function HealthLoans() {
                             <h3 className="text-5xl font-black text-[#0B1E3D] mb-6 leading-tight">
                                 Our Care <br /> <span className="text-cyan-500">Manifesto.</span>
                             </h3>
-                            <p className="text-gray-500 text-lg mb-8">
+                            <p className="text-gray-500 text-lg mb-8 font-medium">
                                 We've automated the complex parts of healthcare financing so you can focus on getting better. No medical jargon, just simple steps.
                             </p>
                             <div className="space-y-4">

@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { GraduationCap, BookOpen, Users, RefreshCw, Briefcase } from 'lucide-react';
+import { GraduationCap, BookOpen, Users, RefreshCw, Briefcase, ShieldCheck, Zap, Lock, Award } from 'lucide-react';
+
+// Import images
+import undergraduateImg from '../../assets/undergraduate.jpg';
+import graduateImg from '../../assets/graduate.jpg';
+import parentplusImg from '../../assets/parentplus.jpg';
+import studentrefinanceImg from '../../assets/studentrefinance.jpg';
+import mbaImg from '../../assets/mba.jpg';
 
 export default function StudentLoans() {
     const { hash } = useLocation();
 
-    // Effect to handle scrolling and highlighting when arriving via a hash link
     useEffect(() => {
         if (hash) {
             const id = hash.replace('#', '');
@@ -13,10 +19,9 @@ export default function StudentLoans() {
             if (element) {
                 setTimeout(() => {
                     element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // Visual highlight effect for the card
-                    element.classList.add('ring-4', 'ring-cyan-400', 'ring-offset-4', 'scale-[1.02]');
+                    element.classList.add('ring-4', 'ring-cyan-400', 'ring-offset-8', 'scale-[1.01]');
                     setTimeout(() => {
-                        element.classList.remove('ring-4', 'ring-cyan-400', 'ring-offset-4', 'scale-[1.02]');
+                        element.classList.remove('ring-4', 'ring-cyan-400', 'ring-offset-8', 'scale-[1.01]');
                     }, 2000);
                 }, 100);
             }
@@ -27,48 +32,42 @@ export default function StudentLoans() {
         {
             id: "undergraduate",
             title: "Undergraduate",
-            icon: <GraduationCap className="w-8 h-8 text-cyan-500" />,
+            image: undergraduateImg,
+            icon: <GraduationCap className="w-5 h-5" />,
             desc: "Cover tuition, housing, and books with flexible repayment options that don't start until after you graduate.",
-            color: "bg-slate-900",
-            textColor: "text-white",
-            subText: "text-slate-400"
+            benefit: "Deferred payments available while you are in school at least half-time."
         },
         {
             id: "graduate",
             title: "Graduate",
-            icon: <BookOpen className="w-8 h-8 text-white" />,
+            image: graduateImg,
+            icon: <BookOpen className="w-5 h-5" />,
             desc: "Specialized funding for Masters and PhD candidates with higher lending limits and competitive fixed rates.",
-            color: "bg-cyan-500",
-            textColor: "text-white",
-            subText: "text-cyan-100"
+            benefit: "Borrow up to the full cost of attendance minus other financial aid."
         },
         {
             id: "parent-plus",
             title: "Parent Plus",
-            icon: <Users className="w-8 h-8 text-cyan-500" />,
+            image: parentplusImg,
+            icon: <Users className="w-5 h-5" />,
             desc: "Helping parents support their children's education through affordable loans with low monthly minimums.",
-            color: "bg-white",
-            textColor: "text-[#0B1E3D]",
-            subText: "text-gray-500",
-            border: "border-2 border-gray-100"
+            benefit: "Fast approval process to ensure tuition deadlines are met on time."
         },
         {
             id: "refinance-student",
-            title: "Refinance",
-            icon: <RefreshCw className="w-8 h-8 text-cyan-500" />,
+            title: "Student Refinance",
+            image: studentrefinanceImg,
+            icon: <RefreshCw className="w-5 h-5" />,
             desc: "Combine multiple student loans into one easy payment and potentially lower your overall interest rate.",
-            color: "bg-slate-100",
-            textColor: "text-[#0B1E3D]",
-            subText: "text-gray-500"
+            benefit: "Average savings of over $200 per month for qualified borrowers."
         },
         {
             id: "mba-loans",
             title: "MBA Loans",
-            icon: <Briefcase className="w-8 h-8 text-white" />,
+            image: mbaImg,
+            icon: <Briefcase className="w-5 h-5" />,
             desc: "Tailored financing for business school students, considering your future earning potential in the rate calculation.",
-            color: "bg-[#0B1E3D]",
-            textColor: "text-white",
-            subText: "text-slate-400"
+            benefit: "Exclusive networking events and career resources for MBA borrowers."
         }
     ];
 
@@ -77,43 +76,112 @@ export default function StudentLoans() {
             <div className="max-w-7xl mx-auto px-6">
                 
                 {/* Header Section */}
-                <div className="flex flex-col items-center text-center mb-16">
+                <div className="flex flex-col items-center text-center mb-24">
                     <div className="w-20 h-20 bg-cyan-50 rounded-full flex items-center justify-center mb-6">
-                        <svg className="w-10 h-10 text-cyan-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                        </svg>
+                        <GraduationCap className="w-10 h-10 text-cyan-500" />
                     </div>
-                    <h1 className="text-5xl font-extrabold text-[#0B1E3D] mb-4">Invest in Your Education.</h1>
-                    <p className="text-gray-500 max-w-xl">From undergraduate degrees to specialized MBA loans, we help you fund your future without the stress of high-interest debt.</p>
+                    <h1 className="text-5xl lg:text-7xl font-black text-[#0B1E3D] mb-6 tracking-tight">
+                        Invest in Your <span className="text-cyan-500">Education.</span>
+                    </h1>
+                    <p className="text-gray-500 text-lg max-w-2xl font-medium leading-relaxed">
+                        From undergraduate degrees to specialized MBA loans, we help you fund your future without the stress of high-interest debt.
+                    </p>
+                </div>
+
+                {/* Trust Badges Bar */}
+                <div className="flex flex-wrap justify-center gap-8 mb-32 py-8 border-y border-gray-100">
+                    <div className="flex items-center gap-2 text-gray-400 font-bold uppercase text-xs tracking-widest">
+                        <ShieldCheck className="w-4 h-4 text-cyan-500" /> Secure Application
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-400 font-bold uppercase text-xs tracking-widest">
+                        <Zap className="w-4 h-4 text-cyan-500" /> Instant Decision
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-400 font-bold uppercase text-xs tracking-widest">
+                        <Lock className="w-4 h-4 text-cyan-500" /> No Credit Impact
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-400 font-bold uppercase text-xs tracking-widest">
+                        <Award className="w-4 h-4 text-cyan-500" /> Fixed Rates
+                    </div>
                 </div>
                 
-                {/* Categories Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    {studentCategories.map((loan) => (
+                {/* Categories Sections (Alternating Layout) */}
+                <div className="space-y-32 mb-32">
+                    {studentCategories.map((loan, index) => (
                         <div 
                             key={loan.id} 
                             id={loan.id}
-                            className={`p-10 rounded-[2.5rem] transition-all duration-500 flex flex-col justify-between ${loan.color} ${loan.textColor} ${loan.border || ''} shadow-lg`}
+                            className={`flex flex-col lg:items-center gap-16 transition-all duration-1000 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
                         >
-                            <div>
-                                <div className="mb-6">{loan.icon}</div>
-                                <h2 className="text-2xl font-bold mb-4">{loan.title}</h2>
-                                <p className={`${loan.subText} mb-8 leading-relaxed`}>{loan.desc}</p>
+                            {/* Image Side */}
+                            <div className="w-full lg:w-1/2">
+                                <div className="relative group">
+                                    <div className="absolute -inset-4 bg-cyan-50 rounded-[3rem] scale-95 group-hover:scale-100 transition-transform duration-500 opacity-60"></div>
+                                    <img 
+                                        src={loan.image} 
+                                        alt={loan.title} 
+                                        className="relative rounded-[2.5rem] w-full h-[500px] object-cover shadow-2xl transition-all duration-700 group-hover:scale-105 group-hover:-translate-y-2"
+                                    />
+                                </div>
                             </div>
-                            <Link 
-                                to="/check-rate" 
-                                state={{ 
-                                    loanType: 'Student Loan', 
-                                    specificType: loan.title,
-                                    locked: true 
-                                }}
-                                className="font-bold hover:underline underline-offset-8 flex items-center gap-2"
-                            >
-                                Get Started <span className="text-xl">→</span>
-                            </Link>
+
+                            {/* Content Side */}
+                            <div className="w-full lg:w-1/2 space-y-8">
+                                <div className="flex items-center gap-3">
+                                    <span className="h-[2px] w-12 bg-cyan-500"></span>
+                                    <span className="text-cyan-600 rounded-full text-sm font-black tracking-[0.2em] uppercase flex items-center gap-2">
+                                        {loan.icon} {loan.title}
+                                    </span>
+                                </div>
+                                <h2 className="text-5xl font-black text-[#0B1E3D] tracking-tight">{loan.title} Loans</h2>
+                                <p className="text-gray-500 text-xl leading-relaxed">{loan.desc}</p>
+                                
+                                <div className="p-6 bg-white border border-gray-100 rounded-[2rem] shadow-sm relative overflow-hidden group/benefit">
+                                    <div className="absolute left-0 top-0 bottom-0 w-2 bg-cyan-500 group-hover/benefit:w-3 transition-all"></div>
+                                    <p className="text-[#0B1E3D] font-semibold italic text-base leading-relaxed pl-4">
+                                        "{loan.benefit}"
+                                    </p>
+                                </div>
+
+                                <div className="pt-4">
+                                    <Link 
+                                        to="/check-rate" 
+                                        state={{ 
+                                            loanType: 'Student Loan', 
+                                            specificType: loan.title,
+                                            locked: true 
+                                        }}
+                                        className="group inline-flex items-center px-8 py-4 bg-[#0B1E3D] text-white rounded-xl font-bold hover:bg-cyan-500 transition-all shadow-xl shadow-slate-200"
+                                    >
+                                        Apply for {loan.title}
+                                        <svg className="ml-3 w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                        </svg>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Bottom Trust Section */}
+                <div className="bg-[#0B1E3D] rounded-[4rem] p-16 text-center text-white relative overflow-hidden shadow-2xl">
+                    <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                        <div className="absolute top-[-10%] left-[-10%] w-64 h-64 bg-cyan-500 rounded-full blur-[100px]"></div>
+                        <div className="absolute bottom-[-10%] right-[-10%] w-64 h-64 bg-cyan-400 rounded-full blur-[100px]"></div>
+                    </div>
+                    
+                    <div className="relative z-10">
+                        <h3 className="text-5xl font-black mb-6">Ready to start your journey?</h3>
+                        <p className="text-slate-400 max-w-2xl mx-auto mb-10 text-lg font-medium">
+                            Join thousands of students who have secured their future with our transparent, fixed-rate education financing.
+                        </p>
+                        <Link 
+                            to="/check-rate"
+                            className="inline-block px-12 py-5 bg-cyan-500 text-white font-black uppercase tracking-widest text-sm rounded-2xl hover:bg-white hover:text-[#0B1E3D] transition-all transform hover:scale-105"
+                        >
+                            Check Your Rate Now
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

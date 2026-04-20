@@ -129,7 +129,7 @@ export default function CarLoans() {
                                     <img 
                                         src={loan.image} 
                                         alt={loan.title} 
-                                        className="relative rounded-[2rem] w-full h-[400px] object-cover shadow-2xl transition-all duration-500"
+                                        className="relative rounded-[2rem] w-full h-[400px] object-cover shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2"
                                     />
                                 </div>
                             </div>
@@ -169,9 +169,8 @@ export default function CarLoans() {
                     ))}
                 </div>
 
-               {/* Human-Centered Car Loan Process Section */}
+                {/* Human-Centered Car Loan Process Section */}
                 <div className="bg-[#0B1E3D] rounded-[4rem] p-12 lg:p-20 text-white mb-32 relative overflow-hidden">
-                    {/* Decorative Background Element */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
                     
                     <div className="relative z-10">
