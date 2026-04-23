@@ -13,15 +13,12 @@ export default function PersonalLoans() {
     const [amount, setAmount] = useState(1000);
     const monthlyPayment = Math.round((amount * 1.05) / 12);
 
-    // Effect to handle scrolling and highlighting when arriving via a hash link
     useEffect(() => {
         if (hash) {
             const element = document.getElementById(hash.replace('#', ''));
             if (element) {
-                // Scroll to element
                 setTimeout(() => {
                     element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // Trigger highlight effect
                     element.classList.add('ring-4', 'ring-cyan-400', 'ring-offset-8');
                     setTimeout(() => {
                         element.classList.remove('ring-4', 'ring-cyan-400', 'ring-offset-8');
@@ -85,7 +82,11 @@ export default function PersonalLoans() {
                         </p>
                         <Link 
                             to="/check-rate" 
-                            state={{ loanType: 'Personal Loan', locked: true }}
+                            state={{ 
+                                purpose: 'Personal Loans', 
+                                subType: '', 
+                                minAmount: amount 
+                            }}
                             className="inline-block px-8 py-4 bg-cyan-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-100 hover:bg-black transition-all transform hover:-translate-y-1"
                         >
                             Check Your Rate
@@ -142,7 +143,6 @@ export default function PersonalLoans() {
                         >
                             <div className="w-full lg:w-1/2">
                                 <div className="relative group">
-                                    {/* Animated background shape */}
                                     <div className="absolute -inset-4 bg-cyan-50 rounded-[2rem] scale-95 group-hover:scale-100 transition-transform duration-500 opacity-50"></div>
                                     <img 
                                         src={loan.image} 
@@ -169,9 +169,9 @@ export default function PersonalLoans() {
                                 <Link 
                                     to="/check-rate" 
                                     state={{ 
-                                        loanType: 'Personal Loan', 
-                                        specificType: loan.title,
-                                        locked: true 
+                                        purpose: 'Personal Loans', 
+                                        subType: loan.title,
+                                        minAmount: amount > 50 ? amount : 1000 
                                     }}
                                     className="group inline-flex items-center font-bold text-[#0B1E3D] hover:text-cyan-500 transition-colors"
                                 >

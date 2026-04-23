@@ -11,6 +11,19 @@ const loanCategories = {
   "Student Loans": ["Undergraduate", "Graduate", "Parent Plus", "Refinance", "MBA Loans"]
 };
 
+// Rate mapping for dynamic calculations
+const loanRates = {
+  "Debt Consolidation": 0.06,
+  "Wedding Loans": 0.12,
+  "Home Improvement": 0.07,
+  "Vacation Loans": 0.14,
+  "Emergency Loans": 0.18,
+  "New Car Finance": 0.04,
+  "Used Car Loans": 0.07,
+  "Refinance": 0.035,
+  "default": 0.15
+};
+
 const loanRanges = {
   "Personal Loans": { min: 50, max: 5000 },
   "Car Loans": { min: 2000, max: 40000 },
@@ -28,20 +41,22 @@ export default function CheckRate() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const preSelected = location.state?.preSelected || "";
+  const preSelected = location.state?.purpose || "";
+  const specificType = location.state?.subType || "";
   const minFromCard = location.state?.minAmount || "";
+  const initialRate = location.state?.rate || 0.15;
 
   const [step, setStep] = useState(0); 
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [estPayment, setEstPayment] = useState(0);
-  const [interestPortion, setInterestPortion] = useState(0);
+  const [currentAPR, setCurrentAPR] = useState(initialRate);
 
   const [formData, setFormData] = useState({
     amount: minFromCard || '',
     term: 36,
     purpose: preSelected || '',
-    subType: '',
+    subType: specificType || '',
     fullName: '',
     age: '',
     citizenship: 'Zimbabwe',
@@ -56,7 +71,6 @@ export default function CheckRate() {
   });
 
   const handleVerify = () => {
-    // This transition is now handled by the BotShield onVerified callback
     setStep(1);
   };
 
@@ -71,22 +85,25 @@ export default function CheckRate() {
     });
   };
 
+  // Dynamic Calculation Effect
   useEffect(() => {
     const P = parseFloat(formData.amount);
-    const annualRate = 0.15;
-    const i = annualRate / 12;
+    
+    // Determine the rate based on subType selection
+    const rate = loanRates[formData.subType] || loanRates.default;
+    setCurrentAPR(rate);
+
+    const i = rate / 12;
     const n = formData.term;
 
     if (P > 0) {
       const x = Math.pow(1 + i, n);
       const monthly = (P * i * x) / (x - 1);
       setEstPayment(monthly.toFixed(2));
-      setInterestPortion((P * i).toFixed(2));
     } else {
       setEstPayment("0.00");
-      setInterestPortion("0.00");
     }
-  }, [formData.amount, formData.term]);
+  }, [formData.amount, formData.term, formData.subType]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -159,7 +176,6 @@ export default function CheckRate() {
     );
   }
 
-  // Step 0 is now replaced by the BotShield component
   if (step === 0) {
     return <BotShield onVerified={handleVerify} />;
   }
@@ -198,19 +214,13 @@ export default function CheckRate() {
                         <div className="grid grid-cols-1 gap-4 sm:gap-6">
                           <div className="p-5 sm:p-6 bg-gray-50 rounded-2xl sm:rounded-3xl border border-gray-100 group focus-within:ring-2 focus-within:ring-cyan-500 transition-all">
                               <label className="block text-[10px] sm:text-[11px] font-black text-gray-400 uppercase mb-2 sm:mb-3 tracking-widest">Amount ($)</label>
-                              <div className="flex justify-between items-center">
-                                <input 
-                                    type="text" 
-                                    name="amount" 
-                                    value={formData.amount} 
-                                    onChange={handleInputChange} 
-                                    className="w-full bg-transparent text-3xl sm:text-4xl font-black text-[#0B1E3D] outline-none" 
-                                />
-                                <div className="hidden sm:flex flex-col gap-1 text-gray-400">
-                                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
-                                  <svg className="w-4 h-4 rotate-180" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
-                                </div>
-                              </div>
+                              <input 
+                                  type="text" 
+                                  name="amount" 
+                                  value={formData.amount} 
+                                  onChange={handleInputChange} 
+                                  className="w-full bg-transparent text-3xl sm:text-4xl font-black text-[#0B1E3D] outline-none" 
+                              />
                               <ErrorMsg name="amount" />
                           </div>
 
@@ -223,7 +233,7 @@ export default function CheckRate() {
                             </div>
                             <div className="p-4 sm:p-5 bg-cyan-50 rounded-2xl border border-cyan-100 flex items-center justify-between">
                                 <span className="text-[9px] sm:text-[10px] font-black text-cyan-800 uppercase tracking-widest">AI APR</span>
-                                <span className="text-lg sm:text-xl font-black text-cyan-600">15.0%</span>
+                                <span className="text-lg sm:text-xl font-black text-cyan-600">{(currentAPR * 100).toFixed(1)}%</span>
                             </div>
                           </div>
                         </div>
@@ -282,14 +292,10 @@ export default function CheckRate() {
                             <ErrorMsg name="address" />
                             <div className="grid grid-cols-2 gap-4">
                               <input name="city" placeholder="City" value={formData.city} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm w-full" />
-                              {formData.citizenship === 'Zimbabwe' ? (
-                                <select name="province" value={formData.province} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm w-full">
-                                  <option value="">Province</option>
-                                  {zimProvinces.map(p => <option key={p} value={p}>{p}</option>)}
-                                </select>
-                              ) : (
-                                <input name="province" placeholder="State" value={formData.province} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold text-sm w-full" />
-                              )}
+                              <select name="province" value={formData.province} onChange={handleInputChange} className="px-6 py-4 bg-gray-50 rounded-2xl font-bold border-2 border-transparent focus:ring-2 focus:ring-cyan-500 text-sm w-full">
+                                <option value="">Province</option>
+                                {zimProvinces.map(p => <option key={p} value={p}>{p}</option>)}
+                              </select>
                             </div>
                           </>
                         )}
