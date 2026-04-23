@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Asset imports
 import personalImg from '../assets/personal loan.jpg';
@@ -64,6 +65,18 @@ export default function ProductsLinks() {
     const firstCardRef = useRef(null); 
     const [isHighlighted, setIsHighlighted] = useState(false);
 
+    // Manual scroll logic for buttons
+    const scroll = (direction) => {
+        if (gridRef.current) {
+            const { scrollLeft, clientWidth } = gridRef.current;
+            const scrollAmount = direction === 'left' ? -clientWidth : clientWidth;
+            gridRef.current.scrollTo({
+                left: scrollLeft + scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     const handleExploreClick = () => {
         const isMobile = window.innerWidth < 768;
         const target = isMobile ? firstCardRef.current : gridRef.current;
@@ -77,7 +90,11 @@ export default function ProductsLinks() {
 
     return (
         <div className="min-h-screen bg-gray-50 font-sans flex flex-col">
-            
+            <style>{`
+                .no-scrollbar::-webkit-scrollbar { display: none; }
+                .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            `}</style>
+
             <main className="flex-grow max-w-[1440px] mx-auto px-6 pt-32 pb-20 w-full">
                 {/* 1. Header Hero Card */}
                 <div className="w-full bg-[#0B1E3D] rounded-3xl p-10 mb-12 shadow-2xl border-l-[12px] border-cyan-500 relative overflow-hidden">
@@ -89,43 +106,60 @@ export default function ProductsLinks() {
                 </div>
 
                 {/* 2. Responsive Scrollable Container */}
-                <div 
-                    ref={gridRef}
-                    className={`flex overflow-x-auto pb-8 snap-x snap-mandatory md:snap-none md:grid md:grid-cols-2 lg:grid-cols-5 gap-6 mb-24 transition-all duration-700 rounded-[3rem] p-2 no-scrollbar ${
-                        isHighlighted ? 'md:ring-8 md:ring-cyan-400 md:ring-offset-8 md:bg-cyan-50/50' : 'ring-0'
-                    }`}
-                >
-                    {productData.map((item, index) => (
-                        <div 
-                            key={item.category} 
-                            ref={index === 0 ? firstCardRef : null}
-                            className={`flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-auto snap-center bg-white rounded-[2.5rem] p-8 shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group relative ${
-                                isHighlighted && index === 0 ? 'ring-4 ring-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.5)] scale-105 md:scale-100 md:ring-0' : ''
-                            }`}
+                <div className="relative group/slider">
+                    {/* Desktop Navigation Arrows */}
+                    <div className="hidden lg:flex justify-between absolute top-1/2 -translate-y-1/2 w-full z-10 pointer-events-none">
+                        <button 
+                            onClick={() => scroll('left')} 
+                            className="p-3 rounded-full bg-white shadow-xl border border-slate-100 pointer-events-auto -ml-6 hover:bg-cyan-500 hover:text-white transition-all opacity-0 group-hover/slider:opacity-100"
                         >
-                            <div className="w-28 h-28 rounded-full overflow-hidden mb-6 border-4 border-gray-50 shadow-md group-hover:border-cyan-400/50 transition-colors">
-                                <img src={item.image} alt={item.category} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            <ChevronLeft />
+                        </button>
+                        <button 
+                            onClick={() => scroll('right')} 
+                            className="p-3 rounded-full bg-white shadow-xl border border-slate-100 pointer-events-auto -mr-6 hover:bg-cyan-500 hover:text-white transition-all opacity-0 group-hover/slider:opacity-100"
+                        >
+                            <ChevronRight />
+                        </button>
+                    </div>
+
+                    <div 
+                        ref={gridRef}
+                        className={`flex overflow-x-auto pb-8 snap-x snap-mandatory lg:grid-cols-5 gap-6 mb-24 transition-all duration-700 rounded-[3rem] p-2 no-scrollbar ${
+                            isHighlighted ? 'ring-8 ring-cyan-400 ring-offset-8 bg-cyan-50/50' : 'ring-0'
+                        }`}
+                    >
+                        {productData.map((item, index) => (
+                            <div 
+                                key={item.category} 
+                                ref={index === 0 ? firstCardRef : null}
+                                className={`flex-shrink-0 w-[85vw] sm:w-[60vw] lg:w-[calc(20%-19.2px)] snap-center bg-white rounded-[2.5rem] p-8 shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group relative ${
+                                    isHighlighted && index === 0 ? 'ring-4 ring-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.5)] scale-105' : ''
+                                }`}
+                            >
+                                <div className="w-28 h-28 rounded-full overflow-hidden mb-6 border-4 border-gray-50 shadow-md group-hover:border-cyan-400/50 transition-colors">
+                                    <img src={item.image} alt={item.category} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                </div>
+                                <h3 className="text-[#0B1E3D] font-black text-xl mb-2">{item.category}</h3>
+                                <p className="text-gray-400 text-[11px] mb-6 leading-relaxed uppercase tracking-wider font-bold h-12">{item.desc}</p>
+                                <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-8"></div>
+                                
+                                <ul className="w-full space-y-2">
+                                    {item.links.map((link) => (
+                                        <li key={link}>
+                                            <Link 
+                                                to={`${linkPaths[item.category]}${subLinkIds[link] || ''}`} 
+                                                className="text-gray-600 hover:text-cyan-600 text-base py-2 font-bold flex justify-between items-center group/item transition-colors"
+                                            >
+                                                {link}
+                                                <span className="text-cyan-400 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all font-black">→</span>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
-                            <h3 className="text-[#0B1E3D] font-black text-xl mb-2">{item.category}</h3>
-                            <p className="text-gray-400 text-[11px] mb-6 leading-relaxed uppercase tracking-wider font-bold h-12">{item.desc}</p>
-                            <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-8"></div>
-                            
-                            {/* Functional List */}
-                            <ul className="w-full space-y-2">
-                                {item.links.map((link) => (
-                                    <li key={link}>
-                                        <Link 
-                                            to={`${linkPaths[item.category]}${subLinkIds[link] || ''}`} 
-                                            className="text-gray-600 hover:text-cyan-600 text-base py-2 font-bold flex justify-between items-center group/item transition-colors"
-                                        >
-                                            {link}
-                                            <span className="text-cyan-400 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all font-black">→</span>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
 
                 {/* 3. Secure Your Family Section */}

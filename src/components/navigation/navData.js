@@ -32,7 +32,7 @@ export const productLinks = [
         links: [
             { name: "New Car Finance", path: "/car-loans#new-car-finance" },
             { name: "Used Car Loans", path: "/car-loans#used-car-loans" },
-            { name: "Refinance", path: "/car-loans#refinance-auto" },
+            { name: "Refinance", path: "/car-loans#refinance-auto" }, // Internal: Refinance Auto
             { name: "Lease Buyout", path: "/car-loans#lease-buyout" },
             { name: "Auto Equity", path: "/car-loans#auto-equity" },
         ],
@@ -53,7 +53,7 @@ export const productLinks = [
         path: "/mortgage",
         links: [
             { name: "Home Purchase", path: "/mortgage#home-purchase" },
-            { name: "Refinance", path: "/mortgage#refinance" },
+            { name: "Refinance", path: "/mortgage#refinance" }, // Internal: Refinance Mortgage
             { name: "Cash-out Refi", path: "/mortgage#cash-out-refi" },
             { name: "Jumbo Loans", path: "/mortgage#jumbo-loans" },
             { name: "FHA Loans", path: "/mortgage#fha-loans" },
@@ -66,7 +66,7 @@ export const productLinks = [
             { name: "Undergraduate", path: "/student-loans#undergraduate" },
             { name: "Graduate", path: "/student-loans#graduate" },
             { name: "Parent Plus", path: "/student-loans#parent-plus" },
-            { name: "Refinance", path: "/student-loans#refinance-student" },
+            { name: "Refinance", path: "/student-loans#refinance-student" }, // Internal: Refinance Student
             { name: "MBA Loans", path: "/student-loans#mba-loans" },
         ],
     },

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+// 1. Import HashLink for anchor support
+import { HashLink } from 'react-router-hash-link'; 
 import logo from '../assets/logo.png';
 
 const Navbar = () => {
@@ -30,7 +32,6 @@ const Navbar = () => {
         "CheckRate": "/check-rate"
     };
 
-    // FIXED: Unique keys for each refinance type
     const subLinkIds = {
         "Debt Consolidation": "#debt-consolidation", "Wedding Loans": "#wedding-loans", "Home Improvement": "#home-improvement", "Vacation Loans": "#vacation-loans", "Emergency Loans": "#emergency-loans",
         "New Car Finance": "#new-car-finance", "Used Car Loans": "#used-car-loans", "Refinance Auto": "#refinance-auto", "Lease Buyout": "#lease-buyout", "Auto Equity": "#auto-equity",
@@ -39,7 +40,6 @@ const Navbar = () => {
         "Undergraduate": "#undergraduate", "Graduate": "#graduate", "Parent Plus": "#parent-plus", "Refinance Student": "#refinance-student", "MBA Loans": "#mba-loans"
     };
 
-    // FIXED: Updated names to match the unique keys above
     const products = {
         "Personal Loans": ["Debt Consolidation", "Wedding Loans", "Home Improvement", "Vacation Loans", "Emergency Loans"],
         "Car Loans": ["New Car Finance", "Used Car Loans", "Refinance Auto", "Lease Buyout", "Auto Equity"],
@@ -50,22 +50,22 @@ const Navbar = () => {
 
     const navSections = {
         "Why Nexus?": [
-            { title: "Our AI Tech", desc: "Alternative data modeling" },
-            { title: "Security", desc: "Bank-grade encryption" },
-            { title: "Nexus vs Banks", desc: "Why we are 10x faster" },
-            { title: "Success Stories", desc: "Real user testimonials" }
+            { title: "Our AI Tech", desc: "Alternative data modeling", path: "/why-nexus#ai-tech" },
+            { title: "Security", desc: "Bank-grade encryption", path: "/why-nexus#security" },
+            { title: "Nexus vs Banks", desc: "Why we are 10x faster", path: "/why-nexus#comparison" },
+            { title: "Success Stories", desc: "Real user testimonials", path: "/why-nexus#stories" }
         ],
         "How it works": [
-            { title: "The 3-Step Process", desc: "From rate check to funding" },
-            { title: "Eligibility", desc: "What you need to apply" },
-            { title: "Rates & Fees", desc: "Transparent APR ranges" },
-            { title: "Help Center", desc: "Detailed FAQ & Support" }
+            { title: "The 3-Step Process", desc: "From rate check to funding", path: "/how-it-works#process" },
+            { title: "Eligibility", desc: "What you need to apply", path: "/how-it-works#eligibility" },
+            { title: "Rates & Fees", desc: "Transparent APR ranges", path: "/how-it-works#rates" },
+            { title: "Help Center", desc: "Detailed FAQ & Support", path: "/how-it-works#help" }
         ],
         "About Us": [
-            { title: "Our Mission", desc: "Democratizing credit access" },
-            { title: "Leadership", desc: "Meet the innovators" },
-            { title: "Careers", desc: "Join the Fintech future" },
-            { title: "Press", desc: "Nexus in the news" }
+            { title: "Our Mission", desc: "Democratizing credit access", path: "/about-us#mission" },
+            { title: "Leadership", desc: "Meet the innovators", path: "/about-us#leadership" },
+            { title: "Careers", desc: "Join the Fintech future", path: "/about-us#careers" },
+            { title: "Press", desc: "Nexus in the news", path: "/about-us#press" }
         ]
     };
 
@@ -81,10 +81,10 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-100 font-sans shadow-sm" onMouseLeave={() => setActiveDropdown(null)}>
+        <nav className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-100 shadow-sm" onMouseLeave={() => setActiveDropdown(null)}>
             <div className="max-w-7xl mx-auto px-6 h-[80px] flex items-center justify-between">
                 
-                <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3 group cursor-pointer">
+                <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3 group">
                     <img src={logo} alt="Nexus Logo" className="w-10 h-10 object-contain group-hover:scale-105 transition-transform duration-300" />
                     <div className="flex flex-col leading-tight">
                         <span className="text-[#0B1E3D] font-bold text-xl tracking-tight uppercase">Nexus</span>
@@ -108,12 +108,12 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Link to={linkPaths["Login"]} className="hidden sm:block text-gray-900 hover:text-cyan-500 text-sm font-semibold px-4 py-2 transition-colors">
+                    <Link to={linkPaths["Login"]} className="hidden sm:block text-gray-900 hover:text-cyan-500 text-sm font-semibold px-4 py-2">
                         Log In
                     </Link>
                     <Link 
                         to={linkPaths["CheckRate"]} 
-                        className="px-6 py-2.5 bg-cyan-500 hover:bg-black text-white text-sm font-bold rounded-lg shadow-md shadow-sky-200 transition-all active:scale-95 flex items-center justify-center"
+                        className="px-6 py-2.5 bg-cyan-500 hover:bg-black text-white text-sm font-bold rounded-lg shadow-md shadow-sky-200 transition-all active:scale-95"
                     >
                         Check My Rate
                     </Link>
@@ -135,21 +135,22 @@ const Navbar = () => {
                                 <Link 
                                     to={linkPaths[category]} 
                                     onClick={() => setActiveDropdown(null)}
-                                    className="text-[#0B1E3D] font-bold text-xs uppercase tracking-widest mb-4 border-l-4 border-cyan-500 pl-3 block hover:text-cyan-500 transition-colors"
+                                    className="text-[#0B1E3D] font-bold text-xs uppercase tracking-widest mb-4 border-l-4 border-cyan-500 pl-3 block hover:text-cyan-500"
                                 >
                                     {category}
                                 </Link>
                                 <ul className="space-y-2">
                                     {items.map(item => (
                                         <li key={item}>
-                                            <Link 
+                                            {/* 2. Used HashLink with 'smooth' prop for sub-items */}
+                                            <HashLink 
+                                                smooth
                                                 to={`${linkPaths[category]}${subLinkIds[item] || ''}`} 
                                                 onClick={() => setActiveDropdown(null)}
                                                 className="text-gray-500 hover:text-cyan-500 text-sm block py-1 transition-colors"
                                             >
-                                                {/* FIXED: regex to hide the extra identifier in the UI */}
                                                 {item.replace(/ (Auto|Mortgage|Student)/, '')}
-                                            </Link>
+                                            </HashLink>
                                         </li>
                                     ))}
                                 </ul>
@@ -163,10 +164,10 @@ const Navbar = () => {
                 <div className="hidden lg:block absolute top-[80px] left-0 w-full bg-white border-b border-gray-100 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="max-w-7xl mx-auto px-10 py-8 grid grid-cols-4 gap-6">
                         {navSections[activeDropdown].map((item) => (
-                            <Link key={item.title} to={linkPaths[activeDropdown]} className="group p-4 rounded-xl hover:bg-gray-50 transition-all">
+                            <HashLink smooth key={item.title} to={item.path} onClick={() => setActiveDropdown(null)} className="group p-4 rounded-xl hover:bg-gray-50 transition-all">
                                 <p className="text-[#0B1E3D] font-bold text-sm mb-1 group-hover:text-cyan-500">{item.title}</p>
                                 <p className="text-gray-400 text-xs">{item.desc}</p>
-                            </Link>
+                            </HashLink>
                         ))}
                     </div>
                 </div>
@@ -187,11 +188,11 @@ const Navbar = () => {
                                     <Link 
                                         to={linkPaths[name]} 
                                         onClick={() => setIsOpen(false)}
-                                        className="flex-grow text-[#0B1E3D] font-bold text-lg py-4 transition-all duration-200 hover:text-cyan-500"
+                                        className="flex-grow text-[#0B1E3D] font-bold text-lg py-4 hover:text-cyan-500"
                                     >
                                         {name}
                                     </Link>
-                                    <button onClick={() => toggleAccordion(name)} className="py-4 px-4 text-gray-400 hover:text-cyan-500 transition-all">
+                                    <button onClick={() => toggleAccordion(name)} className="py-4 px-4 text-gray-400 hover:text-cyan-500">
                                         <svg className={`w-5 h-5 transition-transform duration-300 ${mobileAccordion === name ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                                     </button>
                                 </div>
@@ -218,25 +219,25 @@ const Navbar = () => {
                                                     </div>
                                                     <div className={`overflow-hidden transition-all duration-300 ${mobileSubAccordion === cat ? 'max-h-[500px] py-2' : 'max-h-0'}`}>
                                                         {items.map(subItem => (
-                                                            <Link
+                                                            <HashLink
+                                                                smooth
                                                                 key={subItem}
                                                                 to={`${linkPaths[cat]}${subLinkIds[subItem] || ''}`}
                                                                 onClick={() => setIsOpen(false)}
                                                                 className="block pl-6 py-2 text-gray-500 text-sm hover:text-cyan-500 font-medium"
                                                             >
-                                                                {/* FIXED: UI display logic also added to mobile */}
                                                                 {subItem.replace(/ (Auto|Mortgage|Student)/, '')}
-                                                            </Link>
+                                                            </HashLink>
                                                         ))}
                                                     </div>
                                                 </div>
                                             ))
                                         ) : (
                                             navSections[name].map(item => (
-                                                <Link key={item.title} to={linkPaths[name]} onClick={() => setIsOpen(false)} className="text-gray-500 text-sm py-2 px-3 rounded-xl transition-colors hover:bg-cyan-50">
+                                                <HashLink smooth key={item.title} to={item.path} onClick={() => setIsOpen(false)} className="text-gray-500 text-sm py-2 px-3 rounded-xl hover:bg-cyan-50">
                                                     <span className="font-bold block text-[#0B1E3D]">{item.title}</span>
                                                     <span className="text-[11px] opacity-70">{item.desc}</span>
-                                                </Link>
+                                                </HashLink>
                                             ))
                                         )}
                                     </div>
@@ -248,7 +249,7 @@ const Navbar = () => {
                             <Link 
                                 to={linkPaths["Login"]} 
                                 onClick={() => setIsOpen(false)}
-                                className="block text-[#0B1E3D] font-bold text-lg py-4 hover:text-cyan-500 transition-all"
+                                className="block text-[#0B1E3D] font-bold text-lg py-4 hover:text-cyan-500"
                             >
                                 Log In
                             </Link>

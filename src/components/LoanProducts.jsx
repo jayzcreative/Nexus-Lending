@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Home, Car, HeartPulse, GraduationCap } from 'lucide-react';
+import { User, Home, Car, HeartPulse, GraduationCap, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const products = [
     { 
@@ -41,16 +41,55 @@ const products = [
 ];
 
 export default function LoanProducts() {
+    const scrollRef = useRef(null);
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const { scrollLeft, clientWidth } = scrollRef.current;
+            const scrollAmount = direction === 'left' ? -clientWidth : clientWidth;
+            scrollRef.current.scrollTo({
+                left: scrollLeft + scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
-        <div className="relative w-full">
-            <div className="flex overflow-x-auto lg:overflow-visible snap-x snap-mandatory gap-6 pb-8 lg:pb-0 lg:grid lg:grid-cols-2 xl:grid-cols-5 scrollbar-hide px-4 lg:px-0">
+        <div className="relative w-full group/slider">
+            <style>{`
+                .no-scrollbar::-webkit-scrollbar { display: none; }
+                .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            `}</style>
+
+            {/* Desktop Navigation Arrows */}
+            <div className="hidden lg:flex justify-between absolute top-1/2 -translate-y-1/2 w-full z-10 pointer-events-none px-2">
+                <button 
+                    onClick={() => scroll('left')} 
+                    className="p-3 rounded-full bg-white shadow-xl border border-slate-100 pointer-events-auto -ml-4 hover:bg-cyan-500 hover:text-white transition-all opacity-0 group-hover/slider:opacity-100"
+                >
+                    <ChevronLeft />
+                </button>
+                <button 
+                    onClick={() => scroll('right')} 
+                    className="p-3 rounded-full bg-white shadow-xl border border-slate-100 pointer-events-auto -mr-4 hover:bg-cyan-500 hover:text-white transition-all opacity-0 group-hover/slider:opacity-100"
+                >
+                    <ChevronRight />
+                </button>
+            </div>
+
+            {/* Added items-stretch to ensure cards expand to the height of the tallest peer */}
+            <div 
+                ref={scrollRef}
+                className="flex items-stretch overflow-x-auto snap-x snap-mandatory gap-6 pb-8 no-scrollbar px-4 lg:px-0"
+            >
                 {products.map((loan, index) => (
                     <div 
                         key={index} 
                         data-aos="fade-up" 
                         data-aos-delay={index * 100} 
-                        className="flex-shrink-0 w-[85%] sm:w-[60%] lg:w-full snap-center bg-white p-8 rounded-[2.5rem] border-2 border-gray-100 shadow-sm hover:shadow-2xl hover:border-cyan-400 transition-all duration-500 group flex flex-col h-full"
+                        className="flex-shrink-0 w-[85%] sm:w-[60%] lg:w-[calc(33.333%-16px)] xl:w-[calc(20%-20px)] snap-center bg-white p-8 rounded-[2.5rem] border-2 border-gray-100 shadow-sm hover:shadow-2xl hover:border-cyan-400 transition-all duration-500 group flex flex-col"
                     >
+                        {/* Header Content */}
                         <div className="flex flex-col items-center text-center mb-6">
                             <div className="mb-4 group-hover:scale-110 transition-transform">
                                 {loan.icon}
@@ -60,10 +99,12 @@ export default function LoanProducts() {
                             </h3>
                         </div>
 
+                        {/* Range Badge */}
                         <div className="bg-cyan-50 text-cyan-700 font-bold text-sm py-2 px-4 rounded-lg text-center mb-8">
                             {loan.range}
                         </div>
 
+                        {/* Features List - flex-grow pushes the footer content down */}
                         <ul className="space-y-4 mb-10 flex-grow">
                             {loan.features.map((feature, fIndex) => (
                                 <li key={fIndex} className="flex items-start gap-3 text-left">
@@ -79,6 +120,7 @@ export default function LoanProducts() {
                             ))}
                         </ul>
 
+                        {/* Footer Content - Always stays at the bottom */}
                         <div className="flex flex-col items-center gap-6 mt-auto">
                             <Link 
                                 to="/check-rate"
@@ -105,7 +147,8 @@ export default function LoanProducts() {
                     </div>
                 ))}
             </div>
-            <div className="absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-cyan-500/10 to-transparent pointer-events-none lg:hidden"></div>
+            
+            <div className="absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-slate-50/50 to-transparent pointer-events-none lg:hidden"></div>
         </div>
     );
 }

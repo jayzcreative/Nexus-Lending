@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { ShieldCheck, Eye, Zap } from 'lucide-react'; // Added Lucide Icons
+import { ShieldCheck, Eye, Zap, ChevronLeft, ChevronRight } from 'lucide-react'; 
 import Bridget from '../assets/student.jpg';
 import Elena from '../assets/woman.jpg';
 import Jordan from '../assets/father.jpg';
@@ -34,6 +34,8 @@ const socialFeed = [
 ];
 
 export default function TrustSection() {
+    const scrollRef = useRef(null);
+
     useEffect(() => {
         AOS.init({
             duration: 1000,
@@ -42,11 +44,27 @@ export default function TrustSection() {
         });
     }, []);
 
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const { scrollLeft, clientWidth } = scrollRef.current;
+            const scrollAmount = direction === 'left' ? -clientWidth : clientWidth;
+            scrollRef.current.scrollTo({
+                left: scrollLeft + scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
         <section className="py-24 bg-white relative overflow-hidden">
+            <style>{`
+                .no-scrollbar::-webkit-scrollbar { display: none; }
+                .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            `}</style>
+
             <div className="max-w-[1440px] mx-auto px-6">
                 
-                {/* --- PART 1: THE PILLARS (Authority) --- */}
+                {/* --- PART 1: THE PILLARS --- */}
                 <div className="text-center mb-20" data-aos="fade-down">
                     <h2 className="text-4xl lg:text-6xl font-black text-[#0B1E3D] mb-6 tracking-tight">
                         The Nexus <span className="text-cyan-500">Difference.</span>
@@ -57,7 +75,6 @@ export default function TrustSection() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24">
-                    {/* Autonomous Defense Icon */}
                     <div data-aos="fade-right" data-aos-delay="100" className="p-10 rounded-[3rem] bg-cyan-50 border border-cyan-100 hover:shadow-xl transition-all group">
                         <div className="mb-6 group-hover:scale-110 transition-transform">
                             <ShieldCheck className="w-12 h-12 text-cyan-600" strokeWidth={1.5} />
@@ -68,7 +85,6 @@ export default function TrustSection() {
                         </p>
                     </div>
 
-                    {/* Pure Transparency Icon */}
                     <div data-aos="fade-up" data-aos-delay="300" className="p-10 rounded-[3rem] bg-[#0B1E3D] text-white hover:shadow-xl transition-all group">
                         <div className="mb-6 group-hover:scale-110 transition-transform">
                             <Eye className="w-12 h-12 text-cyan-400" strokeWidth={1.5} />
@@ -79,7 +95,6 @@ export default function TrustSection() {
                         </p>
                     </div>
 
-                    {/* Instant Synergy Icon */}
                     <div data-aos="fade-left" data-aos-delay="500" className="p-10 rounded-[3rem] bg-cyan-500 text-white hover:shadow-xl transition-all group">
                         <div className="mb-6 group-hover:scale-110 transition-transform">
                             <Zap className="w-12 h-12 text-white" strokeWidth={1.5} />
@@ -92,7 +107,7 @@ export default function TrustSection() {
                 </div>
 
                 {/* --- PART 2: THE REVIEWS --- */}
-                <div className="bg-[#F8FAFC] rounded-[4rem] relative border border-gray-100 overflow-hidden" data-aos="zoom-in-up">
+                <div className="bg-[#F8FAFC] rounded-[4rem] relative border border-gray-100 overflow-hidden group/slider" data-aos="zoom-in-up">
                     
                     {/* Aggregate Rating Bar */}
                     <div className="bg-[#0B1E3D] p-4 lg:p-6 text-center lg:text-left flex flex-col lg:flex-row items-center justify-between gap-4">
@@ -120,14 +135,32 @@ export default function TrustSection() {
                             <p className="text-gray-500 text-lg font-bold uppercase tracking-widest">Active Community Stories</p>
                         </div>
 
-                        {/* --- Horizontal Scroll on Small Screens --- */}
-                        <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 pb-8 md:pb-0 snap-x snap-mandatory scrollbar-hide">
+                        {/* Desktop Slider Controls */}
+                        <div className="hidden lg:flex justify-between absolute top-[60%] -translate-y-1/2 w-full left-0 z-10 pointer-events-none px-8">
+                            <button 
+                                onClick={() => scroll('left')} 
+                                className="p-4 rounded-full bg-white shadow-xl border border-slate-100 pointer-events-auto hover:bg-cyan-500 hover:text-white transition-all opacity-0 group-hover/slider:opacity-100"
+                            >
+                                <ChevronLeft size={28} />
+                            </button>
+                            <button 
+                                onClick={() => scroll('right')} 
+                                className="p-4 rounded-full bg-white shadow-xl border border-slate-100 pointer-events-auto hover:bg-cyan-500 hover:text-white transition-all opacity-0 group-hover/slider:opacity-100"
+                            >
+                                <ChevronRight size={28} />
+                            </button>
+                        </div>
+
+                        <div 
+                            ref={scrollRef}
+                            className="flex overflow-x-auto lg:grid lg:grid-cols-3 gap-8 pb-8 md:pb-0 snap-x snap-mandatory no-scrollbar"
+                        >
                             {socialFeed.map((post, index) => (
                                 <div 
                                     key={index} 
                                     data-aos="fade-up"
                                     data-aos-delay={index * 200}
-                                    className="min-w-[85%] md:min-w-0 snap-center bg-white p-8 rounded-[2.5rem] border-2 border-transparent hover:border-cyan-400 transition-all duration-300 group shadow-sm hover:shadow-xl flex flex-col h-full"
+                                    className="min-w-[85%] lg:min-w-0 snap-center bg-white p-8 rounded-[2.5rem] border-2 border-transparent hover:border-cyan-400 transition-all duration-300 group shadow-sm hover:shadow-xl flex flex-col h-full"
                                 >
                                     <div className="flex justify-between items-center mb-6">
                                         <div className="flex gap-0.5 text-green-500">
