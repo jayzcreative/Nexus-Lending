@@ -19,9 +19,26 @@ export default function StudentLoans() {
             if (element) {
                 setTimeout(() => {
                     element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    element.classList.add('ring-4', 'ring-cyan-400', 'ring-offset-8', 'scale-[1.01]');
+                    
+                    // Added 'rounded-[2.5rem]' to ensure the ring is circular/rounded
+                    element.classList.add(
+                        'ring-4', 
+                        'ring-cyan-400', 
+                        'ring-offset-8', 
+                        'scale-[1.01]', 
+                        'rounded-[2.5rem]',
+                        'transition-all',
+                        'duration-500'
+                    );
+
                     setTimeout(() => {
-                        element.classList.remove('ring-4', 'ring-cyan-400', 'ring-offset-8', 'scale-[1.01]');
+                        element.classList.remove(
+                            'ring-4', 
+                            'ring-cyan-400', 
+                            'ring-offset-8', 
+                            'scale-[1.01]', 
+                            'rounded-[2.5rem]'
+                        );
                     }, 2000);
                 }, 100);
             }
@@ -104,7 +121,7 @@ export default function StudentLoans() {
                     </div>
                 </div>
                 
-                {/* Categories Sections (Alternating Layout) */}
+                {/* Categories Sections */}
                 <div className="space-y-32 mb-32">
                     {studentCategories.map((loan, index) => (
                         <div 

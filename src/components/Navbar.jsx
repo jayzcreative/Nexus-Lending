@@ -8,7 +8,6 @@ const Navbar = () => {
     const [mobileAccordion, setMobileAccordion] = useState(null);
     const [mobileSubAccordion, setMobileSubAccordion] = useState(null);
 
-    // Prevent scrolling when mobile menu is open
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -31,20 +30,22 @@ const Navbar = () => {
         "CheckRate": "/check-rate"
     };
 
+    // FIXED: Unique keys for each refinance type
     const subLinkIds = {
         "Debt Consolidation": "#debt-consolidation", "Wedding Loans": "#wedding-loans", "Home Improvement": "#home-improvement", "Vacation Loans": "#vacation-loans", "Emergency Loans": "#emergency-loans",
-        "New Car Finance": "#new-car-finance", "Used Car Loans": "#used-car-loans", "Refinance": "#refinance-auto", "Lease Buyout": "#lease-buyout", "Auto Equity": "#auto-equity",
+        "New Car Finance": "#new-car-finance", "Used Car Loans": "#used-car-loans", "Refinance Auto": "#refinance-auto", "Lease Buyout": "#lease-buyout", "Auto Equity": "#auto-equity",
         "Medical Bills": "#medical-bills", "Dental Loans": "#dental-loans", "Life Insurance": "#life-insurance", "Health Coverage": "#health-coverage", "Pet Insurance": "#pet-insurance",
-        "Home Purchase": "#home-purchase", "Refinance ": "#refinance", "Cash-out Refi": "#cash-out-refi", "Jumbo Loans": "#jumbo-loans", "FHA Loans": "#fha-loans",
-        "Undergraduate": "#undergraduate", "Graduate": "#graduate", "Parent Plus": "#parent-plus", "Refinance  ": "#refinance-student", "MBA Loans": "#mba-loans"
+        "Home Purchase": "#home-purchase", "Refinance Mortgage": "#refinance", "Cash-out Refi": "#cash-out-refi", "Jumbo Loans": "#jumbo-loans", "FHA Loans": "#fha-loans",
+        "Undergraduate": "#undergraduate", "Graduate": "#graduate", "Parent Plus": "#parent-plus", "Refinance Student": "#refinance-student", "MBA Loans": "#mba-loans"
     };
 
+    // FIXED: Updated names to match the unique keys above
     const products = {
         "Personal Loans": ["Debt Consolidation", "Wedding Loans", "Home Improvement", "Vacation Loans", "Emergency Loans"],
-        "Car Loans": ["New Car Finance", "Used Car Loans", "Refinance", "Lease Buyout", "Auto Equity"],
+        "Car Loans": ["New Car Finance", "Used Car Loans", "Refinance Auto", "Lease Buyout", "Auto Equity"],
         "Health & Insurance": ["Medical Bills", "Dental Loans", "Life Insurance", "Health Coverage", "Pet Insurance"],
-        "Mortgage": ["Home Purchase", "Refinance", "Cash-out Refi", "Jumbo Loans", "FHA Loans"],
-        "Student Loans": ["Undergraduate", "Graduate", "Parent Plus", "Refinance", "MBA Loans"]
+        "Mortgage": ["Home Purchase", "Refinance Mortgage", "Cash-out Refi", "Jumbo Loans", "FHA Loans"],
+        "Student Loans": ["Undergraduate", "Graduate", "Parent Plus", "Refinance Student", "MBA Loans"]
     };
 
     const navSections = {
@@ -146,7 +147,8 @@ const Navbar = () => {
                                                 onClick={() => setActiveDropdown(null)}
                                                 className="text-gray-500 hover:text-cyan-500 text-sm block py-1 transition-colors"
                                             >
-                                                {item}
+                                                {/* FIXED: regex to hide the extra identifier in the UI */}
+                                                {item.replace(/ (Auto|Mortgage|Student)/, '')}
                                             </Link>
                                         </li>
                                     ))}
@@ -222,7 +224,8 @@ const Navbar = () => {
                                                                 onClick={() => setIsOpen(false)}
                                                                 className="block pl-6 py-2 text-gray-500 text-sm hover:text-cyan-500 font-medium"
                                                             >
-                                                                {subItem}
+                                                                {/* FIXED: UI display logic also added to mobile */}
+                                                                {subItem.replace(/ (Auto|Mortgage|Student)/, '')}
                                                             </Link>
                                                         ))}
                                                     </div>

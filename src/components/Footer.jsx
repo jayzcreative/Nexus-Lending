@@ -1,14 +1,40 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Ensure react-router-dom is installed
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png'; 
 
 export default function Footer({ onCheckRate }) {
+    // Mapping logic synced with Navbar
+    const linkPaths = {
+        "Products": "/products",
+        "Personal Loans": "/personal-loans",
+        "Car Loans": "/car-loans",
+        "Health & Insurance": "/health-insurance",
+        "Mortgage": "/mortgage",
+        "Student Loans": "/student-loans",
+        "Why Nexus?": "/why-nexus",
+        "How it works": "/how-it-works",
+        "About Us": "/about-us",
+        "Login": "/login",
+        "CheckRate": "/check-rate",
+        "Resources": "/how-it-works"
+    };
+
+    // FIXED: Unique keys for each refinance type to prevent collision
+    const subLinkIds = {
+        "Debt Consolidation": "#debt-consolidation", "Wedding Loans": "#wedding-loans", "Home Improvement": "#home-improvement", "Vacation Loans": "#vacation-loans", "Emergency Loans": "#emergency-loans",
+        "New Car Finance": "#new-car-finance", "Used Car Loans": "#used-car-loans", "Refinance Auto": "#refinance-auto", "Lease Buyout": "#lease-buyout", "Auto Equity": "#auto-equity",
+        "Medical Bills": "#medical-bills", "Dental Loans": "#dental-loans", "Life Insurance": "#life-insurance", "Health Coverage": "#health-coverage", "Pet Insurance": "#pet-insurance",
+        "Home Purchase": "#home-purchase", "Refinance Mortgage": "#refinance", "Cash-out Refi": "#cash-out-refi", "Jumbo Loans": "#jumbo-loans", "FHA Loans": "#fha-loans",
+        "Undergraduate": "#undergraduate", "Graduate": "#graduate", "Parent Plus": "#parent-plus", "Refinance Student": "#refinance-student", "MBA Loans": "#mba-loans"
+    };
+
+    // FIXED: Updated names to match unique subLinkIds keys
     const products = {
         "Personal Loans": ["Debt Consolidation", "Wedding Loans", "Home Improvement", "Vacation Loans", "Emergency Loans"],
-        "Car Loans": ["New Car Finance", "Used Car Loans", "Refinance", "Lease Buyout", "Auto Equity"],
+        "Car Loans": ["New Car Finance", "Used Car Loans", "Refinance Auto", "Lease Buyout", "Auto Equity"],
         "Health & Insurance": ["Medical Bills", "Dental Loans", "Life Insurance", "Health Coverage", "Pet Insurance"],
-        "Mortgage": ["Home Purchase", "Refinance", "Cash-out Refi", "Jumbo Loans", "FHA Loans"],
-        "Student Loans": ["Undergraduate", "Graduate", "Parent Plus", "Refinance", "MBA Loans"]
+        "Mortgage": ["Home Purchase", "Refinance Mortgage", "Cash-out Refi", "Jumbo Loans", "FHA Loans"],
+        "Student Loans": ["Undergraduate", "Graduate", "Parent Plus", "Refinance Student", "MBA Loans"]
     };
 
     const whyNexus = ["Our AI Tech", "Security", "Nexus vs Banks", "Success Stories"];
@@ -66,16 +92,19 @@ export default function Footer({ onCheckRate }) {
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-16 gap-x-8 mb-20 border-t border-white/10 pt-16">
                     {Object.entries(products).map(([category, items]) => (
                         <div key={category}>
-                            <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">
+                            <Link to={linkPaths[category]} className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3 block hover:text-cyan-400 transition-colors">
                                 {category}
-                            </h4>
+                            </Link>
                             <ul className="space-y-3">
                                 {items.map((item, index) => (
                                     <li 
                                         key={item} 
                                         className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}
                                     >
-                                        {item}
+                                        <Link to={`${linkPaths[category]}${subLinkIds[item] || ''}`}>
+                                            {/* FIXED: regex to display "Refinance" cleanly in footer */}
+                                            {item.replace(/ (Auto|Mortgage|Student)/, '')}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
@@ -83,10 +112,14 @@ export default function Footer({ onCheckRate }) {
                     ))}
 
                     <div>
-                        <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Why Nexus?</h4>
+                        <Link to={linkPaths["Why Nexus?"]} className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3 block hover:text-cyan-400 transition-colors">
+                            Why Nexus?
+                        </Link>
                         <ul className="space-y-3">
                             {whyNexus.map((link, index) => (
-                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>{link}</li>
+                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>
+                                    <Link to={linkPaths["Why Nexus?"]}>{link}</Link>
+                                </li>
                             ))}
                         </ul>
                     </div>
@@ -95,16 +128,22 @@ export default function Footer({ onCheckRate }) {
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Resources</h4>
                         <ul className="space-y-3">
                             {howItWorks.map((link, index) => (
-                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>{link}</li>
+                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>
+                                    <Link to={linkPaths["Resources"]}>{link}</Link>
+                                </li>
                             ))}
                         </ul>
                     </div>
 
                     <div>
-                        <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">About Us</h4>
+                        <Link to={linkPaths["About Us"]} className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3 block hover:text-cyan-400 transition-colors">
+                            About Us
+                        </Link>
                         <ul className="space-y-3">
                             {aboutUs.map((link, index) => (
-                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>{link}</li>
+                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>
+                                    <Link to={linkPaths["About Us"]}>{link}</Link>
+                                </li>
                             ))}
                         </ul>
                     </div>
