@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, RefreshCcw, DollarSign, Building2, ShieldCheck } from 'lucide-react';
+import { Home, RefreshCcw, DollarSign, Building2, ShieldCheck, ArrowRight } from 'lucide-react';
 
 // Import images
 import homePurchaseImg from '../../assets/home purchase.jpg';
@@ -90,14 +90,20 @@ export default function MortgageLoans() {
                         <p className="text-xl text-gray-500 mb-10 max-w-md leading-relaxed">
                             From first-time buyers to luxury estates, our AI modeling identifies your true creditworthiness to secure rates traditional banks miss.
                         </p>
+                        
+                        {/* UPDATED: Purpose is set to Mortgage, subType is left empty to remain open */}
                         <Link 
                             to="/check-rate"
-                            state={{ loanType: 'Mortgage Loan', locked: true }}
-                            className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#0B1E3D] text-white font-bold rounded-2xl transition-all hover:bg-cyan-500 hover:shadow-2xl hover:shadow-cyan-200"
+                            state={{ 
+                                purpose: 'Mortgage', 
+                                subType: '', 
+                                source: 'hero_main' 
+                            }}
+                            className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#0B1E3D] text-white font-bold rounded-2xl transition-all hover:bg-cyan-600 hover:shadow-2xl hover:shadow-cyan-200"
                         >
                             Get Pre-Approved
                             <div className="bg-white/10 p-1 rounded-lg group-hover:translate-x-1 transition-transform">
-                                <Home className="w-5 h-5 text-cyan-400" fill="currentColor" />
+                                <ArrowRight className="w-5 h-5 text-cyan-400" />
                             </div>
                         </Link>
                     </div>
@@ -116,7 +122,7 @@ export default function MortgageLoans() {
                     </div>
                 </div>
 
-                {/* Alternating Loan Sections */}
+                {/* Alternating Loan Sections (Remaining untouched as requested) */}
                 <div className="space-y-32 mb-32">
                     {mortgageCategories.map((loan, index) => (
                         <div 
@@ -155,9 +161,8 @@ export default function MortgageLoans() {
                                 <Link 
                                     to="/check-rate" 
                                     state={{ 
-                                        loanType: 'Mortgage Loan', 
-                                        specificType: loan.title,
-                                        locked: true 
+                                        purpose: 'Mortgage', 
+                                        subType: loan.title 
                                     }}
                                     className="inline-flex items-center gap-2 font-black text-lg text-[#0B1E3D] hover:text-cyan-500 transition-colors"
                                 >

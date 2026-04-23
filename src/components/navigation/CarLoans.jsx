@@ -94,7 +94,10 @@ export default function CarLoans() {
                         </p>
                         <Link 
                             to="/check-rate"
-                            state={{ loanType: 'Car Loan', locked: true }}
+                            state={{ 
+                                purpose: 'Car Loans', 
+                                locked: true 
+                            }}
                             className="inline-block px-8 py-4 bg-cyan-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-100 hover:bg-black transition-all transform hover:-translate-y-1"
                         >
                             Check Auto Rate
@@ -153,9 +156,8 @@ export default function CarLoans() {
                                 <Link 
                                     to="/check-rate" 
                                     state={{ 
-                                        loanType: 'Car Loan', 
-                                        specificType: loan.title,
-                                        locked: true 
+                                        purpose: 'Car Loans', 
+                                        subType: loan.title 
                                     }}
                                     className="group inline-flex items-center font-bold text-[#0B1E3D] hover:text-cyan-500 transition-colors"
                                 >

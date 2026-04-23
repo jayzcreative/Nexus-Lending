@@ -83,15 +83,14 @@ export default function LoanProducts() {
                             <Link 
                                 to="/check-rate"
                                 state={{ 
-                                    preSelected: loan.name, 
-                                    minAmount: loan.range.split('-')[0].replace(/[^0-9]/g, '') 
+                                    purpose: loan.name, 
+                                    amount: loan.range.split('-')[0].replace(/[^0-9]/g, '') 
                                 }}
                                 className="w-full py-4 bg-[#0B1E3D] text-white font-bold rounded-xl hover:bg-cyan-600 transition-colors text-center block shadow-lg shadow-[#0B1E3D]/10"
                             >
                                 Check your rate
                             </Link>
                             
-                            {/* Explore Link updated from button to Link */}
                             <Link to={loan.path} className="flex items-center justify-center group/arrow cursor-pointer">
                                 <div className="flex items-center gap-2 text-[#0B1E3D] font-bold text-lg group-hover/arrow:text-cyan-500 transition-colors">
                                     <span className="text-sm uppercase tracking-widest">Explore</span>

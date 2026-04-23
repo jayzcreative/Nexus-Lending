@@ -146,9 +146,8 @@ export default function StudentLoans() {
                                     <Link 
                                         to="/check-rate" 
                                         state={{ 
-                                            loanType: 'Student Loan', 
-                                            specificType: loan.title,
-                                            locked: true 
+                                            purpose: 'Student Loans', 
+                                            subType: loan.title 
                                         }}
                                         className="group inline-flex items-center px-8 py-4 bg-[#0B1E3D] text-white rounded-xl font-bold hover:bg-cyan-500 transition-all shadow-xl shadow-slate-200"
                                     >
@@ -177,6 +176,7 @@ export default function StudentLoans() {
                         </p>
                         <Link 
                             to="/check-rate"
+                            state={{ purpose: 'Student Loans' }}
                             className="inline-block px-12 py-5 bg-cyan-500 text-white font-black uppercase tracking-widest text-sm rounded-2xl hover:bg-white hover:text-[#0B1E3D] transition-all transform hover:scale-105"
                         >
                             Check Your Rate Now

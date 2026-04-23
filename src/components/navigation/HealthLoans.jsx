@@ -80,7 +80,7 @@ export default function HealthLoans() {
         <div className="pt-[120px] pb-20 bg-[#F8FAFC] min-h-screen">
             <div className="max-w-7xl mx-auto px-6">
                 
-                {/* UNIQUE HERO SECTION */}
+                {/* HERO SECTION */}
                 <div className="grid lg:grid-cols-2 gap-16 items-center mb-40">
                     <div className="relative">
                         <div className="absolute -top-10 -left-10 w-32 h-32 bg-cyan-100 rounded-full blur-3xl opacity-60"></div>
@@ -93,7 +93,10 @@ export default function HealthLoans() {
                         </p>
                         <Link 
                             to="/check-rate"
-                            state={{ loanType: 'Health Loan', locked: true }}
+                            state={{ 
+                                purpose: 'Health & Insurance', 
+                                locked: true 
+                            }}
                             className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#0B1E3D] text-white font-bold rounded-2xl transition-all hover:bg-cyan-500 hover:shadow-2xl hover:shadow-cyan-200"
                         >
                             Start Your Application
@@ -103,7 +106,6 @@ export default function HealthLoans() {
                         </Link>
                     </div>
                     
-                    {/* Unique Floating Stats Grid */}
                     <div className="grid grid-cols-2 gap-4 relative">
                         <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent rounded-[3rem] -rotate-3"></div>
                         <div className="p-8 bg-white border border-white rounded-[2.5rem] shadow-xl shadow-gray-200/50 transform translate-y-8">
@@ -167,7 +169,10 @@ export default function HealthLoans() {
 
                                 <Link 
                                     to="/check-rate" 
-                                    state={{ loanType: 'Health Loan', specificType: loan.title, locked: true }}
+                                    state={{ 
+                                        purpose: 'Health & Insurance', 
+                                        subType: loan.title 
+                                    }}
                                     className="inline-flex items-center gap-2 font-black text-lg text-[#0B1E3D] hover:text-cyan-500 transition-colors"
                                 >
                                     Check Eligibility <span>→</span>
@@ -177,7 +182,7 @@ export default function HealthLoans() {
                     ))}
                 </div>
 
-                {/* UNIQUE BOTTOM PROCESS SECTION */}
+                {/* BOTTOM PROCESS SECTION */}
                 <div className="relative bg-white border border-gray-100 rounded-[4rem] p-12 lg:p-24 shadow-2xl shadow-gray-200/50 overflow-hidden mb-20">
                     <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400"></div>
                     
