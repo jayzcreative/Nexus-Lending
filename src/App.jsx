@@ -21,6 +21,8 @@ import LogIn from './components/LogIn';
 import NewUsers from './components/NewUsers';
 import CheckRate from './components/CheckRate'; 
 import BotShield from './components/BotShield';
+import ContactUs from './components/ContactUs';
+import HelpCenter from './components/HelpCenter'; // Added Import
 
 import PersonalLoans from './components/navigation/PersonalLoans';
 import CarLoans from './components/navigation/CarLoans';
@@ -50,12 +52,13 @@ const Home = () => (
 const AppContent = ({ user }) => {
   const location = useLocation();
   
-  // Pages that hide Navbar/Footer for a clean experience
-  // Note: We keep Navbar for the specific Loan category pages (Car, Health, etc.)
+  // Updated to include /contact and /help for a clean experience
   const isCleanPage = 
     location.pathname === '/login' || 
     location.pathname === '/signup' || 
-    location.pathname === '/check-rate';
+    location.pathname === '/check-rate' ||
+    location.pathname === '/contact' ||
+    location.pathname === '/help';
 
   return (
     <div className="min-h-screen bg-white">
@@ -68,8 +71,10 @@ const AppContent = ({ user }) => {
           <Route path="/why-nexus" element={<WhyNexusLinks />} />
           <Route path="/how-it-works" element={<HowLinks />} />
           <Route path="/about-us" element={<AboutUsLinks />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/help" element={<HelpCenter />} /> {/* Added HelpCenter Route */}
           
-          {/* NEW: Dedicated Routes for each Loan Type */}
+          {/* Dedicated Routes for each Loan Type */}
           <Route path="/personal-loans" element={<PersonalLoans />} />
           <Route path="/car-loans" element={<CarLoans />} />
           <Route path="/health-insurance" element={<HealthLoans />} />

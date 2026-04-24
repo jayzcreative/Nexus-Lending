@@ -166,14 +166,7 @@ export default function Footer({ onCheckRate }) {
                         </ul>
                     </div>
 
-                    <div>
-                        <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Support & Legal</h4>
-                        <ul className="space-y-3">
-                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Contact Us</li>
-                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Help Center</li>
-                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer hidden md:block">Media Kit</li>
-                        </ul>
-                    </div>
+                    
 
                     <div>
                         <h4 className="text-cyan-400 font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Compliance & Privacy</h4>
@@ -182,6 +175,15 @@ export default function Footer({ onCheckRate }) {
                             <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Privacy Policy</li>
                             <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer hidden md:block">Cookie Settings</li>
                             <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer hidden md:block">Disclosures</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Support & Legal</h4>
+                        <ul className="space-y-3">
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Contact Us</li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Help Center</li>
+                           
                         </ul>
                     </div>
                 </div>

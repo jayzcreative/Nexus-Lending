@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Added for navigation
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -29,6 +30,7 @@ export default function FAQ() {
     const [openIndex, setOpenIndex] = useState(null);
 
     useEffect(() => {
+        // Initializing animations
         AOS.init({
             duration: 800,
             once: false,
@@ -43,7 +45,7 @@ export default function FAQ() {
         <section className="py-24 bg-gray-50 overflow-hidden">
             <div className="max-w-[1000px] mx-auto px-6">
                 
-                {/* Header: Zooms in slightly */}
+                {/* Header */}
                 <div className="text-center mb-16" data-aos="zoom-in">
                     <h2 className="text-[#0B1E3D] text-4xl lg:text-5xl font-black mb-4">
                         Got <span className="text-cyan-500">Questions?</span>
@@ -53,11 +55,11 @@ export default function FAQ() {
                     </p>
                 </div>
 
+                {/* FAQ List */}
                 <div className="space-y-4">
                     {faqData.map((item, index) => (
                         <div 
                             key={index} 
-                            // Staggered fade up for each question
                             data-aos="fade-up"
                             data-aos-delay={index * 100}
                             className="bg-white rounded-[2rem] border border-gray-100 overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md"
@@ -89,12 +91,15 @@ export default function FAQ() {
                     ))}
                 </div>
 
-                {/* Footer Button: Slides in from the bottom after the list */}
+                {/* Updated Footer Button with Link */}
                 <div className="mt-16 text-center" data-aos="fade-up" data-aos-offset="0">
                     <p className="text-[#0B1E3D] font-bold text-lg mb-6">Still confused about something?</p>
-                    <button className="px-10 py-4 border-2 border-[#0B1E3D] text-[#0B1E3D] font-black rounded-2xl hover:bg-[#0B1E3D] hover:text-white transition-all shadow-lg hover:shadow-[#0B1E3D]/20">
+                    <Link 
+                        to="/contact" 
+                        className="inline-block px-10 py-4 border-2 border-[#0B1E3D] text-[#0B1E3D] font-black rounded-2xl hover:bg-[#0B1E3D] hover:text-white transition-all shadow-lg hover:shadow-[#0B1E3D]/20"
+                    >
                         Contact Support
-                    </button>
+                    </Link>
                 </div>
 
             </div>

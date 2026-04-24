@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Fixed: Added this import to prevent breaking
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import CryptoJS from 'crypto-js';
 import logo from '../assets/logo.png';
@@ -26,7 +27,7 @@ export default function NewUsers() {
     province: '',
     email: '',
     password: '',
-    confirmPassword: '', // Improvement: Added confirm field
+    confirmPassword: '', 
     agreed: false,
     isHuman: false 
   });
@@ -36,7 +37,6 @@ export default function NewUsers() {
   const [showPassword, setShowPassword] = useState(false); 
   const [error, setError] = useState('');
 
-  // Validations for visual feedback
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
   const passwordsMatch = formData.password.length > 0 && formData.password === formData.confirmPassword;
 
@@ -47,8 +47,6 @@ export default function NewUsers() {
   };
 
   const isPasswordValid = Object.values(passwordCriteria).every(Boolean);
-  
-  // Updated: Button now requires matching passwords
   const isFormReady = isPasswordValid && passwordsMatch && formData.agreed && formData.isHuman;
 
   const handleChange = (e) => {
@@ -91,7 +89,6 @@ export default function NewUsers() {
 
     try {
       const token = await executeRecaptcha('signup_form');
-      
       const existingUsers = ["leozuzenoel@gmail.com"];
       if (existingUsers.includes(formData.email.toLowerCase())) {
         throw new Error("An account with this email already exists.");
@@ -199,7 +196,6 @@ export default function NewUsers() {
               <input type="email" name="email" required className="w-full bg-transparent outline-none px-2 pb-1 text-[#0B1E3D]" onChange={handleChange} />
             </div>
 
-            {/* PASSWORD INPUT */}
             <div className={`relative border-2 rounded-lg p-2 bg-[#E8F0FE] transition-all ${isPasswordValid ? 'border-green-500' : 'border-gray-200'}`}>
               <label className="block text-[10px] font-bold text-gray-400 uppercase ml-2">Strong Password</label>
               <div className="flex items-center">
@@ -220,7 +216,6 @@ export default function NewUsers() {
               </div>
             </div>
 
-            {/* Improvement 1: CONFIRM PASSWORD FIELD */}
             <div className={`relative border-2 rounded-lg p-2 bg-[#E8F0FE] transition-all ${passwordsMatch ? 'border-green-500' : 'border-gray-200'}`}>
               <label className="block text-[10px] font-bold text-gray-400 uppercase ml-2">Confirm Password</label>
               <input 
@@ -238,7 +233,6 @@ export default function NewUsers() {
                <Requirement label="Special" met={passwordCriteria.special} />
             </div>
 
-            {/* INTERACTIVE HUMAN VERIFICATION */}
             <div className={`flex items-center gap-3 p-4 border rounded-xl mt-4 transition-all ${formData.isHuman ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'}`}>
               <div className="flex items-center gap-3 flex-grow">
                 <input 
@@ -274,28 +268,13 @@ export default function NewUsers() {
         </div>
       </div>
 
-      <footer className="bg-[#F3F4F6] border-t border-gray-200 pt-10 pb-6 px-6">
-        <div className="max-w-4xl mx-auto text-center md:text-left">
-          <div className="grid grid-cols-2 gap-8 mb-10 text-sm font-bold text-[#008199]">
-            <div className="space-y-3">
-              <a href="#" className="hover:underline">Privacy & Security</a>
-              <a href="#" className="block hover:underline">Disclaimers</a>
-            </div>
-            <div className="space-y-3">
-              <a href="#" className="hover:underline">Terms of Use</a>
-              <a href="#" className="block hover:underline">Licenses</a>
-            </div>
-          </div>
-          <div className="text-[10px] text-gray-500 leading-relaxed space-y-4 border-t border-gray-200 pt-6">
-            <p>The Nexus Credit Card is issued by Nexus Bank, N.A. Loans originated by Nexus Bank N.A., Member FDIC.</p>
-            <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-4 border-t border-gray-200 mt-4 font-bold text-gray-400">
-                <p>© 2026 Nexus Lending, Inc.</p>
-                <p className="flex items-center gap-1 uppercase tracking-tighter">
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" /></svg>
-                  SSL Encrypted
-                </p>
-            </div>
-          </div>
+      <footer className="bg-[#0097B2] py-5 mb-10">
+        <div className="flex items-center justify-center gap-6 text-white text-sm font-bold">
+           <Link to="/help" className="hover:opacity-80 transition-opacity">Help</Link>
+            <span className="text-white/30 text-xs">•</span>
+          <Link to="/terms" className="hover:opacity-70 transition-opacity">Terms of Service</Link>
+          <span className="text-white/30 text-xs">•</span>
+          <Link to="/privacy" className="hover:opacity-70 transition-opacity">Privacy Policy</Link>
         </div>
       </footer>
     </div>
