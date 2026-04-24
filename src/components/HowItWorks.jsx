@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import Hero1Image from '../assets/hero1.jpg';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+// Added icon imports for the new steps
+import { MousePointerClick, Activity, Landmark, Rocket } from 'lucide-react';
 
 export default function HowItWorks() {
     // Initialize AOS for the scroll animations
@@ -14,19 +16,32 @@ export default function HowItWorks() {
 
     const steps = [
         {
-            number: "1",
-            title: "Check your rate",
-            desc: "Fill out a simple form to check your personalized rate in just 5 minutes."
+            number: "01",
+            title: "Check Your Rate",
+            desc: "Tell us about your trajectory. It takes 60 seconds and won't affect your credit score.",
+            icon: <MousePointerClick className="w-6 h-6" />,
+            link: "/how#eligibility"
         },
         {
-            number: "2",
-            title: "Verify your information",
-            desc: "Submit your details and find out if you're approved instantly with our AI model."
+            number: "02",
+            title: "Connect Your Data",
+            desc: "Securely link your accounts so our AI can analyze your real-time financial health.",
+            icon: <Activity className="w-6 h-6" />,
+            link: "/how#faq"
         },
         {
-            number: "3",
-            title: "Get your money",
-            desc: "99% of personal loan funds are sent just 1 business day after digital signing."
+            number: "03",
+            title: "Get Funded",
+            desc: "Review your offer and sign digitally. Funds are typically sent within 24 hours.",
+            icon: <Landmark className="w-6 h-6" />,
+            link: "/how#security"
+        },
+        {
+            number: "04",
+            title: "Grow with Nexus",
+            desc: "Use our dashboard to track your growth. Consistent repayment unlocks even better rates.",
+            icon: <Rocket className="w-6 h-6" />,
+            link: "/how#cta"
         }
     ];
 
@@ -38,7 +53,7 @@ export default function HowItWorks() {
                     {/* LEFT SIDE: Slides in from the LEFT */}
                     <div 
                         className="lg:w-1/2 order-2 lg:order-1"
-                        data-aos="fade-right" // This triggers the "from aside" movement
+                        data-aos="fade-right"
                     >
                         <h2 className="text-[#0B1E3D] text-4xl lg:text-5xl font-black mb-12 tracking-tight">
                             A new loan could be just <br />
@@ -51,7 +66,7 @@ export default function HowItWorks() {
                                     key={index} 
                                     className="flex gap-8 group"
                                     data-aos="fade-right"
-                                    data-aos-delay={index * 200} // Staggered delay for each step
+                                    data-aos-delay={index * 200}
                                 >
                                     {/* Number Circle */}
                                     <div className="flex-shrink-0 w-12 h-12 bg-cyan-500 text-white rounded-full flex items-center justify-center text-xl font-black shadow-[0_10px_20px_rgba(6,182,212,0.3)] group-hover:scale-110 transition-transform">
@@ -60,9 +75,12 @@ export default function HowItWorks() {
                                     
                                     {/* Text Content */}
                                     <div>
-                                        <h3 className="text-[#0B1E3D] text-2xl font-bold mb-2">
-                                            {step.title}
-                                        </h3>
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <span className="text-cyan-500">{step.icon}</span>
+                                            <h3 className="text-[#0B1E3D] text-2xl font-bold">
+                                                {step.title}
+                                            </h3>
+                                        </div>
                                         <p className="text-gray-500 text-lg font-medium leading-relaxed max-w-md">
                                             {step.desc}
                                         </p>
@@ -75,7 +93,7 @@ export default function HowItWorks() {
                     {/* RIGHT SIDE: Slides in from the RIGHT */}
                     <div 
                         className="lg:w-1/2 order-1 lg:order-2 flex justify-center relative"
-                        data-aos="fade-left" // Slides in from the opposite side
+                        data-aos="fade-left"
                     >
                         {/* Decorative Background Glow */}
                         <div className="absolute inset-0 bg-cyan-100 rounded-full blur-3xl opacity-40 scale-75"></div>
@@ -91,7 +109,7 @@ export default function HowItWorks() {
                             <div 
                                 className="absolute -top-6 -right-6 bg-white p-4 rounded-3xl shadow-xl animate-bounce"
                                 data-aos="zoom-in"
-                                data-aos-delay="600" // Pops in after the image arrives
+                                data-aos-delay="600"
                             >
                                 <div className="bg-green-500 p-2 rounded-xl">
                                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

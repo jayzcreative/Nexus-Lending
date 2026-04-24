@@ -38,7 +38,7 @@ export default function Footer({ onCheckRate }) {
     };
 
     const whyNexus = ["Our AI Tech", "Security", "Nexus vs Banks", "Success Stories"];
-    const howItWorks = ["The 3-Step Process", "Eligibility", "Rates & Fees", "Help Center"];
+    const howItWorks = ["The 4-Step Process", "Eligibility", "Rates & Fees", "Help Center"];
     const aboutUs = ["Our Mission", "Leadership", "Careers", "Press"];
 
     const socialLinks = [

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// 1. Import HashLink for anchor support
 import { HashLink } from 'react-router-hash-link'; 
 import logo from '../assets/logo.png';
 
@@ -56,7 +55,7 @@ const Navbar = () => {
             { title: "Success Stories", desc: "Real user testimonials", path: "/why-nexus#stories" }
         ],
         "How it works": [
-            { title: "The 3-Step Process", desc: "From rate check to funding", path: "/how-it-works#process" },
+            { title: "The 4-Step Process", desc: "From rate check to funding", path: "/how-it-works#process" },
             { title: "Eligibility", desc: "What you need to apply", path: "/how-it-works#eligibility" },
             { title: "Rates & Fees", desc: "Transparent APR ranges", path: "/how-it-works#rates" },
             { title: "Help Center", desc: "Detailed FAQ & Support", path: "/how-it-works#help" }
@@ -78,6 +77,13 @@ const Navbar = () => {
 
     const toggleSubAccordion = (name) => {
         setMobileSubAccordion(mobileSubAccordion === name ? null : name);
+    };
+
+    // Helper function to handle scroll behavior across pages
+    const scrollWithOffset = (el) => {
+        const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+        const yOffset = -80; // This accounts for your fixed navbar height
+        window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' }); 
     };
 
     return (
@@ -142,9 +148,9 @@ const Navbar = () => {
                                 <ul className="space-y-2">
                                     {items.map(item => (
                                         <li key={item}>
-                                            {/* 2. Used HashLink with 'smooth' prop for sub-items */}
                                             <HashLink 
                                                 smooth
+                                                scroll={scrollWithOffset}
                                                 to={`${linkPaths[category]}${subLinkIds[item] || ''}`} 
                                                 onClick={() => setActiveDropdown(null)}
                                                 className="text-gray-500 hover:text-cyan-500 text-sm block py-1 transition-colors"
@@ -164,7 +170,14 @@ const Navbar = () => {
                 <div className="hidden lg:block absolute top-[80px] left-0 w-full bg-white border-b border-gray-100 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="max-w-7xl mx-auto px-10 py-8 grid grid-cols-4 gap-6">
                         {navSections[activeDropdown].map((item) => (
-                            <HashLink smooth key={item.title} to={item.path} onClick={() => setActiveDropdown(null)} className="group p-4 rounded-xl hover:bg-gray-50 transition-all">
+                            <HashLink 
+                                smooth 
+                                scroll={scrollWithOffset}
+                                key={item.title} 
+                                to={item.path} 
+                                onClick={() => setActiveDropdown(null)} 
+                                className="group p-4 rounded-xl hover:bg-gray-50 transition-all"
+                            >
                                 <p className="text-[#0B1E3D] font-bold text-sm mb-1 group-hover:text-cyan-500">{item.title}</p>
                                 <p className="text-gray-400 text-xs">{item.desc}</p>
                             </HashLink>
@@ -221,6 +234,7 @@ const Navbar = () => {
                                                         {items.map(subItem => (
                                                             <HashLink
                                                                 smooth
+                                                                scroll={scrollWithOffset}
                                                                 key={subItem}
                                                                 to={`${linkPaths[cat]}${subLinkIds[subItem] || ''}`}
                                                                 onClick={() => setIsOpen(false)}
@@ -234,7 +248,7 @@ const Navbar = () => {
                                             ))
                                         ) : (
                                             navSections[name].map(item => (
-                                                <HashLink smooth key={item.title} to={item.path} onClick={() => setIsOpen(false)} className="text-gray-500 text-sm py-2 px-3 rounded-xl hover:bg-cyan-50">
+                                                <HashLink smooth scroll={scrollWithOffset} key={item.title} to={item.path} onClick={() => setIsOpen(false)} className="text-gray-500 text-sm py-2 px-3 rounded-xl hover:bg-cyan-50">
                                                     <span className="font-bold block text-[#0B1E3D]">{item.title}</span>
                                                     <span className="text-[11px] opacity-70">{item.desc}</span>
                                                 </HashLink>
