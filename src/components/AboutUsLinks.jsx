@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Target, Shield, Globe, Heart, ChevronDown, Rocket, Newspaper, Calendar, ArrowRight, Users, Briefcase } from 'lucide-react';
+import React, { useState, useEffect } from 'react'; 
+import { Link, useLocation } from 'react-router-dom'; 
+import { Target, Shield, Globe, Heart, ChevronDown, Rocket, Newspaper, Calendar, ArrowRight, Users, Briefcase, X } from 'lucide-react'; // Added X for closing modal
 
 // Assets
 import companyImg from '../assets/company.jpg';
@@ -20,6 +20,19 @@ import worldImg from '../assets/world.jpg';
 
 export default function AboutUsLinks() {
     const [openFaq, setOpenFaq] = useState(null);
+    const [selectedBlog, setSelectedBlog] = useState(null); // Added for the News Modal
+    const { hash } = useLocation(); 
+
+    useEffect(() => {
+        if (hash) {
+            const element = document.getElementById(hash.replace('#', ''));
+            if (element) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+    }, [hash]);
 
     const team = [
         { name: "Marcus Darwins", role: "Founder & Visionary", img: founderImg },
@@ -32,37 +45,43 @@ export default function AboutUsLinks() {
             title: "Harare CBD Milestone: Nexus Expansion", 
             date: "April 20, 2026", 
             img: cbdImg, 
-            desc: "Nexus officially opens its physical verification hub in the heart of Harare to support local merchants." 
+            desc: "Nexus officially opens its physical verification hub in the heart of Harare to support local merchants. This move marks a significant step in our commitment to physical accessibility for our business partners.",
+            fullInfo: "Our new hub in the Harare CBD is designed to provide face-to-face support for merchants and entrepreneurs. This center features dedicated AI consulting stations where business owners can learn how to leverage our credit engine to scale their operations. We believe that while digital is the future, local presence builds the trust necessary for a thriving financial ecosystem."
         },
         { 
             title: "The Tech Stack Behind the Engine", 
             date: "April 15, 2026", 
             img: techImg, 
-            desc: "An inside look at our proprietary AI credit scoring model and the security layers protecting user data." 
+            desc: "An inside look at our proprietary AI credit scoring model and the security layers protecting user data.",
+            fullInfo: "At Nexus, we utilize a multi-layered security architecture. Our proprietary AI model analyzes over 500 non-traditional data points to determine creditworthiness without relying on outdated banking history. Everything is protected by bank-grade AES-256 encryption and monitored 24/7 by our security operations center." 
         },
         { 
             title: "Inside the Nexus Innovation Lab", 
             date: "April 05, 2026", 
             img: companyImg, 
-            desc: "How our high-tech office environment fosters the next generation of African fintech solutions." 
+            desc: "How our high-tech office environment fosters the next generation of African fintech solutions.",
+            fullInfo: "Our Innovation Lab is where the magic happens. We've created an open-collaboration space in Harare where engineers, data scientists, and financial experts work side-by-side. This environment has reduced our feature deployment cycle by 40%, allowing us to respond to user needs in near real-time."
         },
         { 
             title: "Collaboration: Our Secret Weapon", 
             date: "March 22, 2026", 
             img: teamImg, 
-            desc: "Our engineering and operations teams working in sync to reduce loan approval times to under 24 hours." 
+            desc: "Our engineering and operations teams working in sync to reduce loan approval times to under 24 hours.",
+            fullInfo: "Syncing technical development with on-the-ground operations is key. By automating the verification pipeline and integrating real-time KYC (Know Your Customer) checks, our team has achieved an industry-leading approval speed. This ensures that capital is available exactly when our users need it most."
         },
         { 
             title: "Student Success: Breaking the Barrier", 
             date: "March 10, 2026", 
             img: studentImg, 
-            desc: "Meet Tinashe, the university student who used Nexus to fund his final year project and launch a startup." 
+            desc: "Meet Tinashe, the university student who used Nexus to fund his final year project and launch a startup.",
+            fullInfo: "Tinashe's journey represents the core of our mission. Unable to secure traditional funding, he used the Nexus micro-credit line to purchase specialized hardware for his Final Year Project. Today, that project has evolved into a registered tech startup, proving that accessible credit can jumpstart careers."
         },
         { 
             title: "A Global Vision from Local Roots", 
             date: "Feb 28, 2026", 
             img: worldImg, 
-            desc: "Mapping the journey of Nexus as we prepare to scale our democratized credit model to international markets." 
+            desc: "Mapping the journey of Nexus as we prepare to scale our democratized credit model to international markets.",
+            fullInfo: "While we are rooted in Zimbabwe, the problems we solve are global. We are currently auditing our algorithms for cross-border compliance as we prepare to expand into neighboring SADC regions. Our goal is to create a unified credit standard for the modern African professional."
         }
     ];
 
@@ -70,12 +89,6 @@ export default function AboutUsLinks() {
         { q: "Why did you start in Harare?", a: "We saw that local brilliance was being held back by outdated paperwork. We wanted to build a solution from home, for home." },
         { q: "Are you a bank?", a: "We are an AI-first fintech partner. We work alongside the financial ecosystem to provide faster access to capital." },
         { q: "How do you protect my data?", a: "We use bank-grade AES-256 encryption. Your 'Financial DNA' is seen by our AI, but never sold to third parties." }
-    ];
-
-    const values = [
-        { icon: <Shield className="w-6 h-6" />, title: "People over Paperwork", desc: "We believe your potential is more than just a credit score." },
-        { icon: <Heart className="w-6 h-6" />, title: "Built with Empathy", desc: "We design tools that solve real financial hurdles for real people." },
-        { icon: <Globe className="w-6 h-6" />, title: "Borderless Access", desc: "From Harare to the world, we're making finance inclusive." }
     ];
 
     return (
@@ -112,7 +125,7 @@ export default function AboutUsLinks() {
                     </div>
                 </div>
 
-                {/* Section 2: News / Blogs (Horizontal Scroll) */}
+                {/* Section 2: News / Blogs */}
                 <div id="press" className="mb-32 scroll-mt-32">
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
                         <div>
@@ -128,23 +141,58 @@ export default function AboutUsLinks() {
                     
                     <div className="flex overflow-x-auto pb-8 gap-8 no-scrollbar snap-x snap-mandatory">
                         {blogs.map((blog, i) => (
-                            <div key={i} className="min-w-[300px] md:min-w-[400px] snap-start group cursor-pointer">
+                            <div key={i} onClick={() => setSelectedBlog(blog)} className="min-w-[300px] md:min-w-[400px] snap-start group cursor-pointer">
                                 <div className="overflow-hidden rounded-[2rem] mb-6 shadow-md border border-slate-100">
                                     <img src={blog.img} alt={blog.title} className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700" />
                                 </div>
                                 <div className="flex items-center gap-2 text-cyan-600 font-bold text-[10px] mb-3 uppercase tracking-widest">
                                     <Calendar size={12} /> {blog.date}
                                 </div>
-                                <h3 className="text-xl font-bold text-[#0B1E3D] mb-3 group-hover:text-cyan-500 transition-colors leading-tight">{blog.title}</h3>
-                                {/* Removed line-clamp-2 to ensure text is visible on small screens */}
-                                <p className="text-slate-500 text-sm">{blog.desc}</p>
+                                <h3 className="text-xl font-bold text-[#0B1E3D] mb-3 group-hover:text-cyan-500 transition-colors leading-tight line-clamp-1">{blog.title}</h3>
+                                <p className="text-slate-500 text-sm line-clamp-2">{blog.desc}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                {/* New Section: Career Identity & Tech Work */}
-                <div  id="careers" className="mb-32 scroll-mt-32">
+                {/* News Modal - ONLY SHOWS WHEN A BLOG IS CLICKED */}
+                {selectedBlog && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+                        <div className="bg-white rounded-[3rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl">
+                            <button 
+                                onClick={() => setSelectedBlog(null)}
+                                className="absolute top-6 right-6 p-3 bg-slate-100 hover:bg-cyan-500 hover:text-white text-slate-500 rounded-full transition-all z-20"
+                            >
+                                <X size={24} />
+                            </button>
+                            
+                            <div className="grid md:grid-cols-2">
+                                <div className="h-[300px] md:h-full">
+                                    <img src={selectedBlog.img} alt={selectedBlog.title} className="w-full h-full object-cover" />
+                                </div>
+                                <div className="p-8 md:p-12">
+                                    <div className="inline-flex items-center gap-2 text-cyan-600 font-bold text-xs uppercase tracking-widest mb-4">
+                                        <Calendar size={14} /> {selectedBlog.date}
+                                    </div>
+                                    <h2 className="text-3xl font-black text-[#0B1E3D] mb-6 leading-tight">{selectedBlog.title}</h2>
+                                    <div className="space-y-4">
+                                        <p className="text-slate-600 font-bold leading-relaxed">{selectedBlog.desc}</p>
+                                        <p className="text-slate-500 leading-relaxed">{selectedBlog.fullInfo}</p>
+                                    </div>
+                                    <button 
+                                        onClick={() => setSelectedBlog(null)}
+                                        className="mt-8 px-8 py-3 bg-[#0B1E3D] text-white rounded-full font-bold hover:bg-cyan-600 transition-colors"
+                                    >
+                                        Close Story
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Section: Careers */}
+                <div id="careers" className="mb-32 scroll-mt-32">
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                         <div className="order-2 lg:order-1">
                             <img src={techImg} alt="Development" className="rounded-[2.5rem] shadow-xl h-[400px] w-full object-cover" />
@@ -171,8 +219,8 @@ export default function AboutUsLinks() {
                     </div>
                 </div>
 
-                {/* Section 3: Growth Hub (Ecosystem Connect) */}
-                <div className="mb-32">
+                {/* Section 3: Growth Hub */}
+                <div id="ecosystem" className="mb-32 scroll-mt-32">
                     <div className="bg-slate-900 rounded-[3rem] p-10 lg:p-16 flex flex-col lg:flex-row items-center gap-12 text-white">
                         <div className="lg:w-1/2">
                             <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 text-cyan-400 rounded-full text-sm font-bold mb-6 border border-cyan-500/20">
@@ -197,7 +245,7 @@ export default function AboutUsLinks() {
                     </div>
                 </div>
 
-                {/* Section 4: Leadership (Horizontal Scroll on Small Screens) */}
+                {/* Section 4: Leadership */}
                 <div id="leadership" className="mb-32 scroll-mt-32">
                     <div className="text-center md:text-left mb-16">
                         <h2 className="text-4xl font-black text-[#0B1E3D]">The People Behind the Code</h2>
@@ -217,7 +265,7 @@ export default function AboutUsLinks() {
                 </div>
 
                 {/* Section 5: FAQ */}
-                <div className="mb-32 max-w-3xl mx-auto">
+                <div id="faq" className="mb-32 max-w-3xl mx-auto scroll-mt-32">
                     <h2 className="text-3xl font-black text-[#0B1E3D] text-center mb-12">Common Questions</h2>
                     <div className="space-y-4">
                         {aboutFaqs.map((faq, i) => (

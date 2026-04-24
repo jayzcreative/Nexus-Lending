@@ -37,9 +37,26 @@ export default function Footer({ onCheckRate }) {
         "Student Loans": ["Undergraduate", "Graduate", "Parent Plus", "Refinance Student", "MBA Loans"]
     };
 
-    const whyNexus = ["Our AI Tech", "Security", "Nexus vs Banks", "Success Stories"];
-    const howItWorks = ["The 4-Step Process", "Eligibility", "Rates & Fees", "Help Center"];
-    const aboutUs = ["Our Mission", "Leadership", "Careers", "Press"];
+    const whyNexus = [
+        { title: "Our AI Tech", path: "/why-nexus#ai-tech" },
+        { title: "Security", path: "/why-nexus#security" },
+        { title: "Nexus vs Banks", path: "/why-nexus#comparison" },
+        { title: "Success Stories", path: "/why-nexus#stories" }
+    ];
+
+    const howItWorks = [
+        { title: "The 4-Step Process", path: "/how-it-works#process" },
+        { title: "Eligibility", path: "/how-it-works#eligibility" },
+        { title: "Rates & Fees", path: "/how-it-works#rates" },
+        { title: "Help Center", path: "/how-it-works#help" }
+    ];
+
+    const aboutUs = [
+        { title: "Our Mission", path: "/about-us#mission" },
+        { title: "Leadership", path: "/about-us#leadership" },
+        { title: "Careers", path: "/about-us#careers" },
+        { title: "Press", path: "/about-us#press" }
+    ];
 
     const socialLinks = [
         { name: 'LinkedIn', svg: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> },
@@ -102,7 +119,6 @@ export default function Footer({ onCheckRate }) {
                                         className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}
                                     >
                                         <Link to={`${linkPaths[category]}${subLinkIds[item] || ''}`}>
-                                            {/* FIXED: regex to display "Refinance" cleanly in footer */}
                                             {item.replace(/ (Auto|Mortgage|Student)/, '')}
                                         </Link>
                                     </li>
@@ -116,20 +132,22 @@ export default function Footer({ onCheckRate }) {
                             Why Nexus?
                         </Link>
                         <ul className="space-y-3">
-                            {whyNexus.map((link, index) => (
-                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>
-                                    <Link to={linkPaths["Why Nexus?"]}>{link}</Link>
+                            {whyNexus.map((item, index) => (
+                                <li key={item.title} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>
+                                    <Link to={item.path}>{item.title}</Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
                     <div>
-                        <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Resources</h4>
+                        <Link to={linkPaths["How it works"]} className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3 block hover:text-cyan-400 transition-colors">
+                            How It Works
+                        </Link>
                         <ul className="space-y-3">
-                            {howItWorks.map((link, index) => (
-                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>
-                                    <Link to={linkPaths["Resources"]}>{link}</Link>
+                            {howItWorks.map((item, index) => (
+                                <li key={item.title} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>
+                                    <Link to={item.path}>{item.title}</Link>
                                 </li>
                             ))}
                         </ul>
@@ -140,9 +158,9 @@ export default function Footer({ onCheckRate }) {
                             About Us
                         </Link>
                         <ul className="space-y-3">
-                            {aboutUs.map((link, index) => (
-                                <li key={link} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>
-                                    <Link to={linkPaths["About Us"]}>{link}</Link>
+                            {aboutUs.map((item, index) => (
+                                <li key={item.title} className={`text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ${index > 2 ? 'hidden md:block' : ''}`}>
+                                    <Link to={item.path}>{item.title}</Link>
                                 </li>
                             ))}
                         </ul>
