@@ -1,44 +1,68 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Added this import
-import { Target, Shield, Globe, Award, Zap, Heart, MessageSquare, ChevronDown } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Target, Shield, Globe, Heart, ChevronDown, Rocket, Newspaper, Calendar, ArrowRight, Users, Briefcase } from 'lucide-react';
+
+// Assets
 import companyImg from '../assets/company.jpg';
 import dataImg from '../assets/data.jpg';
 import founderImg from '../assets/founder.jpg';
 import ceoImg from '../assets/ceo.jpg';
 import managerImg from '../assets/manager.jpg';
+import personalLoanImg from '../assets/data.jpg'; 
+import businessLoanImg from '../assets/company.jpg';
+
+// New Assets
+import cbdImg from '../assets/cbd.jpg';
+import techImg from '../assets/tech.jpg';
+import teamImg from '../assets/team.jpg';
+import studentImg from '../assets/happystudent.jpg';
+import worldImg from '../assets/world.jpg';
 
 export default function AboutUsLinks() {
+    const [openFaq, setOpenFaq] = useState(null);
+
     const team = [
-        { 
-            name: "Marcus Darwins", 
-            role: "Founder & Visionary", 
-            img: founderImg, 
-            linkedin: "https://linkedin.com" 
-        },
-        { 
-            name: "Sarah Moyo", 
-            role: "Chief Executive Officer", 
-            img: managerImg, 
-            linkedin: "https://linkedin.com" 
-        },
-        { 
-            name: "David Mapfuudze", 
-            role: "Operations Manager", 
-            img: ceoImg, 
-            linkedin: "https://linkedin.com" 
-        }
+        { name: "Marcus Darwins", role: "Founder & Visionary", img: founderImg },
+        { name: "Sarah Moyo", role: "Chief Executive Officer", img: managerImg },
+        { name: "David Mapfuudze", role: "Operations Manager", img: ceoImg }
     ];
 
-    const impacts = [
-        {
-            name: "Chenai M.",
-            biz: "Tech Startup Founder",
-            story: "Nexus saw my potential when traditional banks only saw my lack of collateral. They funded my expansion in 24 hours."
+    const blogs = [
+        { 
+            title: "Harare CBD Milestone: Nexus Expansion", 
+            date: "April 20, 2026", 
+            img: cbdImg, 
+            desc: "Nexus officially opens its physical verification hub in the heart of Harare to support local merchants." 
         },
-        {
-            name: "Tinashe K.",
-            biz: "Final Year Student",
-            story: "The AI score took my part-time earnings into account, allowing me to secure a laptop loan for my final projects."
+        { 
+            title: "The Tech Stack Behind the Engine", 
+            date: "April 15, 2026", 
+            img: techImg, 
+            desc: "An inside look at our proprietary AI credit scoring model and the security layers protecting user data." 
+        },
+        { 
+            title: "Inside the Nexus Innovation Lab", 
+            date: "April 05, 2026", 
+            img: companyImg, 
+            desc: "How our high-tech office environment fosters the next generation of African fintech solutions." 
+        },
+        { 
+            title: "Collaboration: Our Secret Weapon", 
+            date: "March 22, 2026", 
+            img: teamImg, 
+            desc: "Our engineering and operations teams working in sync to reduce loan approval times to under 24 hours." 
+        },
+        { 
+            title: "Student Success: Breaking the Barrier", 
+            date: "March 10, 2026", 
+            img: studentImg, 
+            desc: "Meet Tinashe, the university student who used Nexus to fund his final year project and launch a startup." 
+        },
+        { 
+            title: "A Global Vision from Local Roots", 
+            date: "Feb 28, 2026", 
+            img: worldImg, 
+            desc: "Mapping the journey of Nexus as we prepare to scale our democratized credit model to international markets." 
         }
     ];
 
@@ -48,12 +72,6 @@ export default function AboutUsLinks() {
         { q: "How do you protect my data?", a: "We use bank-grade AES-256 encryption. Your 'Financial DNA' is seen by our AI, but never sold to third parties." }
     ];
 
-    const milestones = [
-        { year: "2024", event: "The Spark in Harare" },
-        { year: "2025", event: "Nexus AI Goes Live" },
-        { year: "2026", event: "120k Lives Impacted" }
-    ];
-
     const values = [
         { icon: <Shield className="w-6 h-6" />, title: "People over Paperwork", desc: "We believe your potential is more than just a credit score." },
         { icon: <Heart className="w-6 h-6" />, title: "Built with Empathy", desc: "We design tools that solve real financial hurdles for real people." },
@@ -61,110 +79,133 @@ export default function AboutUsLinks() {
     ];
 
     return (
-        <div className="pt-32 pb-20 bg-white font-sans selection:bg-cyan-100">
+        <div className="pt-32 pb-20 bg-white font-sans selection:bg-cyan-100 scroll-smooth">
             <div className="max-w-7xl mx-auto px-6">
                 
                 {/* Section 1: Hero */}
-                <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
+                <div id="mission" className="grid lg:grid-cols-2 gap-16 items-center mb-32 scroll-mt-32">
                     <div>
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-50 text-cyan-600 rounded-full text-sm font-bold mb-6">
-                            <Target size={16} /> OUR STORY
+                            <Target size={16} /> OUR MISSION
                         </div>
                         <h1 className="text-5xl md:text-6xl font-black text-[#0B1E3D] mb-8 tracking-tight leading-tight">
                             More than an engine. <br/>
-                            <span className="text-cyan-500">A partner in your growth.</span>
+                            <span className="text-cyan-500">A partner in growth.</span>
                         </h1>
                         <p className="text-xl text-slate-500 leading-relaxed mb-8">
-                            We started Nexus in Harare with a simple observation: the banking system wasn't built for the modern earner. We built this to help the entrepreneurs and the doers get the support they deserve.
+                            Nexus is democratizing credit access. We started with a simple observation: the system wasn't built for the modern earner.
                         </p>
-                        
-                        <div className="grid grid-cols-3 gap-4 border-t border-slate-100 pt-8">
-                            {milestones.map((m, i) => (
-                                <div key={i} className="flex flex-col">
-                                    <span className="text-cyan-500 font-black text-xl">{m.year}</span>
-                                    <span className="text-slate-400 text-[10px] font-bold uppercase tracking-tight leading-tight">{m.event}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="relative">
-                        <div className="absolute -top-4 -right-4 w-64 h-64 bg-cyan-100 rounded-full blur-3xl opacity-40"></div>
-                        <img 
-                            src={companyImg} 
-                            alt="Our Workspace" 
-                            className="rounded-[2.5rem] shadow-2xl relative z-10 w-full h-[500px] object-cover"
-                        />
-                        <div className="absolute -bottom-6 -left-6 bg-[#0B1E3D] text-white p-5 rounded-3xl z-20 shadow-xl border border-white/10 hidden md:flex items-center gap-4">
-                            <div className="bg-cyan-500/20 p-3 rounded-2xl text-cyan-400">
-                                <Globe size={24} />
-                            </div>
+                        <div className="flex items-center gap-6 border-t border-slate-100 pt-8">
                             <div>
-                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-1">Our Base</p>
-                                <p className="font-bold text-sm">Harare, Zimbabwe</p>
+                                <p className="text-3xl font-black text-[#0B1E3D]">120k+</p>
+                                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">Active Users</p>
+                            </div>
+                            <div className="w-px h-10 bg-slate-100"></div>
+                            <div>
+                                <p className="text-3xl font-black text-cyan-500">24h</p>
+                                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">Avg. Funding</p>
                             </div>
                         </div>
                     </div>
+                    <div className="relative">
+                        <img src={companyImg} alt="Base" className="rounded-[2.5rem] shadow-2xl relative z-10 w-full h-[450px] object-cover" />
+                    </div>
                 </div>
 
-                {/* Section 2: Values */}
-                <div className="bg-[#0B1E3D] rounded-[3rem] p-12 lg:p-20 text-white mb-32 relative overflow-hidden">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
-                        <div className="order-2 lg:order-1">
-                            <img 
-                                src={dataImg} 
-                                alt="Technology" 
-                                className="rounded-3xl opacity-90 border border-white/10 shadow-2xl"
-                            />
-                        </div>
-                        <div className="order-1 lg:order-2">
-                            <h2 className="text-4xl font-bold mb-6 italic">The Heart of the Tech</h2>
-                            <p className="text-slate-300 text-lg mb-8 leading-relaxed">
-                                Our engine handles the complexity so you can focus on your dreams. We analyze trajectory, not just history.
-                            </p>
-                            <div className="space-y-6">
-                                {values.map((v, i) => (
-                                    <div key={i} className="flex gap-4 group">
-                                        <div className="flex-shrink-0 w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-300">
-                                            {v.icon}
-                                        </div>
-                                        <div>
-                                            <h5 className="font-bold text-xl">{v.title}</h5>
-                                            <p className="text-slate-400 text-sm leading-snug">{v.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
+                {/* Section 2: News / Blogs (Horizontal Scroll) */}
+                <div id="press" className="mb-32 scroll-mt-32">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                        <div>
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-50 text-slate-600 rounded-full text-sm font-bold mb-4">
+                                <Newspaper size={16} /> NEXUS BLOG
                             </div>
+                            <h2 className="text-4xl font-black text-[#0B1E3D]">Latest from the Newsroom</h2>
+                        </div>
+                        <div className="text-slate-400 font-bold text-sm flex items-center gap-2">
+                            Scroll to explore <ArrowRight size={16} className="animate-bounce-x" />
                         </div>
                     </div>
-                </div>
-
-                {/* Section 3: Impact */}
-                <div className="mb-32">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-black text-[#0B1E3D] mb-4">Lives Impacted</h2>
-                        <p className="text-slate-500">Real stories from our Nexus community.</p>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-8">
-                        {impacts.map((story, i) => (
-                            <div key={i} className="p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:shadow-xl transition-shadow relative overflow-hidden">
-                                <MessageSquare className="absolute -top-4 -right-4 w-24 h-24 text-cyan-500/5 rotate-12" />
-                                <p className="text-slate-600 text-lg italic mb-8 relative z-10">"{story.story}"</p>
-                                <div>
-                                    <h4 className="font-black text-[#0B1E3D]">{story.name}</h4>
-                                    <p className="text-cyan-600 text-sm font-bold uppercase tracking-widest">{story.biz}</p>
+                    
+                    <div className="flex overflow-x-auto pb-8 gap-8 no-scrollbar snap-x snap-mandatory">
+                        {blogs.map((blog, i) => (
+                            <div key={i} className="min-w-[300px] md:min-w-[400px] snap-start group cursor-pointer">
+                                <div className="overflow-hidden rounded-[2rem] mb-6 shadow-md border border-slate-100">
+                                    <img src={blog.img} alt={blog.title} className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700" />
                                 </div>
+                                <div className="flex items-center gap-2 text-cyan-600 font-bold text-[10px] mb-3 uppercase tracking-widest">
+                                    <Calendar size={12} /> {blog.date}
+                                </div>
+                                <h3 className="text-xl font-bold text-[#0B1E3D] mb-3 group-hover:text-cyan-500 transition-colors leading-tight">{blog.title}</h3>
+                                {/* Removed line-clamp-2 to ensure text is visible on small screens */}
+                                <p className="text-slate-500 text-sm">{blog.desc}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                {/* Section 4: Leadership */}
-                <div className="text-center mb-32">
-                    <h2 className="text-4xl font-black text-[#0B1E3D] mb-16">The People Behind the Code</h2>
-                    <div className="grid md:grid-cols-3 gap-12">
+                {/* New Section: Career Identity & Tech Work */}
+                <div  id="careers" className="mb-32 scroll-mt-32">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <div className="order-2 lg:order-1">
+                            <img src={techImg} alt="Development" className="rounded-[2.5rem] shadow-xl h-[400px] w-full object-cover" />
+                        </div>
+                        <div className="order-1 lg:order-2">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-sm font-bold mb-6">
+                                <Briefcase size={16} /> CAREER & INNOVATION
+                            </div>
+                            <h2 className="text-4xl font-black text-[#0B1E3D] mb-6">Bridging Academic Excellence with Professional AI</h2>
+                            <p className="text-slate-500 text-lg leading-relaxed mb-6">
+                                Our development philosophy stems from a deep foundation in Artificial Intelligence and Fullstack engineering. By integrating specialized BTech insights with freelance web expertise, we build systems that aren't just functional, but intelligently responsive.
+                            </p>
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-3">
+                                    <div className="mt-1 bg-cyan-100 p-1 rounded-md text-cyan-600 font-bold">✓</div>
+                                    <p className="text-slate-600"><span className="font-bold text-[#0B1E3D]">Fintech AI:</span> Designing security-first algorithms for fraud detection.</p>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <div className="mt-1 bg-cyan-100 p-1 rounded-md text-cyan-600 font-bold">✓</div>
+                                    <p className="text-slate-600"><span className="font-bold text-[#0B1E3D]">Responsive Architecture:</span> Crafting high-performance React and Tailwind interfaces.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Section 3: Growth Hub (Ecosystem Connect) */}
+                <div className="mb-32">
+                    <div className="bg-slate-900 rounded-[3rem] p-10 lg:p-16 flex flex-col lg:flex-row items-center gap-12 text-white">
+                        <div className="lg:w-1/2">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 text-cyan-400 rounded-full text-sm font-bold mb-6 border border-cyan-500/20">
+                                <Users size={16} /> ECOSYSTEM
+                            </div>
+                            <h2 className="text-4xl font-black mb-6">Building the Future</h2>
+                            <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+                                We aren't building in a vacuum. Nexus is actively collaborating with Harare's innovation hubs to ensure our AI models align with local standards and financial inclusion goals.
+                            </p>
+                            <Link to="/contact" className="inline-block bg-white text-slate-900 px-8 py-3 rounded-2xl font-bold hover:bg-cyan-500 hover:text-white transition-all">Connect to Hub</Link>
+                        </div>
+                        <div className="lg:w-1/2 w-full grid grid-cols-1 gap-4">
+                            <div className="p-8 bg-white/5 rounded-3xl border border-white/10 hover:border-cyan-500/50 transition-colors">
+                                <h4 className="font-bold text-xl mb-2 text-cyan-400">Impact Hub Harare x Nexus</h4>
+                                <p className="text-slate-400 text-sm">Strategic alignment for monthly AI essentials and financial security workshops.</p>
+                            </div>
+                            <div className="p-8 bg-white/5 rounded-3xl border border-white/10 hover:border-cyan-500/50 transition-colors">
+                                <h4 className="font-bold text-xl mb-2 text-cyan-400">Regulatory Roadmap</h4>
+                                <p className="text-slate-400 text-sm">Working within the framework of the RBZ Fintech Sandbox for bank-grade security protocols.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Section 4: Leadership (Horizontal Scroll on Small Screens) */}
+                <div id="leadership" className="mb-32 scroll-mt-32">
+                    <div className="text-center md:text-left mb-16">
+                        <h2 className="text-4xl font-black text-[#0B1E3D]">The People Behind the Code</h2>
+                    </div>
+                    
+                    <div className="flex overflow-x-auto md:grid md:grid-cols-3 pb-8 gap-12 no-scrollbar snap-x snap-mandatory">
                         {team.map((member, i) => (
-                            <div key={i} className="group text-center">
+                            <div key={i} className="min-w-[280px] md:min-w-0 snap-center group text-center">
                                 <div className="w-48 h-48 rounded-full overflow-hidden border-8 border-slate-50 shadow-xl mx-auto mb-6">
                                     <img src={member.img} alt={member.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                 </div>
@@ -175,35 +216,43 @@ export default function AboutUsLinks() {
                     </div>
                 </div>
 
-                {/* Section 5: Transparency Questions */}
+                {/* Section 5: FAQ */}
                 <div className="mb-32 max-w-3xl mx-auto">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-black text-[#0B1E3D]">Transparency is Key</h2>
-                    </div>
+                    <h2 className="text-3xl font-black text-[#0B1E3D] text-center mb-12">Common Questions</h2>
                     <div className="space-y-4">
                         {aboutFaqs.map((faq, i) => (
-                            <div key={i} className="border-b border-slate-100 pb-6">
-                                <div className="flex justify-between items-center cursor-pointer group">
-                                    <h4 className="font-bold text-[#0B1E3D] group-hover:text-cyan-500 transition-colors">{faq.q}</h4>
-                                    <ChevronDown size={18} className="text-slate-300" />
+                            <div key={i} className="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100">
+                                <button 
+                                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                                    className="w-full p-6 text-left flex justify-between items-center group transition-colors hover:bg-slate-100"
+                                >
+                                    <span className="font-bold text-[#0B1E3D] group-hover:text-cyan-600">{faq.q}</span>
+                                    <ChevronDown className={`text-slate-400 transition-transform duration-300 ${openFaq === i ? 'rotate-180 text-cyan-500' : ''}`} />
+                                </button>
+                                <div className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${openFaq === i ? 'max-h-40 pb-6 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    <p className="text-slate-500 text-sm leading-relaxed">{faq.a}</p>
                                 </div>
-                                <p className="mt-3 text-slate-500 text-sm leading-relaxed">{faq.a}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* Final CTA */}
-                <div className="bg-slate-50 rounded-[2.5rem] p-12 text-center border border-slate-100">
-                    <h3 className="text-3xl font-black text-[#0B1E3D] mb-8">Let's build your future together.</h3>
-                    <Link 
-                        to="/signup"
-                        className="inline-block bg-[#0B1E3D] text-white px-10 py-4 rounded-full font-bold hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
-                    >
-                        Get Started
-                    </Link>
+                <div className="bg-[#0B1E3D] rounded-[2.5rem] p-12 text-center relative overflow-hidden border border-white/10">
+                    <h3 className="text-3xl font-black text-white mb-8 relative z-10">Let's build your future together.</h3>
+                    <Link to="/signup" className="relative z-10 inline-block bg-cyan-500 text-white px-10 py-4 rounded-full font-bold hover:shadow-2xl transition-all">Get Started</Link>
                 </div>
             </div>
+            
+            <style dangerouslySetInnerHTML={{__html: `
+                .no-scrollbar::-webkit-scrollbar { display: none; }
+                .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+                @keyframes bounce-x {
+                    0%, 100% { transform: translateX(0); }
+                    50% { transform: translateX(5px); }
+                }
+                .animate-bounce-x { animation: bounce-x 1s infinite; }
+            `}} />
         </div>
     );
 }
