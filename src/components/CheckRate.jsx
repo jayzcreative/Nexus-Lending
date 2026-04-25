@@ -37,7 +37,6 @@ export default function CheckRate() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Field locking logic
   const isLocked = !!location.state?.purpose;
   const preSelectedPurpose = location.state?.purpose || "";
   const preSelectedSubType = location.state?.subType || "";
@@ -190,9 +189,9 @@ export default function CheckRate() {
   if (step === 0) return <BotShield onVerified={handleVerify} />;
 
   return (
-    <div className="min-h-screen flex flex-col font-sans antialiased bg-gray-50">
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-gray-50 overflow-x-hidden">
       <div className="flex-grow pt-8 sm:pt-16">
-        <div className="max-w-2xl mx-auto w-full px-5">
+        <div className="max-w-2xl mx-auto w-full px-4 sm:px-5">
           <AnimatePresence mode="wait">
             <motion.div key="form-container" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="pb-12">
               <div className="mb-6 px-2 flex justify-between items-end">
@@ -203,7 +202,7 @@ export default function CheckRate() {
                 <span className="text-[10px] font-black text-gray-300 uppercase">Step {step}/6</span>
               </div>
 
-              <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl p-6 sm:p-8 lg:p-12 border border-gray-100">
+              <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl p-5 sm:p-8 lg:p-12 border border-gray-100">
                 <form onSubmit={handleSubmit}>
                   <AnimatePresence mode="wait">
                     {step === 1 && (
@@ -216,12 +215,13 @@ export default function CheckRate() {
                         </div>
 
                         <div className="grid grid-cols-1 gap-4 sm:gap-6">
-                          <div className="p-5 sm:p-6 bg-gray-50 rounded-2xl sm:rounded-3xl border border-gray-100 group focus-within:ring-2 focus-within:ring-cyan-500 transition-all">
+                          <div className="p-4 sm:p-6 bg-gray-50 rounded-2xl sm:rounded-3xl border border-gray-100 group focus-within:ring-2 focus-within:ring-cyan-500 transition-all">
                               <div className="flex justify-between items-center mb-2 sm:mb-3">
                                 <label className="block text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-widest">Amount ($)</label>
-                                <span className="text-[8px] font-bold text-cyan-600 uppercase tracking-widest animate-pulse">Adjust with - / +</span>
+                                <span className="hidden xs:block text-[8px] font-bold text-cyan-600 uppercase tracking-widest animate-pulse">Adjust with - / +</span>
                               </div>
-                              <div className="flex items-center gap-4">
+                              {/* Changed gap-4 to gap-2 for small screens */}
+                              <div className="flex items-center gap-2 sm:gap-4">
                                 <button
                                   type="button"
                                   onClick={() => {
@@ -229,11 +229,12 @@ export default function CheckRate() {
                                     const newVal = Math.max(range.min, Number(formData.amount) - 100);
                                     setFormData({ ...formData, amount: newVal });
                                   }}
-                                  className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-xl font-black text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors shadow-sm"
+                                  className="w-10 h-10 flex-shrink-0 rounded-full bg-white border border-gray-200 flex items-center justify-center text-xl font-black text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors shadow-sm"
                                 >
                                   −
                                 </button>
-                                <input type="text" name="amount" value={formData.amount} onChange={handleInputChange} className="flex-grow bg-transparent text-3xl sm:text-4xl font-black text-[#0B1E3D] outline-none text-center" />
+                                {/* Added min-w-0 to prevent flex input from pushing out */}
+                                <input type="text" name="amount" value={formData.amount} onChange={handleInputChange} className="flex-grow min-w-0 bg-transparent text-2xl sm:text-4xl font-black text-[#0B1E3D] outline-none text-center" />
                                 <button
                                   type="button"
                                   onClick={() => {
@@ -241,7 +242,7 @@ export default function CheckRate() {
                                     const newVal = Math.min(range.max, Number(formData.amount) + 100);
                                     setFormData({ ...formData, amount: newVal });
                                   }}
-                                  className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-xl font-black text-gray-400 hover:bg-cyan-50 hover:text-cyan-500 transition-colors shadow-sm"
+                                  className="w-10 h-10 flex-shrink-0 rounded-full bg-white border border-gray-200 flex items-center justify-center text-xl font-black text-gray-400 hover:bg-cyan-50 hover:text-cyan-500 transition-colors shadow-sm"
                                 >
                                   +
                                 </button>
@@ -268,7 +269,7 @@ export default function CheckRate() {
                             value={formData.purpose} 
                             onChange={handleCategoryChange} 
                             disabled={isLocked}
-                            className={`w-full px-6 sm:px-8 py-4 sm:py-5 bg-gray-50 rounded-2xl font-bold text-sm sm:text-base border-2 transition-all ${isLocked ? 'opacity-70 cursor-not-allowed border-gray-200' : 'border-transparent focus:ring-2 focus:ring-cyan-500'}`}
+                            className={`w-full px-5 sm:px-8 py-4 sm:py-5 bg-gray-50 rounded-2xl font-bold text-sm sm:text-base border-2 transition-all ${isLocked ? 'opacity-70 cursor-not-allowed border-gray-200' : 'border-transparent focus:ring-2 focus:ring-cyan-500'}`}
                           >
                             <option value="">Choose Loan Category</option>
                             {Object.keys(loanCategories).map(cat => <option key={cat} value={cat}>{cat}</option>)}
@@ -281,7 +282,7 @@ export default function CheckRate() {
                               value={formData.subType} 
                               onChange={handleInputChange} 
                               disabled={isLocked && !!preSelectedSubType}
-                              className={`w-full px-6 sm:px-8 py-4 sm:py-5 bg-cyan-50 border-2 rounded-2xl font-bold text-cyan-900 text-sm sm:text-base transition-all ${isLocked && !!preSelectedSubType ? 'opacity-70 cursor-not-allowed border-cyan-200' : 'border-cyan-100'}`}
+                              className={`w-full px-5 sm:px-8 py-4 sm:py-5 bg-cyan-50 border-2 rounded-2xl font-bold text-cyan-900 text-sm sm:text-base transition-all ${isLocked && !!preSelectedSubType ? 'opacity-70 cursor-not-allowed border-cyan-200' : 'border-cyan-100'}`}
                             >
                               <option value="">Specific Type</option>
                               {loanCategories[formData.purpose].map(sub => <option key={sub} value={sub}>{sub}</option>)}
@@ -370,7 +371,7 @@ export default function CheckRate() {
                     )}
                   </AnimatePresence>
 
-                  <div className="flex flex-col sm:flex-row gap-4 mt-12">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-10 sm:mt-12">
                     {step > 1 && (
                       <button type="button" onClick={prevStep} className="w-full sm:flex-1 py-4 bg-gray-100 text-gray-500 font-black rounded-2xl uppercase text-[10px] tracking-widest order-2 sm:order-1">Back</button>
                     )}
@@ -385,16 +386,15 @@ export default function CheckRate() {
         </div>
       </div>
 
-         {/* Footer - Optimized spacing */}
-                 <footer className="bg-[#0097B2] pt-8 pb-12">
-         <div className="flex flex-wrap items-center justify-center gap-5 text-white text-sm font-bold px-6">
-           <Link to="/help" className="hover:opacity-80 transition-opacity">Help</Link>
-           <span className="text-white/30">•</span>
-           <Link to="/terms" className="hover:opacity-80 transition-opacity">Terms of Use</Link>
-           <span className="text-white/30">•</span>
-           <Link to="/privacy" className="hover:opacity-80 transition-opacity">Privacy Policy</Link>
-         </div>
-       </footer>
+      <footer className="bg-[#0097B2] pt-8 pb-12">
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5 text-white text-sm font-bold px-6">
+          <Link to="/help" className="hover:opacity-80 transition-opacity text-xs sm:text-sm">Help</Link>
+          <span className="text-white/30">•</span>
+          <Link to="/terms" className="hover:opacity-80 transition-opacity text-xs sm:text-sm">Terms of Use</Link>
+          <span className="text-white/30">•</span>
+          <Link to="/privacy" className="hover:opacity-80 transition-opacity text-xs sm:text-sm">Privacy Policy</Link>
+        </div>
+      </footer>
     </div>
   );
 }
