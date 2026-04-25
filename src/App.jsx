@@ -22,7 +22,10 @@ import NewUsers from './components/NewUsers';
 import CheckRate from './components/CheckRate'; 
 import BotShield from './components/BotShield';
 import ContactUs from './components/ContactUs';
-import HelpCenter from './components/HelpCenter'; // Added Import
+import HelpCenter from './components/HelpCenter'; 
+import TermsOfUse from './components/TermsOfUse';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import CookieSettings from './components/CookieSettings'; // Added Cookie Settings Import
 
 import PersonalLoans from './components/navigation/PersonalLoans';
 import CarLoans from './components/navigation/CarLoans';
@@ -52,13 +55,16 @@ const Home = () => (
 const AppContent = ({ user }) => {
   const location = useLocation();
   
-  // Updated to include /contact and /help for a clean experience
+  // Updated to include /terms, /privacy, and /cookies for a clean experience
   const isCleanPage = 
     location.pathname === '/login' || 
     location.pathname === '/signup' || 
     location.pathname === '/check-rate' ||
     location.pathname === '/contact' ||
-    location.pathname === '/help';
+    location.pathname === '/help' ||
+    location.pathname === '/terms' ||
+    location.pathname === '/privacy' ||
+    location.pathname === '/cookies'; // Added /cookies to clean pages
 
   return (
     <div className="min-h-screen bg-white">
@@ -72,7 +78,10 @@ const AppContent = ({ user }) => {
           <Route path="/how-it-works" element={<HowLinks />} />
           <Route path="/about-us" element={<AboutUsLinks />} />
           <Route path="/contact" element={<ContactUs />} />
-          <Route path="/help" element={<HelpCenter />} /> {/* Added HelpCenter Route */}
+          <Route path="/help" element={<HelpCenter />} /> 
+          <Route path="/terms" element={<TermsOfUse />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/cookies" element={<CookieSettings />} /> {/* Added Cookie Settings Route */}
           
           {/* Dedicated Routes for each Loan Type */}
           <Route path="/personal-loans" element={<PersonalLoans />} />

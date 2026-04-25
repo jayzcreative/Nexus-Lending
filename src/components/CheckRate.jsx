@@ -385,15 +385,16 @@ export default function CheckRate() {
         </div>
       </div>
 
-      <footer className="bg-[#0097B2] py-5">
-        <div className="flex items-center justify-center gap-5 text-white text-xs font-bold uppercase tracking-tighter">
-          <Link to="/help">Help</Link>
-          <span>•</span>
-          <Link to="/terms">Terms</Link>
-          <span>•</span>
-          <Link to="/privacy">Privacy</Link>
-        </div>
-      </footer>
+         {/* Footer - Optimized spacing */}
+                 <footer className="bg-[#0097B2] pt-8 pb-12">
+         <div className="flex flex-wrap items-center justify-center gap-5 text-white text-sm font-bold px-6">
+           <Link to="/help" className="hover:opacity-80 transition-opacity">Help</Link>
+           <span className="text-white/30">•</span>
+           <Link to="/terms" className="hover:opacity-80 transition-opacity">Terms of Use</Link>
+           <span className="text-white/30">•</span>
+           <Link to="/privacy" className="hover:opacity-80 transition-opacity">Privacy Policy</Link>
+         </div>
+       </footer>
     </div>
   );
 }

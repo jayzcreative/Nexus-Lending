@@ -235,7 +235,7 @@ const steps = [
                     <p className="text-slate-500 mb-8 max-w-md mx-auto">If you're stuck, our support team is available 24/7.</p>
                     <div className="flex justify-center gap-8">
                         <Link to="/help" className="text-slate-400 hover:text-cyan-500 font-semibold text-sm transition-colors underline-offset-4 hover:underline">Help Center</Link>
-                        <HashLink smooth to="/how#rates" className="text-slate-400 hover:text-cyan-500 font-semibold text-sm transition-colors underline-offset-4 hover:underline">Rates & Fees</HashLink>
+                        <HashLink smooth to="/how-it-works#rates" className="text-slate-400 hover:text-cyan-500 font-semibold text-sm transition-colors underline-offset-4 hover:underline">Rates & Fees</HashLink>
                     </div>
                 </div>
             </div>

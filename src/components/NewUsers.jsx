@@ -268,13 +268,14 @@ export default function NewUsers() {
         </div>
       </div>
 
-      <footer className="bg-[#0097B2] py-5 mb-10">
-        <div className="flex items-center justify-center gap-6 text-white text-sm font-bold">
-           <Link to="/help" className="hover:opacity-80 transition-opacity">Help</Link>
-            <span className="text-white/30 text-xs">•</span>
-          <Link to="/terms" className="hover:opacity-70 transition-opacity">Terms of Service</Link>
-          <span className="text-white/30 text-xs">•</span>
-          <Link to="/privacy" className="hover:opacity-70 transition-opacity">Privacy Policy</Link>
+        {/* Footer - Optimized spacing */}
+                <footer className="bg-[#0097B2] pt-8 pb-12">
+        <div className="flex flex-wrap items-center justify-center gap-5 text-white text-sm font-bold px-6">
+          <Link to="/help" className="hover:opacity-80 transition-opacity">Help</Link>
+          <span className="text-white/30">•</span>
+          <Link to="/terms" className="hover:opacity-80 transition-opacity">Terms of Use</Link>
+          <span className="text-white/30">•</span>
+          <Link to="/privacy" className="hover:opacity-80 transition-opacity">Privacy Policy</Link>
         </div>
       </footer>
     </div>
