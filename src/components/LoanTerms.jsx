@@ -24,7 +24,7 @@ export default function LoanTerms() {
             Detailed Loan <span className="text-cyan-500">Specifications</span>
           </h2>
           <p className="text-gray-400 mt-4 font-bold text-sm italic">
-            Last Updated: April 14, 2026 ● All rates subject to change without prior notice.
+            Last Updated: April 19, 2026 ● All rates subject to change without prior notice.
           </p>
         </div>
 
@@ -36,7 +36,7 @@ export default function LoanTerms() {
               Mortgage & Home Equity
             </h3>
             <p>
-              <sup>5</sup> Financing for home purchases and equity access ranges from **$10,000 to $250,000**. Rates are determined by the Loan-to-Value (LTV) ratio, credit history, and alternative data modeling via the Nexus AI engine. No prepayment penalties are applied to fixed-rate residential liens. Monthly payments are calculated based on the final agreed-upon term and APR, which includes all origination charges.
+              <sup>1</sup> Financing for home purchases and equity access ranges from **$10,000 to $250,000**. Rates are determined by the Loan-to-Value (LTV) ratio, credit history, and alternative data modeling via the Nexus AI engine. No prepayment penalties are applied to fixed-rate residential liens. Monthly payments are calculated based on the final agreed-upon term and APR, which includes all origination charges.
             </p>
           </div>
 
@@ -46,7 +46,7 @@ export default function LoanTerms() {
               Education & Student Financing
             </h3>
             <p>
-              Nexus Student Loan rates reflect a 0.25% interest rate reduction for users enrolled in automatic recurring payments. Eligible borrowers can access funding ranging from **$100 up to $10,000** to cover tuition, books, and living expenses. For specialized graduate programs, the aggregate limit is determined by the specific field of study and professional potential analyzed by our AI modeling.
+             <sup>2</sup> Nexus Student Loan rates reflect a 0.25% interest rate reduction for users enrolled in automatic recurring payments. Eligible borrowers can access funding ranging from **$100 up to $10,000** to cover tuition, books, and living expenses. For specialized graduate programs, the aggregate limit is determined by the specific field of study and professional potential analyzed by our AI modeling.
             </p>
           </div>
 
@@ -56,7 +56,7 @@ export default function LoanTerms() {
               Automotive & Vehicle Liens
             </h3>
             <p>
-              Vehicle financing is available for amounts between **$2,000 and $40,000** with terms ranging from 24 to 84 months. Interest rates vary based on the borrower's credit profile and the specific loan-to-value ratio of the collateral. Nexus does not charge application fees for standard auto financing. Vehicles must be for personal use and pass our internal Nexus Shield security and valuation criteria.
+              <sup>3</sup> Vehicle financing is available for amounts between **$2,000 and $40,000** with terms ranging from 12 to 84 months. Interest rates vary based on the borrower's credit profile and the specific loan-to-value ratio of the collateral. Nexus does not charge application fees for standard auto financing. Vehicles must be for personal use and pass our internal Nexus Shield security and valuation criteria.
             </p>
           </div>
 
@@ -66,7 +66,7 @@ export default function LoanTerms() {
               Healthcare & Wellness Funding
             </h3>
             <p>
-              Medical and health-related loans cover elective procedures and urgent care with ranges from **$100 to $15,000**. Terms span 12 to 60 months with fixed monthly installments. Our healthcare partners offer instant point-of-sale approval via the Nexus API. There are zero penalties for early repayment of medical debt, allowing for full financial flexibility for patients and their families.
+              <sup>4</sup> Medical and health-related loans cover elective procedures and urgent care with ranges from **$100 to $15,000**. Terms span 12 to 84 months with fixed monthly installments. Our healthcare partners offer instant point-of-sale approval via the Nexus API. There are zero penalties for early repayment of medical debt, allowing for full financial flexibility for patients and their families.
             </p>
           </div>
 
@@ -81,7 +81,7 @@ export default function LoanTerms() {
                Personal Loan Comprehensive Terms
             </h3>
             <p className="text-gray-600 text-sm mb-4">
-              Fixed rates from **8.99% APR to 35.99% APR** include a total potential **0.50% discount** (0.25% for Autopay enrollment and 0.25% for Direct Deposit). Lowest rates are reserved for creditworthy borrowers with a debt-to-income ratio below 35%. Your actual rate is determined by the selected term and our AI's evaluation of your income and security profile.
+              <sup>5</sup> Fixed rates from **8.99% APR to 35.99% APR** include a total potential **0.50% discount** (0.25% for Autopay enrollment and 0.25% for Direct Deposit). Lowest rates are reserved for creditworthy borrowers with a debt-to-income ratio below 35%. Your actual rate is determined by the selected term and our AI's evaluation of your income and security profile.
             </p>
             <p className="text-gray-600 text-sm mb-6">
               Personal loan amounts range from **$50 to $5,000**. The APR reflects the yearly cost of credit, including the interest rate and a one-time origination fee of 1%–8% deducted at the time of funding. While Autopay is not required for loan approval, it is mandatory to receive the associated interest rate reduction. All transactions are protected by the Nexus Shield Engine V2.4.

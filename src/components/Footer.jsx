@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png'; 
 
 export default function Footer({ onCheckRate }) {
-    // Mapping logic synced with Navbar
+    // Mapping logic synced with Navbar and App.jsx
     const linkPaths = {
         "Products": "/products",
         "Personal Loans": "/personal-loans",
@@ -16,7 +16,13 @@ export default function Footer({ onCheckRate }) {
         "About Us": "/about-us",
         "Login": "/login",
         "CheckRate": "/check-rate",
-        "Resources": "/how-it-works"
+        "Resources": "/how-it-works",
+        "Terms of Use": "/terms",
+        "Privacy Policy": "/privacy",
+        "Cookie Settings": "/cookies",
+        "Disclosures": "/disclosures",
+        "Contact Us": "/contact",
+        "Help Center": "/help"
     };
 
     // FIXED: Unique keys for each refinance type to prevent collision
@@ -28,7 +34,6 @@ export default function Footer({ onCheckRate }) {
         "Undergraduate": "#undergraduate", "Graduate": "#graduate", "Parent Plus": "#parent-plus", "Refinance Student": "#refinance-student", "MBA Loans": "#mba-loans"
     };
 
-    // FIXED: Updated names to match unique subLinkIds keys
     const products = {
         "Personal Loans": ["Debt Consolidation", "Wedding Loans", "Home Improvement", "Vacation Loans", "Emergency Loans"],
         "Car Loans": ["New Car Finance", "Used Car Loans", "Refinance Auto", "Lease Buyout", "Auto Equity"],
@@ -166,24 +171,33 @@ export default function Footer({ onCheckRate }) {
                         </ul>
                     </div>
 
-                    
-
                     <div>
                         <h4 className="text-cyan-400 font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Compliance & Privacy</h4>
                         <ul className="space-y-3">
-                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Terms of Use</li>
-                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Privacy Policy</li>
-                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer hidden md:block">Cookie Settings</li>
-                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer hidden md:block">Disclosures</li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">
+                                <Link to={linkPaths["Terms of Use"]}>Terms of Use</Link>
+                            </li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">
+                                <Link to={linkPaths["Privacy Policy"]}>Privacy Policy</Link>
+                            </li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer ">
+                                <Link to={linkPaths["Cookie Settings"]}>Cookie Settings</Link>
+                            </li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer  ">
+                                <Link to={linkPaths["Disclosures"]}>Disclosures</Link>
+                            </li>
                         </ul>
                     </div>
                     
                     <div>
                         <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-6 border-l-2 border-cyan-500 pl-3">Support & Legal</h4>
                         <ul className="space-y-3">
-                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Contact Us</li>
-                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">Help Center</li>
-                           
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">
+                                <Link to={linkPaths["Contact Us"]}>Contact Us</Link>
+                            </li>
+                            <li className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors cursor-pointer">
+                                <Link to={linkPaths["Help Center"]}>Help Center</Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

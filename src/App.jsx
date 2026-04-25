@@ -25,7 +25,8 @@ import ContactUs from './components/ContactUs';
 import HelpCenter from './components/HelpCenter'; 
 import TermsOfUse from './components/TermsOfUse';
 import PrivacyPolicy from './components/PrivacyPolicy';
-import CookieSettings from './components/CookieSettings'; // Added Cookie Settings Import
+import CookieSettings from './components/CookieSettings'; 
+import Disclosures from './components/Disclosures'; // Added Disclosures Import
 
 import PersonalLoans from './components/navigation/PersonalLoans';
 import CarLoans from './components/navigation/CarLoans';
@@ -55,7 +56,7 @@ const Home = () => (
 const AppContent = ({ user }) => {
   const location = useLocation();
   
-  // Updated to include /terms, /privacy, and /cookies for a clean experience
+  // Updated to include /terms, /privacy, /cookies, and /disclosures for a clean experience
   const isCleanPage = 
     location.pathname === '/login' || 
     location.pathname === '/signup' || 
@@ -64,7 +65,8 @@ const AppContent = ({ user }) => {
     location.pathname === '/help' ||
     location.pathname === '/terms' ||
     location.pathname === '/privacy' ||
-    location.pathname === '/cookies'; // Added /cookies to clean pages
+    location.pathname === '/cookies' ||
+    location.pathname === '/disclosures'; // Added /disclosures to clean pages
 
   return (
     <div className="min-h-screen bg-white">
@@ -81,7 +83,8 @@ const AppContent = ({ user }) => {
           <Route path="/help" element={<HelpCenter />} /> 
           <Route path="/terms" element={<TermsOfUse />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/cookies" element={<CookieSettings />} /> {/* Added Cookie Settings Route */}
+          <Route path="/cookies" element={<CookieSettings />} /> 
+          <Route path="/disclosures" element={<Disclosures />} /> {/* Added Disclosures Route */}
           
           {/* Dedicated Routes for each Loan Type */}
           <Route path="/personal-loans" element={<PersonalLoans />} />
